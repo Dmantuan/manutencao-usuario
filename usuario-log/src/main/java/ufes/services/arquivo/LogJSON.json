@@ -1,17 +1,14 @@
 [
 {
-  "data": "29/JUNE/2023",
-  "hora": "13:47:33",
-  "operacao": "inclusão"
+  "nome": "Matheus",
+  "data": "13/JULY/2023",
+  "hora": "23:10:58",
+  "operacao": "REMOÇÃO"
 },
 {
-  "data": "29/JUNE/2023",
-  "hora": "13:47:40",
-  "operacao": "inclusão"
-},
-{
-  "data": "29/JUNE/2023",
-  "hora": "13:49:49",
-  "operacao": "inclusão"
+  "nome": "Matheus",
+  "data": "13/JULY/2023",
+  "hora": "23:10:58",
+  "operacao": "ADIÇÃO"
 }
 ]
