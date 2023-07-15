@@ -11,6 +11,10 @@ public class UsuarioDAO {
 
     private final conexaoDB db = conexaoDB.getInstancia();
 
+    public UsuarioDAO() {
+        
+    }
+    
     public Usuario getById(Integer id) throws Exception {
 
         StringBuilder query = new StringBuilder();

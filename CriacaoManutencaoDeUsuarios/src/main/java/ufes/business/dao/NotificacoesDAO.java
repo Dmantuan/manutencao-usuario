@@ -12,6 +12,10 @@ public class NotificacoesDAO {
 
     private final conexaoDB db = conexaoDB.getInstancia();
 
+    public NotificacoesDAO() {
+        
+    }
+    
     public Notificacao getById(Integer id) throws Exception {
 
         StringBuilder query = new StringBuilder();
