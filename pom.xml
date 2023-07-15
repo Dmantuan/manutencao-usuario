@@ -19,8 +19,6 @@
     </dependencies>
   
     <modules>
-        <module>usuario-log</module>
-        <module>CriacaoManutencaoDeUsuarios</module>
         <module>notificacoes</module>
     </modules>
   
