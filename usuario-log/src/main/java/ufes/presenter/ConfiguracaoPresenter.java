@@ -34,7 +34,7 @@ public class ConfiguracaoPresenter {
     }
     
     private void setConfiguracao(){
-        if( this.view.getCmbBox().getItemAt(this.view.getCmbBox().getSelectedIndex()).equalsIgnoreCase("V")){
+        if( this.view.getCmbBox().getItemAt(this.view.getCmbBox().getSelectedIndex()).equalsIgnoreCase("CSV")){
             ConfiguracaoPresenter.tipoLog = new LogCSV();
         }
         else{

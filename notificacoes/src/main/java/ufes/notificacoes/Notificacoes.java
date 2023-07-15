@@ -1,8 +1,12 @@
 package ufes.notificacoes;
 
+import ufes.presenter.MainPresenter;
+
 public class Notificacoes {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        MainPresenter presenter = new MainPresenter();
+        presenter.exibirEmTelaCheia();
     }
 }

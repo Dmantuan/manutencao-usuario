@@ -13,10 +13,10 @@ public class UsuarioLog {
         ConfiguracaoPresenter presneter = new ConfiguracaoPresenter();
         presneter.setVisible();
         
-        Log log = new Log("Matheus", "REMOÇÃO");
+        Log log = new Log("Daniel", "Matheus", "REMOÇÃO");
         GerenciadorLog.salvarLog(ConfiguracaoPresenter.getTipoLog(), log);
         
-        Log log2 = new Log("Matheus","ADIÇÃO");
+        Log log2 = new Log("Daniel" ,"Matheus","ADIÇÃO", "index of");
         GerenciadorLog.salvarLog(ConfiguracaoPresenter.getTipoLog(), log2);
     }
 }

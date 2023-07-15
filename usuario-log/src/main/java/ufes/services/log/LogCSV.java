@@ -14,7 +14,7 @@ public class LogCSV implements ILog {
 
     @Override
     public void salvarLog(Log log) {
-        String logData = log.getNome() + " | " + log.getData() + " | " + log.getHora() + " | " + log.getOperacao();
+        String logData = log.csvFormat();
         GerenciadorEscritaArquivo.escrever(arquivo, logData);
         System.out.println(String.join(",", logData));
     }

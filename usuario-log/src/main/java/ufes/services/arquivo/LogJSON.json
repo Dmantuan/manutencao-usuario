@@ -1,14 +1,17 @@
 [
 {
-  "nome": "Matheus",
-  "data": "13/JULY/2023",
-  "hora": "23:10:58",
-  "operacao": "REMOÇÃO"
+  "operacao": "REMOÇÃO",
+  "nome": "Daniel",
+  "user": "Matheus",
+  "data": "14/JULY/2023",
+  "hora": "22:11:44"
 },
 {
-  "nome": "Matheus",
-  "data": "13/JULY/2023",
-  "hora": "23:10:58",
-  "operacao": "ADIÇÃO"
+  "error": "index of",
+  "operacao": "ADIÇÃO",
+  "nome": "Daniel",
+  "user": "Matheus",
+  "data": "14/JULY/2023",
+  "hora": "22:11:44"
 }
 ]
