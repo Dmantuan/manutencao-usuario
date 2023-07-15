@@ -16,6 +16,12 @@ public class NotificacoesBusiness {
     private NotificacoesDAO notificacoesDAO;
 
     private UsuarioDAO usuarioDAO;
+    
+    public NotificacoesBusiness(){
+        
+        this.notificacoesDAO = new NotificacoesDAO();
+        this.usuarioDAO = new UsuarioDAO();
+    }
 
     public Notificacao getById(Integer id) throws Exception {
         return this.notificacoesDAO.getById(id);
