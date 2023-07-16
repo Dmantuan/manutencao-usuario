@@ -4,13 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import ufes.db.conexaoDB;
+import ufes.db.ConexaoDB;
 import ufes.models.Notificacao;
-import ufes.models.Usuario;
 
 public class NotificacoesDAO {
 
-    private final conexaoDB db = conexaoDB.getInstancia();
+    private final ConexaoDB db = ConexaoDB.getInstancia();
 
     public NotificacoesDAO() {
         
@@ -49,12 +48,13 @@ public class NotificacoesDAO {
     public List<Notificacao> getAllByUserDestinyId(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo ");
+        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo ");
         query.append(" FROM usuario as u ");
-        query.append(" LEFT JOIN usuario_notificacao as un ");
-        query.append(" ON un.id_destinatario = ? ");
-        query.append(" LEFT JOIN notificacao as n ");
+        query.append(" INNER JOIN usuario_notificacao un ");
+        query.append(" ON un.id_destinatario = u.id ");
+        query.append(" LEFT JOIN notificacao n ");
         query.append(" ON n.id = un.id_notificacao ");
+        query.append(" WHERE u.id = ? ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
@@ -72,9 +72,7 @@ public class NotificacoesDAO {
                         rs.getString("tx_titulo")
                 );
                 lista.add(notificacao);
-                
             }
-
             return lista;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -84,16 +82,50 @@ public class NotificacoesDAO {
     public List<Notificacao> getAllByUserSendId(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo ");
+        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo ");
         query.append(" FROM usuario as u ");
-        query.append(" LEFT JOIN usuario_notificacao as un ");
-        query.append(" ON un.id_remetente = ? ");
-        query.append(" LEFT JOIN notificacao as n ");
+        query.append(" INNER JOIN usuario_notificacao un ");
+        query.append(" ON un.id_remetente = u.id ");
+        query.append(" LEFT JOIN notificacao n ");
         query.append(" ON n.id = un.id_notificacao ");
+        query.append(" WHERE u.id = ? ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
             stm.setInt(1, id);
+
+            ResultSet rs = stm.executeQuery();
+
+            List<Notificacao> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                Notificacao notificacao = new Notificacao(rs.getInt("id"), 
+                        rs.getInt("id_remetente"),
+                        rs.getInt("id_destinatario"), 
+                        rs.getString("tx_conteudo"), 
+                        rs.getString("tx_titulo")
+                );
+                lista.add(notificacao);
+            }
+
+            return lista;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    public List<Notificacao> getAll() throws Exception {
+        StringBuilder query = new StringBuilder();
+
+        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo ");
+        query.append(" FROM usuario as u ");
+        query.append(" INNER JOIN usuario_notificacao un ");
+        query.append(" ON un.id_remetente = u.id ");
+        query.append(" LEFT JOIN notificacao n ");
+        query.append(" ON n.id = un.id_notificacao ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
 
             ResultSet rs = stm.executeQuery();
 
@@ -151,6 +183,10 @@ public class NotificacoesDAO {
         }
     }
 
+    
+    /*
+    TODO:consertar
+    */
     public void insert(Notificacao notificacao) throws Exception {
         StringBuilder query = new StringBuilder();
 

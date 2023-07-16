@@ -13,9 +13,9 @@ import ufes.models.Notificacao;
  */
 public class NotificacoesBusiness {
 
-    private NotificacoesDAO notificacoesDAO;
+    private final NotificacoesDAO notificacoesDAO;
 
-    private UsuarioDAO usuarioDAO;
+    private final UsuarioDAO usuarioDAO;
     
     public NotificacoesBusiness(){
         
@@ -29,6 +29,10 @@ public class NotificacoesBusiness {
 
     public List<Notificacao> getAllByUserId(Integer id) throws Exception {
         return notificacoesDAO.getAllByUserDestinyId(id);
+    }
+    
+        public List<Notificacao> getAll() throws Exception {
+        return notificacoesDAO.getAll();
     }
 
     public List<Notificacao> getAllByUserSendId(Integer id) throws Exception {
