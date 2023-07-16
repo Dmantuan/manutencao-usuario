@@ -15,7 +15,7 @@ public class ListarMensagemPresenter {
 
     public ListarMensagemPresenter() {
         this.view = new ListarMensagemView();
-        // this.dbMensagens = new NotificacoesBusiness(); // ver erro aki
+        this.dbMensagens = new NotificacoesBusiness(); // ver erro aki
 
         // Habilitar a barra de fechar no JInternalFrame
         this.view.setClosable(true);
