@@ -409,4 +409,8 @@ public class EnviarMensagemView extends javax.swing.JInternalFrame {
         return destinatarios;
     }
 
+    public JButton getRemoverDestinatarios() {
+        return removerDestinatarios;
+    }
+
 }

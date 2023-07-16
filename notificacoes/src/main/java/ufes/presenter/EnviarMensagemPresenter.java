@@ -3,7 +3,6 @@ package ufes.presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import ufes.business.business.UsuarioBusiness;
@@ -48,12 +47,19 @@ public class EnviarMensagemPresenter {
             }
         });
         
+        this.view.getRemoverDestinatarios().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                removerDestinatario();
+            }
+        });
+        
         this.view.getEnviar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 enviarMensagem();
             }
-        });
+        });   
     }
 
     public EnviarMensagemView getView() {
@@ -69,7 +75,7 @@ public class EnviarMensagemPresenter {
     private void atualizar() {
 
     }
-
+    
     private void adicionarDestinatario() {
         
         DestinatarioModel selectedItem = this.view.getDestinatarios().getSelectedValue();
@@ -78,6 +84,19 @@ public class EnviarMensagemPresenter {
             DefaultListModel<DestinatarioModel> listModelDestinatariosSelecionados
                     = (DefaultListModel<DestinatarioModel>) this.view.getDestinatariosSelect().getModel();
             listModelDestinatariosSelecionados.addElement(selectedItem);
+        }
+    }
+    
+    private void removerDestinatario() {
+        
+        DestinatarioModel selectedItem = this.view.getDestinatariosSelect().getSelectedValue();
+        if(selectedItem == null){
+            DefaultListModel<DestinatarioModel> listModelDestinatariosSelecionados
+                    = (DefaultListModel<DestinatarioModel>) this.view.getDestinatariosSelect().getModel();
+            listModelDestinatariosSelecionados.removeElement(selectedItem);
+        }        
+        else {
+            
         }
     }
 
