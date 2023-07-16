@@ -5,11 +5,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import ufes.models.Usuario;
-import ufes.db.conexaoDB;
+import ufes.db.ConexaoDB;
 
 public class UsuarioDAO {
 
-    private final conexaoDB db = conexaoDB.getInstancia();
+    private final ConexaoDB db = ConexaoDB.getInstancia();
 
     public UsuarioDAO() {
         

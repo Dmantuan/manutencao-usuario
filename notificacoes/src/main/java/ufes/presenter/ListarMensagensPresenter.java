@@ -16,6 +16,13 @@ public class ListarMensagensPresenter {
     public ListarMensagensPresenter() {
         this.view = new ListarMensagensView();
         this.dbMensagens = new NotificacoesBusiness();
+        
+        try{
+            System.out.println(dbMensagens.getAll());
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
 
         // Habilitar a barra de fechar no JInternalFrame
         this.view.setClosable(true);
@@ -39,7 +46,7 @@ public class ListarMensagensPresenter {
 
     public void loadData() throws Exception {
        
-        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAllByUserSendId(2); 
+        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAllByUserSendId(1); 
         atualizar();
     }
     
