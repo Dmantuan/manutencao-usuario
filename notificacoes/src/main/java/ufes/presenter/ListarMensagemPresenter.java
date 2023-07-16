@@ -2,20 +2,20 @@ package ufes.presenter;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import ufes.view.ListarMensagensView;
+import ufes.view.ListarMensagemView;
 import ufes.models.Notificacao;
 import ufes.business.business.NotificacoesBusiness;
 
-public class ListarMensagensPresenter {
+public class ListarMensagemPresenter {
 
     private DefaultTableModel tbMensagens;
-    private ListarMensagensView view;
+    private ListarMensagemView view;
     private ArrayList<Notificacao> mensagens;
     private NotificacoesBusiness dbMensagens;
 
-    public ListarMensagensPresenter() {
-        this.view = new ListarMensagensView();
-        this.dbMensagens = new NotificacoesBusiness();
+    public ListarMensagemPresenter() {
+        this.view = new ListarMensagemView();
+        this.dbMensagens = new NotificacoesBusiness(); // ver erro aki
 
         // Habilitar a barra de fechar no JInternalFrame
         this.view.setClosable(true);
@@ -33,7 +33,7 @@ public class ListarMensagensPresenter {
 
     
 
-    public ListarMensagensView getView() {
+    public ListarMensagemView getView() {
         return this.view;
     }
 

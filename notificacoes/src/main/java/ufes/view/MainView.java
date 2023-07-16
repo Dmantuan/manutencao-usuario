@@ -34,6 +34,7 @@ public class MainView extends javax.swing.JFrame {
         footer = new javax.swing.JPanel();
         tipoUser = new javax.swing.JLabel();
         notificacao = new javax.swing.JButton();
+        mensagem = new javax.swing.JButton();
         DesktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,6 +59,13 @@ public class MainView extends javax.swing.JFrame {
 
         notificacao.setText("15");
 
+        mensagem.setText("Enviar mensagem");
+        mensagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mensagemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
         footerLayout.setHorizontalGroup(
@@ -65,7 +73,9 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(footerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tipoUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 651, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mensagem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(notificacao)
                 .addContainerGap())
         );
@@ -75,7 +85,8 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(notificacao)
-                    .addComponent(tipoUser))
+                    .addComponent(tipoUser)
+                    .addComponent(mensagem))
                 .addContainerGap())
         );
 
@@ -83,7 +94,7 @@ public class MainView extends javax.swing.JFrame {
         DesktopPane.setLayout(DesktopPaneLayout);
         DesktopPaneLayout.setHorizontalGroup(
             DesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 819, Short.MAX_VALUE)
         );
         DesktopPaneLayout.setVerticalGroup(
             DesktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,11 +122,16 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mensagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mensagemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mensagemActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopPane;
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
+    private javax.swing.JButton mensagem;
     private javax.swing.JButton notificacao;
     private javax.swing.JLabel tipoUser;
     // End of variables declaration//GEN-END:variables
@@ -130,5 +146,9 @@ public class MainView extends javax.swing.JFrame {
 
     public JDesktopPane getDesktopPane() {
         return DesktopPane;
+    }
+
+    public JButton getMensagem() {
+        return mensagem;
     }
 }
