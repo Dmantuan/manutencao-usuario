@@ -9,7 +9,7 @@ import ufes.models.PassWordException;
 import ufes.models.Usuario;
 
 public class UsuarioBusiness {
-    private UsuarioDAO usuarioDAO;
+    private UsuarioDAO usuarioDAO = new UsuarioDAO();
     
     ValidadorSenha validadorSenha = new ValidadorSenha();
     

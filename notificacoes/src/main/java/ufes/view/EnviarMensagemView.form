@@ -205,12 +205,12 @@
             <Component class="javax.swing.JList" name="destinatarios">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.AbstractListModel&lt;DestinatarioModel&gt;() {&#xd;&#xa;    DestinatarioModel[] destinatariosArray = {&#xd;&#xa;        new DestinatarioModel(1, &quot;Item 1&quot;),&#xd;&#xa;        new DestinatarioModel(2, &quot;Item 2&quot;),&#xd;&#xa;        new DestinatarioModel(3, &quot;Item 3&quot;),&#xd;&#xa;        new DestinatarioModel(4, &quot;Item 4&quot;),&#xd;&#xa;        new DestinatarioModel(5, &quot;Item 5&quot;)&#xd;&#xa;    };&#xd;&#xa;&#xd;&#xa;    public int getSize() {&#xd;&#xa;        return destinatariosArray.length;&#xd;&#xa;    }&#xd;&#xa;&#xd;&#xa;    public DestinatarioModel getElementAt(int index) {&#xd;&#xa;        return destinatariosArray[index];&#xd;&#xa;    }&#xd;&#xa;}" type="code"/>
+                  <Connection code="new javax.swing.AbstractListModel&lt;Usuario&gt;() {&#xd;&#xa;    Usuario[] destinatariosArray = {&#xd;&#xa;        new Usuario(&quot;Error&quot;, &quot;Error&quot;, &quot;Error&quot;)&#xd;&#xa;    };&#xd;&#xa;&#xd;&#xa;    public int getSize() {&#xd;&#xa;        return destinatariosArray.length;&#xd;&#xa;    }&#xd;&#xa;&#xd;&#xa;    public Usuario getElementAt(int index) {&#xd;&#xa;        return destinatariosArray[index];&#xd;&#xa;    }&#xd;&#xa;}" type="code"/>
                 </Property>
                 <Property name="layoutOrientation" type="int" value="1"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DestinatarioModel&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Usuario&gt;"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -277,12 +277,12 @@
             <Component class="javax.swing.JList" name="destinatariosSelect">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.AbstractListModel&lt;DestinatarioModel&gt;() {&#xd;&#xa;    DestinatarioModel[] destinatariosArray = {&#xd;&#xa;        new DestinatarioModel(1, &quot;Item 1&quot;),&#xd;&#xa;        new DestinatarioModel(2, &quot;Item 2&quot;),&#xd;&#xa;        new DestinatarioModel(3, &quot;Item 3&quot;),&#xd;&#xa;        new DestinatarioModel(4, &quot;Item 4&quot;),&#xd;&#xa;        new DestinatarioModel(5, &quot;Item 5&quot;)&#xd;&#xa;    };&#xd;&#xa;&#xd;&#xa;    public int getSize() {&#xd;&#xa;        return destinatariosArray.length;&#xd;&#xa;    }&#xd;&#xa;&#xd;&#xa;    public DestinatarioModel getElementAt(int index) {&#xd;&#xa;        return destinatariosArray[index];&#xd;&#xa;    }&#xd;&#xa;}" type="code"/>
+                  <Connection code="new javax.swing.AbstractListModel&lt;Usuario&gt;() {&#xd;&#xa;    Usuario[] destinatariosArray = {&#xd;&#xa;        new Usuario(&quot;Error&quot;, &quot;Error&quot;, &quot;Error&quot;)&#xd;&#xa;    };&#xd;&#xa;&#xd;&#xa;    public int getSize() {&#xd;&#xa;        return destinatariosArray.length;&#xd;&#xa;    }&#xd;&#xa;&#xd;&#xa;    public Usuario getElementAt(int index) {&#xd;&#xa;        return destinatariosArray[index];&#xd;&#xa;    }&#xd;&#xa;}" type="code"/>
                 </Property>
                 <Property name="layoutOrientation" type="int" value="2"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DestinatarioModel&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Usuario&gt;"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -403,6 +403,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="EnviarMensagemView_mensagem"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import ufes.models.DestinatarioModel;
+import ufes.models.Usuario;
 
 /**
  *
@@ -123,20 +123,16 @@ public class EnviarMensagemView extends javax.swing.JInternalFrame {
             }
         });
 
-        destinatarios.setModel(new javax.swing.AbstractListModel<DestinatarioModel>() {
-            DestinatarioModel[] destinatariosArray = {
-                new DestinatarioModel(1, "Item 1"),
-                new DestinatarioModel(2, "Item 2"),
-                new DestinatarioModel(3, "Item 3"),
-                new DestinatarioModel(4, "Item 4"),
-                new DestinatarioModel(5, "Item 5")
+        destinatarios.setModel(new javax.swing.AbstractListModel<Usuario>() {
+            Usuario[] destinatariosArray = {
+                new Usuario("Error", "Error", "Error")
             };
 
             public int getSize() {
                 return destinatariosArray.length;
             }
 
-            public DestinatarioModel getElementAt(int index) {
+            public Usuario getElementAt(int index) {
                 return destinatariosArray[index];
             }
         });
@@ -176,20 +172,16 @@ public class EnviarMensagemView extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
-        destinatariosSelect.setModel(new javax.swing.AbstractListModel<DestinatarioModel>() {
-            DestinatarioModel[] destinatariosArray = {
-                new DestinatarioModel(1, "Item 1"),
-                new DestinatarioModel(2, "Item 2"),
-                new DestinatarioModel(3, "Item 3"),
-                new DestinatarioModel(4, "Item 4"),
-                new DestinatarioModel(5, "Item 5")
+        destinatariosSelect.setModel(new javax.swing.AbstractListModel<Usuario>() {
+            Usuario[] destinatariosArray = {
+                new Usuario("Error", "Error", "Error")
             };
 
             public int getSize() {
                 return destinatariosArray.length;
             }
 
-            public DestinatarioModel getElementAt(int index) {
+            public Usuario getElementAt(int index) {
                 return destinatariosArray[index];
             }
         });
@@ -360,8 +352,8 @@ public class EnviarMensagemView extends javax.swing.JInternalFrame {
     private javax.swing.JButton adicionarDestinatarios;
     private javax.swing.JButton cancelar;
     private javax.swing.JPanel d;
-    private javax.swing.JList<DestinatarioModel> destinatarios;
-    private javax.swing.JList<DestinatarioModel> destinatariosSelect;
+    private javax.swing.JList<Usuario> destinatarios;
+    private javax.swing.JList<Usuario> destinatariosSelect;
     private javax.swing.JButton enviar;
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
@@ -401,16 +393,17 @@ public class EnviarMensagemView extends javax.swing.JInternalFrame {
         return adicionarDestinatarios;
     }
 
-    public JList<DestinatarioModel> getDestinatariosSelect() {
-        return destinatariosSelect;
+    public JList<Usuario> getDestinatarios() {
+        return destinatarios;
     }
 
-    public JList<DestinatarioModel> getDestinatarios() {
-        return destinatarios;
+    public JList<Usuario> getDestinatariosSelect() {
+        return destinatariosSelect;
     }
 
     public JButton getRemoverDestinatarios() {
         return removerDestinatarios;
     }
-
+    
+    
 }
