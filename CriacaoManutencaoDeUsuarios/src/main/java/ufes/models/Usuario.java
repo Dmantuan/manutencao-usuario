@@ -50,6 +50,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "id: " + String.valueOf(this.id) + " nome: " + this.nome + " senha: " + this.senha;
+        return this.nome;
     }
 }

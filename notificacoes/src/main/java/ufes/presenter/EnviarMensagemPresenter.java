@@ -3,11 +3,9 @@ package ufes.presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import ufes.business.business.UsuarioBusiness;
-import ufes.models.DestinatarioModel;
 import ufes.models.Notificacao;
 import ufes.models.Usuario;
 import ufes.view.EnviarMensagemView;
@@ -20,23 +18,27 @@ public class EnviarMensagemPresenter {
 
     public EnviarMensagemPresenter() {
         this.view = new EnviarMensagemView();
+        this.dbUsuarios = new UsuarioBusiness();
         this.view.setClosable(true);
-
+         
         // Criação dos objetos de exemplo
-        List<DestinatarioModel> destinatarios = new ArrayList<>();
-        destinatarios.add(new DestinatarioModel(1, "Matheus kanck da silva"));
-        destinatarios.add(new DestinatarioModel(2, "Maria Silva Amanaque"));
-        destinatarios.add(new DestinatarioModel(3, "Daniel Mantuan"));
+        
+        try {
+            loadData();  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         
         // setando modelo da lista de destinatarios
-        DefaultListModel<DestinatarioModel> listModelDestinatarios = new DefaultListModel<>();
-        for (DestinatarioModel item : destinatarios) {
+        DefaultListModel<Usuario> listModelDestinatarios = new DefaultListModel<>();
+        for (Usuario item : usuarios) {
             listModelDestinatarios.addElement(item);
         }
         this.view.getDestinatarios().setModel(listModelDestinatarios);
         
         // setando modelo da lista de destinatarios selecionados
-        DefaultListModel<DestinatarioModel> listModelDestinatariosSelecionados = new DefaultListModel<>();
+        DefaultListModel<Usuario> listModelDestinatariosSelecionados = new DefaultListModel<>();
         this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
 
         this.view.setVisible(true);
@@ -44,7 +46,14 @@ public class EnviarMensagemPresenter {
         this.view.getAdicionarDestinatarios().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                adicionarDestinatario();
+                adicionarDestinatario(listModelDestinatarios);
+            }
+        });
+        
+        this.view.getRemoverDestinatarios().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                removerDestinatarios(listModelDestinatarios);
             }
         });
         
@@ -60,8 +69,9 @@ public class EnviarMensagemPresenter {
         return this.view;
     }
 
-    public void loadData() throws Exception {
+    private void loadData() throws Exception {
 
+        this.usuarios = new ArrayList<>();
         this.usuarios = (ArrayList<Usuario>) dbUsuarios.getAllUsers();
         atualizar();
     }
@@ -70,21 +80,39 @@ public class EnviarMensagemPresenter {
 
     }
 
-    private void adicionarDestinatario() {
+    private void adicionarDestinatario(DefaultListModel<Usuario> listModelDestinatarios) {
         
-        DestinatarioModel selectedItem = this.view.getDestinatarios().getSelectedValue();
+        Usuario selectedItem = this.view.getDestinatarios().getSelectedValue();
         
         if (null != selectedItem) {
-            DefaultListModel<DestinatarioModel> listModelDestinatariosSelecionados
-                    = (DefaultListModel<DestinatarioModel>) this.view.getDestinatariosSelect().getModel();
+            DefaultListModel<Usuario> listModelDestinatariosSelecionados
+                    = (DefaultListModel<Usuario>) this.view.getDestinatariosSelect().getModel();
             listModelDestinatariosSelecionados.addElement(selectedItem);
+            
+            // removendo da lista
+            listModelDestinatarios.removeElement(selectedItem);
         }
+    }
+    
+    private void removerDestinatarios(DefaultListModel<Usuario> listModelDestinatarios){
+        
+        Usuario selectedItem = this.view.getDestinatariosSelect().getSelectedValue();
+        
+        if (null != selectedItem) {
+            DefaultListModel<Usuario> listModelDestinatariosSelecionados
+                    = (DefaultListModel<Usuario>) this.view.getDestinatariosSelect().getModel();
+            listModelDestinatariosSelecionados.removeElement(selectedItem);
+            
+            // removendo da lista
+            listModelDestinatarios.addElement(selectedItem);
+        }
+        
     }
 
     private void enviarMensagem() {
 
-        DefaultListModel<DestinatarioModel> listModelDestinatariosSelecionados = (DefaultListModel<DestinatarioModel>) this.view.getDestinatariosSelect().getModel();
-        List<DestinatarioModel> destinatariosSelecionados = new ArrayList<>();
+        DefaultListModel<Usuario> listModelDestinatariosSelecionados = (DefaultListModel<Usuario>) this.view.getDestinatariosSelect().getModel();
+        List<Usuario> destinatariosSelecionados = new ArrayList<>();
         for (int i = 0; i < listModelDestinatariosSelecionados.size(); i++) {
             destinatariosSelecionados.add(listModelDestinatariosSelecionados.get(i));
         }
@@ -97,7 +125,7 @@ public class EnviarMensagemPresenter {
 
         // atribundo as notificações para cada id de destinatario
         ArrayList<Notificacao> notificacoes = new ArrayList<>();
-        for (DestinatarioModel ds : destinatariosSelecionados) { // talvez fazer essa logica em notificações
+        for (Usuario ds : destinatariosSelecionados) { // talvez fazer essa logica em notificações
             
 //            notificacoes.add(new Notificacao(id_remetente, ds.getId(), tx_conteudo ,tx_titulo));
 //            System.out.println(notificacoes.toString());
