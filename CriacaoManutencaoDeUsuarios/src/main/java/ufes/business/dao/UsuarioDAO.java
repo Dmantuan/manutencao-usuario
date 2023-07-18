@@ -39,7 +39,7 @@ public class UsuarioDAO {
             throw new Exception(e.getMessage());
         }
     }
-
+    
     public List<Usuario> getAll() throws Exception {
         StringBuilder query = new StringBuilder();
 

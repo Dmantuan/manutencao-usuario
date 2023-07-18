@@ -32,7 +32,7 @@ public class UsuarioBusiness {
     public Usuario getUserById(Integer id) throws Exception {
         return validateExists(id);
     }
-    
+        
     public List<Usuario> getAllUsers() throws Exception {
         return this.usuarioDAO.getAll();
     }
