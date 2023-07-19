@@ -1,5 +1,6 @@
 package ufes.presenter;
 
+import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,16 +15,13 @@ public class ListarMensagemPresenter {
     private ListarMensagemView view;
     private ArrayList<Notificacao> mensagens;
     private NotificacoesBusiness dbMensagens;
+    private static ListarMensagemPresenter instancia = null;
 
-    public ListarMensagemPresenter() {
+    private ListarMensagemPresenter() {
         this.view = new ListarMensagemView();
         this.dbMensagens = new NotificacoesBusiness();
 
         this.mensagens = new ArrayList<>();
-
-        // Habilitar a barra de fechar no JInternalFrame
-        this.view.setClosable(true);
-        this.view.setVisible(true);
 
         // tabelas
         this.tbMensagens = new DefaultTableModel(
@@ -41,9 +39,24 @@ public class ListarMensagemPresenter {
             Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static ListarMensagemPresenter getIntance(){
+        
+        if(instancia == null){
+            instancia = new ListarMensagemPresenter();
+        }
+        return instancia;
+    }
 
     public ListarMensagemView getView() {
         return this.view;
+    }
+    
+    public void setVisible(boolean visible){
+        EventQueue.invokeLater(() -> {
+            view.setVisible(visible);
+            view.toFront(); // Abrir a tela na frente de outras
+        });
     }
 
     private void loadData() throws Exception {
@@ -65,10 +78,6 @@ public class ListarMensagemPresenter {
             }
         }
 
-        this.view.getTable().setModel(this.tbMensagens);
-
-        // Defina o tamanho da primeira coluna
-        this.view.getTable().getColumnModel().getColumn(0).setPreferredWidth(10);
-        
+        this.view.getTable().setModel(this.tbMensagens); 
     }
 }

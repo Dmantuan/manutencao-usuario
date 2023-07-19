@@ -11,12 +11,18 @@ public class MainPresenter {
     private MainView view;
     private int qtdNovasNotificacoes;
     private String user;
+    ListarMensagemPresenter listarMensagensPresenter;
+    EnviarMensagemPresenter enviarMensagensPresenter;
 
     public MainPresenter() {
 
         this.view = new MainView();
         this.view.setVisible(true);
+        
+        this.enviarMensagensPresenter = EnviarMensagemPresenter.getIntance();
+        this.listarMensagensPresenter = ListarMensagemPresenter.getIntance();
 
+        exibirEmTelaCheia();
         novasNotificacoes();
 
         this.view.getNotificacao().addActionListener(new ActionListener() {
@@ -32,34 +38,45 @@ public class MainPresenter {
                 enviarNotificacoes();
             }
         });
+        
+        inicializarListarMensagens();
+        inicializarEnviarMensagens();
     }
 
-    private void visualizarNotificacoes() {
+    private void inicializarListarMensagens() {
 
-        ListarMensagemPresenter listarMensagensPresenter = new ListarMensagemPresenter();
-        JInternalFrame internalFrame = listarMensagensPresenter.getView();
+        JInternalFrame internalFrame = this.listarMensagensPresenter.getView();
         internalFrame.setSize(view.getDesktopPane().getSize());
         internalFrame.setPreferredSize(view.getDesktopPane().getSize());
-
         int x = (view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
         int y = (view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
         internalFrame.setLocation(x, y);
 
+        internalFrame.setVisible(false);
         view.getDesktopPane().add(internalFrame);
     }
 
-    private void enviarNotificacoes() {
+    private void inicializarEnviarMensagens() {
 
-        EnviarMensagemPresenter enviarMensagensPresenter = new EnviarMensagemPresenter();
-        JInternalFrame internalFrame = enviarMensagensPresenter.getView();
+        JInternalFrame internalFrame = this.enviarMensagensPresenter.getView();
         internalFrame.setSize(view.getDesktopPane().getSize());
         internalFrame.setPreferredSize(view.getDesktopPane().getSize());
-
         int x = (view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
         int y = (view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
         internalFrame.setLocation(x, y);
 
+        internalFrame.setVisible(false);
         view.getDesktopPane().add(internalFrame);
+    }
+    
+    private void visualizarNotificacoes(){
+        this.listarMensagensPresenter.setVisible(true);
+        this.enviarMensagensPresenter.setVisible(false);
+    }
+    
+    private void enviarNotificacoes(){
+        this.enviarMensagensPresenter.setVisible(true);
+        this.listarMensagensPresenter.setVisible(false);
     }
 
     private void novasNotificacoes() {
@@ -67,7 +84,7 @@ public class MainPresenter {
             this.qtdNovasNotificacoes = 4; // aqui vai ser feita a consulta
             this.user = "Admin: Matheus";
 
-            this.view.getNotificacao().setText(String.valueOf(this.qtdNovasNotificacoes));
+            this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
             this.view.getTipoUser().setText(this.user);
         } catch (Exception e) {
 
@@ -78,7 +95,7 @@ public class MainPresenter {
         this.view.setVisible(true);
     }
 
-    public void exibirEmTelaCheia() {
+    private void exibirEmTelaCheia() {
         this.view.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 }

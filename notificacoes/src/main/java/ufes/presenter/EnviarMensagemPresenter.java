@@ -1,5 +1,6 @@
 package ufes.presenter;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,13 +20,14 @@ public class EnviarMensagemPresenter {
     private ArrayList<Usuario> usuarios;
     private UsuarioBusiness dbUsuarios;
     private NotificacoesBusiness dbNotificacoes;
+    private static EnviarMensagemPresenter instancia = null;
 
-    public EnviarMensagemPresenter() {
+    private EnviarMensagemPresenter() {
+        
         this.view = new EnviarMensagemView();
         this.dbUsuarios = new UsuarioBusiness();
         this.dbNotificacoes = new NotificacoesBusiness();
-        this.view.setClosable(true);
-
+        
         // Criação dos objetos de exemplo
         try {
             loadData();
@@ -42,10 +44,8 @@ public class EnviarMensagemPresenter {
 
         // setando modelo da lista de destinatarios selecionados
         DefaultListModel<Usuario> listModelDestinatariosSelecionados = new DefaultListModel<>();
-        this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
-
-        this.view.setVisible(true);
-
+        this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);this.view.setVisible(true);
+        
         this.view.getAdicionarDestinatarios().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -99,9 +99,25 @@ public class EnviarMensagemPresenter {
             }
         });
     }
+    
+    public static EnviarMensagemPresenter getIntance(){
+        
+        if(instancia == null){
+            instancia = new EnviarMensagemPresenter();
+        }
+        return instancia;
+    }
 
-    public EnviarMensagemView getView() {
+    public EnviarMensagemView getView() { 
         return this.view;
+    }
+    
+    public void setVisible(boolean visible){
+
+        EventQueue.invokeLater(() -> {
+            view.setVisible(visible);
+            view.toFront(); // Abrir a tela na frente de outras
+        });
     }
 
     private void loadData() throws Exception {
@@ -168,6 +184,5 @@ public class EnviarMensagemPresenter {
             dbNotificacoes.insert(new Notificacao(id_remetente, ds.getId(), tx_conteudo ,tx_titulo));
             System.out.println(notificacoes.toString());
         }
-
     }
 }
