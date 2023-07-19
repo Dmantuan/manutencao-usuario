@@ -23,6 +23,7 @@ public class AtualizarTelasService {
         }
     }   
     
+    ////////////////////////////// error //////////////////////////
     private void addTelas(){
         // this.telas.add(MainPresenter.getIntance());
         // this.telas.add(new EnviarMensagemPresenter());

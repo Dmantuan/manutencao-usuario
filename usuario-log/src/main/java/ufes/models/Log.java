@@ -55,10 +55,5 @@ public class Log {
         return nome;
     }
     
-    public String csvFormat(){
-        if(error == null){
-            return this.operacao+ ": " +this.nome+ ", (" +this.data+ ", " +this.hora+ ", e " +this.user+ ".)";
-        }
-        return "Ocorreu a falha [" +error+ "] ao realizar a " +this.operacao+ " do contato " +this.nome+ ", (" +this.data+ ", " +this.hora+ ", e " +this.user+ ".)";
-    }
+    
 }

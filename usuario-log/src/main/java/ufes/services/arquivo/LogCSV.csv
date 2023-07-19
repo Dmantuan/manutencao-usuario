@@ -1,6 +1,5 @@
-"REMOÇÃO: Daniel, (14/JULY/2023, 22:11:23, e Matheus.)"
-"Ocorreu a falha [index of] ao realizar a ADIÇÃO do contato Daniel, (14/JULY/2023, 22:11:23, e Matheus.)"
-"REMOÇÃO: Daniel, (15/JULY/2023, 11:29:46, e Matheus.)"
-"Ocorreu a falha [index of] ao realizar a ADIÇÃO do contato Daniel, (15/JULY/2023, 11:29:46, e Matheus.)"
-"REMOÇÃO: Daniel, (15/JULY/2023, 15:9:4, e Matheus.)"
-"Ocorreu a falha [index of] ao realizar a ADIÇÃO do contato Daniel, (15/JULY/2023, 15:9:4, e Matheus.)"
+Error;Operacao;Nome;Data;Hora;usuario
+;REMOÇÃO;Daniel;19/JULY/2023;17:6:38;Matheus
+index of;ADIÇÃO;Daniel;19/JULY/2023;17:6:38;Matheus
+;REMOÇÃO;Daniel;19/JULY/2023;17:6:49;Matheus
+index of;ADIÇÃO;Daniel;19/JULY/2023;17:6:49;Matheus
