@@ -12,22 +12,29 @@ import ufes.business.business.NotificacoesBusiness;
 import ufes.business.business.UsuarioBusiness;
 import ufes.models.Notificacao;
 import ufes.models.Usuario;
+import ufes.service.AtualizarTelasService;
 import ufes.view.EnviarMensagemView;
 
-public class EnviarMensagemPresenter {
+public class EnviarMensagemPresenter implements IAtualizarTelas {
 
+    private static EnviarMensagemPresenter instancia = null;
+    private AtualizarTelasService atualizarTelasService;
     private EnviarMensagemView view;
+
     private ArrayList<Usuario> usuarios;
     private UsuarioBusiness dbUsuarios;
     private NotificacoesBusiness dbNotificacoes;
-    private static EnviarMensagemPresenter instancia = null;
 
-    private EnviarMensagemPresenter() {
-        
+    DefaultListModel<Usuario> listModelDestinatarios = new DefaultListModel<>();
+    DefaultListModel<Usuario> listModelDestinatariosSelecionados = new DefaultListModel<>();
+
+    public EnviarMensagemPresenter() {
+
+        atualizarTelasService = new AtualizarTelasService();
         this.view = new EnviarMensagemView();
         this.dbUsuarios = new UsuarioBusiness();
         this.dbNotificacoes = new NotificacoesBusiness();
-        
+
         // Criação dos objetos de exemplo
         try {
             loadData();
@@ -36,20 +43,19 @@ public class EnviarMensagemPresenter {
         }
 
         // setando modelo da lista de destinatarios
-        DefaultListModel<Usuario> listModelDestinatarios = new DefaultListModel<>();
         for (Usuario item : usuarios) {
             listModelDestinatarios.addElement(item);
         }
         this.view.getDestinatarios().setModel(listModelDestinatarios);
 
         // setando modelo da lista de destinatarios selecionados
-        DefaultListModel<Usuario> listModelDestinatariosSelecionados = new DefaultListModel<>();
-        this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);this.view.setVisible(true);
-        
+        this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
+        this.view.setVisible(true);
+
         this.view.getAdicionarDestinatarios().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                adicionarDestinatario(listModelDestinatarios, listModelDestinatariosSelecionados);
+                adicionarDestinatario();
                 view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
                 view.getDestinatarios().setModel(listModelDestinatarios);
             }
@@ -58,7 +64,7 @@ public class EnviarMensagemPresenter {
         this.view.getRemoverDestinatarios().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                removerDestinatarios(listModelDestinatarios, listModelDestinatariosSelecionados);
+                removerDestinatarios();
                 view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
                 view.getDestinatarios().setModel(listModelDestinatarios);
             }
@@ -69,6 +75,20 @@ public class EnviarMensagemPresenter {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     enviarMensagem();
+                    // ver isso do erro de ficar atualizando infinito
+                    atualizarTelasService.atualizarTodasTelas();
+                } catch (Exception ex) {
+                    Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        this.view.getCancelar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    setVisible(false);
+                    atualizarTelasService.atualizarTodasTelas();
                 } catch (Exception ex) {
                     Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -78,7 +98,7 @@ public class EnviarMensagemPresenter {
         this.view.getBuscarDestinatarios().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+
                 DefaultListModel<Usuario> lsModel;
                 String user = view.getTextoBuscaDestinatarios().getText();
                 lsModel = buscaPorDestinatarios(listModelDestinatarios, user);
@@ -90,29 +110,29 @@ public class EnviarMensagemPresenter {
         this.view.getBuscarDestinatariosSelect().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+
                 DefaultListModel<Usuario> lsModel;
                 String user = view.getTextoBuscaDestinatariosSelect().getText();
-                lsModel = buscaPorDestinatarios(listModelDestinatariosSelecionados, user );
+                lsModel = buscaPorDestinatarios(listModelDestinatariosSelecionados, user);
                 System.out.println(lsModel);
                 view.getDestinatariosSelect().setModel(lsModel);
             }
         });
     }
-    
-    public static EnviarMensagemPresenter getIntance(){
-        
-        if(instancia == null){
-            instancia = new EnviarMensagemPresenter();
-        }
-        return instancia;
-    }
 
-    public EnviarMensagemView getView() { 
+//    public static EnviarMensagemPresenter getIntance() {
+//
+//        if (instancia == null) {
+//            instancia = new EnviarMensagemPresenter();
+//        }
+//        return instancia;
+//    }
+
+    public EnviarMensagemView getView() {
         return this.view;
     }
-    
-    public void setVisible(boolean visible){
+
+    public void setVisible(boolean visible) {
 
         EventQueue.invokeLater(() -> {
             view.setVisible(visible);
@@ -125,10 +145,10 @@ public class EnviarMensagemPresenter {
         this.usuarios = new ArrayList<>();
         this.usuarios = (ArrayList<Usuario>) dbUsuarios.getAllUsers();
     }
-    
+
     private DefaultListModel<Usuario> buscaPorDestinatarios(DefaultListModel<Usuario> listModelData, String user) {
 
-        if(user == null){
+        if (user == null) {
             // caso for nulo os dados totais serão retornados
             return listModelData;
         }
@@ -146,7 +166,7 @@ public class EnviarMensagemPresenter {
         return listModel;
     }
 
-    private void adicionarDestinatario(DefaultListModel<Usuario> listModelDestinatarios, DefaultListModel<Usuario> listModelDestinatariosSelecionados) {
+    private void adicionarDestinatario() {
 
         Usuario selectedItem = this.view.getDestinatarios().getSelectedValue();
         if (null != selectedItem) {
@@ -155,7 +175,7 @@ public class EnviarMensagemPresenter {
         }
     }
 
-    private void removerDestinatarios(DefaultListModel<Usuario> listModelDestinatarios,DefaultListModel<Usuario> listModelDestinatariosSelecionados) {
+    private void removerDestinatarios() {
 
         Usuario selectedItem = this.view.getDestinatariosSelect().getSelectedValue();
         if (null != selectedItem) {
@@ -166,7 +186,6 @@ public class EnviarMensagemPresenter {
 
     private void enviarMensagem() throws Exception {
 
-        DefaultListModel<Usuario> listModelDestinatariosSelecionados = (DefaultListModel<Usuario>) this.view.getDestinatariosSelect().getModel();
         List<Usuario> destinatariosSelecionados = new ArrayList<>();
         for (int i = 0; i < listModelDestinatariosSelecionados.size(); i++) {
             destinatariosSelecionados.add(listModelDestinatariosSelecionados.get(i));
@@ -181,8 +200,20 @@ public class EnviarMensagemPresenter {
         ArrayList<Notificacao> notificacoes = new ArrayList<>();
         for (Usuario ds : destinatariosSelecionados) {
 
-            dbNotificacoes.insert(new Notificacao(id_remetente, ds.getId(), tx_conteudo ,tx_titulo));
-            System.out.println(notificacoes.toString());
+            // dbNotificacoes.insert(new Notificacao(id_remetente, ds.getId(), tx_conteudo ,tx_titulo));
+            System.out.println(new Notificacao(null, id_remetente, ds.getId(), tx_conteudo, tx_titulo).toString());
+        }
+    }
+
+    @Override
+    public void atualizarTela() {
+        try {
+            loadData();
+            adicionarDestinatario();
+            removerDestinatarios();
+            System.out.println("ufes.presenter.EnviarMensagemPresenter.atualizarTela() tela atualizada");
+        } catch (Exception ex) {
+            Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

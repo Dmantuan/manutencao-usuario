@@ -9,7 +9,7 @@ import ufes.view.ListarMensagemView;
 import ufes.models.Notificacao;
 import ufes.business.business.NotificacoesBusiness;
 
-public class ListarMensagemPresenter {
+public class ListarMensagemPresenter implements IAtualizarTelas {
 
     private DefaultTableModel tbMensagens;
     private ListarMensagemView view;
@@ -17,7 +17,7 @@ public class ListarMensagemPresenter {
     private NotificacoesBusiness dbMensagens;
     private static ListarMensagemPresenter instancia = null;
 
-    private ListarMensagemPresenter() {
+    public ListarMensagemPresenter() {
         this.view = new ListarMensagemView();
         this.dbMensagens = new NotificacoesBusiness();
 
@@ -40,13 +40,13 @@ public class ListarMensagemPresenter {
         }
     }
     
-    public static ListarMensagemPresenter getIntance(){
-        
-        if(instancia == null){
-            instancia = new ListarMensagemPresenter();
-        }
-        return instancia;
-    }
+//    public static ListarMensagemPresenter getIntance(){
+//        
+//        if(instancia == null){
+//            instancia = new ListarMensagemPresenter();
+//        }
+//        return instancia;
+//    }
 
     public ListarMensagemView getView() {
         return this.view;
@@ -58,14 +58,14 @@ public class ListarMensagemPresenter {
             view.toFront(); // Abrir a tela na frente de outras
         });
     }
-
+    
     private void loadData() throws Exception {
 
         this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAll();
-        atualizar();
+        atualizarTabela();
     }
 
-    private void atualizar() {
+    private void atualizarTabela() {
 
         if (this.mensagens != null) {
             for (Notificacao mensagem : this.mensagens) {
@@ -74,10 +74,19 @@ public class ListarMensagemPresenter {
                     String.valueOf(mensagem.getTx_titulo()),
                     String.valueOf(mensagem.getTx_conteudo())
                 });
-                System.out.println(mensagem);
             }
         }
 
         this.view.getTable().setModel(this.tbMensagens); 
+    }
+
+    @Override
+    public void atualizarTela() {
+        try {
+            loadData();
+            System.out.println("ufes.presenter.ListarMensagemPresenter.atualizarTela() tela atualizada");
+        } catch (Exception ex) {
+            Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
