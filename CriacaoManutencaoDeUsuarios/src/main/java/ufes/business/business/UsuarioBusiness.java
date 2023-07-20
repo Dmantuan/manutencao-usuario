@@ -4,34 +4,78 @@ import com.pss.senha.validacao.ValidadorSenha;
 import java.util.ArrayList;
 import java.util.List;
 import ufes.business.dao.UsuarioDAO;
+import ufes.models.Log;
 import ufes.models.MultipleExceptions;
+import ufes.models.Notificacao;
 import ufes.models.Usuario;
+import ufes.presenter.ConfiguracaoPresenter;
+import ufes.services.log.GerenciadorLog;
 
 public class UsuarioBusiness {
-
+    
+    private ConfiguracaoPresenter logPresenter = ConfiguracaoPresenter.getIntancia();
+    
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     ValidadorSenha validadorSenha = new ValidadorSenha();
 
     public void insert(Usuario usuario) throws Exception {
-        validate(usuario);
-        this.usuarioDAO.insert(usuario);
+
+        try {
+            validate(usuario);
+            this.usuarioDAO.insert(usuario);
+            
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Isercao de usuario");
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        } catch (Exception e) {
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Isercao de usuario", e.getMessage());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        }   
     }
 
     public void update(Integer id, String nome, String login, String senha) throws Exception {
         validateExists(id);
         validatePassWord(senha);
-        this.usuarioDAO.update(id, nome, login, senha);
+        Usuario usuario = this.usuarioDAO.getById(id);
+        
+        try {
+            this.usuarioDAO.update(id, nome, login, senha);
+            
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de usuario");
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        } catch (Exception e) {
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de usuario", e.getMessage());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        }   
     }
 
     public void updateAdmin(Integer id, Boolean admin, Boolean autorizado) throws Exception {
         validateExists(id);
-        this.usuarioDAO.updateAdmin(id, autorizado, admin);
+        Usuario usuario  = this.usuarioDAO.getById(id);
+        
+        try {this.usuarioDAO.updateAdmin(id, autorizado, admin);
+            
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de admin");
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        } catch (Exception e) {
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de admin", e.getMessage());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        }   
     }
 
     public void delete(Integer id) throws Exception {
         validateExists(id);
-        this.usuarioDAO.deleteById(id);
+        Usuario usuario  = this.usuarioDAO.getById(id);
+        
+        try {
+            this.usuarioDAO.deleteById(id);
+            
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Deletando o usuario");
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        } catch (Exception e) {
+            Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Deletando o usuario", e.getMessage());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        }   
     }
 
     public Usuario getUserById(Integer id) throws Exception {
@@ -56,12 +100,17 @@ public class UsuarioBusiness {
         }
         exceptionList.addAll(validatePassWord(usuario.getSenha()));
 
-        throw new MultipleExceptions(exceptionList);
+        if(!exceptionList.isEmpty()){
+            throw new MultipleExceptions(exceptionList);
+        }
     }
 
     private List validatePassWord(String senha) {
         List<String> listaErros = this.validadorSenha.validar(senha);
 
+        System.out.println(listaErros);
+        System.out.println(listaErros.isEmpty());
+        
         return listaErros;
     }
     

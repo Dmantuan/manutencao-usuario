@@ -1,6 +1,7 @@
 package ufes.presenters;
 
 import java.awt.CardLayout;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -213,5 +214,16 @@ public class CrudPresenter {
 
     public void setEstate(CrudState state) {
         this.estado = state;
+    }
+    
+    public CrudView getCrudView(){
+        return this.view;
+    }
+    
+    public void setVisible(boolean visible){
+        EventQueue.invokeLater(() -> {
+            view.setVisible(visible);
+            view.toFront(); // Abrir a tela na frente de outras
+        });
     }
 }
