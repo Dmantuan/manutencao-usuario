@@ -92,7 +92,7 @@ public class NotificacoesDAO {
                 + " un.id_destinatario as id_destinatario, "
                 + " n.tx_conteudo as tx_conteudo, "
                 + " n.tx_titulo as tx_titulo, "
-                + " n.bool_visualizado as bool_visualizado "
+                + " n.bool_visualizado as bool_visualizado, "
                 + " u.nm_usuario as nm_usuario "
         );
         query.append(" FROM usuario as u ");
@@ -134,8 +134,9 @@ public class NotificacoesDAO {
                 + " un.id_destinatario as id_destinatario, "
                 + " n.tx_conteudo as tx_conteudo, "
                 + " n.tx_titulo as tx_titulo, "
-                + " n.bool_visualizado as bool_visualizado,"
+                + " n.bool_visualizado as bool_visualizado, "
                 + " u.nm_usuario as nm_usuario ");
+        
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
         query.append(" ON un.id_destinatario = u.id ");
@@ -286,16 +287,16 @@ public class NotificacoesDAO {
     public void insertUsuarioNotificacao(Integer id_remetente, Integer id_destinatario) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" INSERT INTO usuario_notificao (id_remetente, id_destinatario, id_notificacao) ");
+        query.append(" INSERT INTO usuario_notificacao (id_remetente, id_destinatario, id_notificacao) ");
         query.append(" VALUES (?, ?, ?) ");
 
         try {
-            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
-            stm.setInt(1, id_remetente);
-            stm.setInt(2, id_destinatario);
-            stm.setInt(3, getMaxId());
+            PreparedStatement stma = db.getConnection().prepareStatement(query.toString());
+            stma.setInt(1, id_remetente);
+            stma.setInt(2, id_destinatario);
+            stma.setInt(3, getMaxId());
 
-            stm.execute();
+            stma.execute();
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

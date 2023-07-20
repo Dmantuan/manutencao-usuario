@@ -47,7 +47,7 @@ public class LoginPresenter {
             }
         });
 
-        this.view.getBtn_casdastro_loginPanel().addActionListener(new ActionListener() {
+        this.view.getBtn_logar_cadastroPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switchLogar();

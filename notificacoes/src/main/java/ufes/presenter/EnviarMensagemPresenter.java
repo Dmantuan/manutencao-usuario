@@ -73,8 +73,9 @@ public class EnviarMensagemPresenter {
                 try {
                     enviarMensagem();
                     // AtualizarTelasService.getInstancia().atualizarTodasTelas();
+                    JOptionPane.showMessageDialog(view, "Messangens enviadas com sucesso");
                 } catch (Exception ex) {
-                    Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                   JOptionPane.showMessageDialog(view, ex.getMessage());
                 }
             }
         });
@@ -180,8 +181,8 @@ public class EnviarMensagemPresenter {
 
         // Criar a mensagem e enviar
         Integer id_remetente = 1; // ver dps pra puxar o usuario logado
-        String tx_titulo = this.view.getMensagem().getText();
-        String tx_conteudo = this.view.getTitulo().getText();
+        String tx_titulo = this.view.getTitulo().getText();
+        String tx_conteudo = this.view.getMensagem().getText();
 
         // atribundo as notificações para cada id de destinatario
         for (Usuario ds : destinatariosSelecionados) {
