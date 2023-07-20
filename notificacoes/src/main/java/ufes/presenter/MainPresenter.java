@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import ufes.business.business.NotificacoesBusiness;
+import ufes.models.Usuario;
+import ufes.presenters.LoginPresenter;
 import ufes.service.AtualizarTelasService;
 import ufes.view.MainView;
 
@@ -15,32 +17,44 @@ public class MainPresenter implements IAtualizarTelas {
     private MainView view;
     private int qtdNovasNotificacoes;
     private String user;
-    ListarMensagemPresenter listarMensagensPresenter;
-    EnviarMensagemPresenter enviarMensagensPresenter;
-    AtualizarTelasService atualizarTelasService;
+    private ListarMensagemPresenter listarMensagensPresenter;
+    private EnviarMensagemPresenter enviarMensagensPresenter;
+    private LoginPresenter loginPresenter;
+
+    private AtualizarTelasService atualizarTelasService;
     private NotificacoesBusiness dbMensagens;
 
     public MainPresenter() {
         this.view = new MainView();
         exibirEmTelaCheia();
         novasNotificacoes();
-        
+
         this.dbMensagens = new NotificacoesBusiness();
+
+        this.loginPresenter = new LoginPresenter();
+        inicializarLogin();
         
+        try {
+            Usuario usuarioLogado = this.loginPresenter.logar();  
+            System.out.println(usuarioLogado);
+            
+        } catch (Exception e) {
+            // error
+            System.out.println("error");
+        }
+
         this.view.setVisible(true);
-        
+
         //  atualizarTelasService = AtualizarTelasService.getInstancia();
-        
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
         this.listarMensagensPresenter = new ListarMensagemPresenter();
-        
+
 //        atualizarTelasService.addTelas(this);
 //        atualizarTelasService.addTelas(this.enviarMensagensPresenter);
 //        atualizarTelasService.addTelas(this.listarMensagensPresenter);
-
         inicializarEnviarMensagens();
         inicializarListarMensagens();
-        
+
         this.view.getNotificacao().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -81,18 +95,33 @@ public class MainPresenter implements IAtualizarTelas {
         internalFrame.setVisible(false);
         this.view.getDesktopPane().add(internalFrame);
     }
-    
-    private void visualizarNotificacoes(){
+
+    private void inicializarLogin() {
+
+        this.view.getNotificacao().setVisible(false);
+        this.view.getMensagem().setVisible(false);
+        JInternalFrame internalFrame = this.loginPresenter.getView();
+//        internalFrame.setSize(this.view.getDesktopPane().getSize());
+//        internalFrame.setPreferredSize(this.view.getDesktopPane().getSize());
+//        int x = (this.view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
+//        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
+//        internalFrame.setLocation(x, y);
+
+        internalFrame.setVisible(true);
+        this.view.getDesktopPane().add(internalFrame);
+    }
+
+    private void visualizarNotificacoes() {
         this.listarMensagensPresenter.setVisible(true);
         this.enviarMensagensPresenter.setVisible(false);
     }
-    
-    private void enviarNotificacoes(){
+
+    private void enviarNotificacoes() {
         this.enviarMensagensPresenter.setVisible(true);
         this.listarMensagensPresenter.setVisible(false);
     }
 
-    private void novasNotificacoes(){
+    private void novasNotificacoes() {
         try {
             this.qtdNovasNotificacoes = this.dbMensagens.getQtdNovasNotificacoes(3); // aqui vai ser feita a consulta
             System.out.println(qtdNovasNotificacoes);
@@ -112,7 +141,7 @@ public class MainPresenter implements IAtualizarTelas {
     private void exibirEmTelaCheia() {
         this.view.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
+
     @Override
     public void atualizarTela() {
         try {
