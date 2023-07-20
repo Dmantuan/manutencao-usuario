@@ -17,8 +17,6 @@ import ufes.view.EnviarMensagemView;
 
 public class EnviarMensagemPresenter implements IAtualizarTelas {
 
-    private static EnviarMensagemPresenter instancia = null;
-    private AtualizarTelasService atualizarTelasService;
     private EnviarMensagemView view;
 
     private ArrayList<Usuario> usuarios;
@@ -30,7 +28,6 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
 
     public EnviarMensagemPresenter() {
 
-        atualizarTelasService = new AtualizarTelasService();
         this.view = new EnviarMensagemView();
         this.dbUsuarios = new UsuarioBusiness();
         this.dbNotificacoes = new NotificacoesBusiness();
@@ -75,8 +72,7 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     enviarMensagem();
-                    // ver isso do erro de ficar atualizando infinito
-                    atualizarTelasService.atualizarTodasTelas();
+                    // AtualizarTelasService.getInstancia().atualizarTodasTelas();
                 } catch (Exception ex) {
                     Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -88,7 +84,6 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     setVisible(false);
-                    atualizarTelasService.atualizarTodasTelas();
                 } catch (Exception ex) {
                     Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -119,14 +114,6 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
             }
         });
     }
-
-//    public static EnviarMensagemPresenter getIntance() {
-//
-//        if (instancia == null) {
-//            instancia = new EnviarMensagemPresenter();
-//        }
-//        return instancia;
-//    }
 
     public EnviarMensagemView getView() {
         return this.view;
@@ -201,7 +188,7 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
         for (Usuario ds : destinatariosSelecionados) {
 
             // dbNotificacoes.insert(new Notificacao(id_remetente, ds.getId(), tx_conteudo ,tx_titulo));
-            System.out.println(new Notificacao(null, id_remetente, ds.getId(), tx_conteudo, tx_titulo).toString());
+            // System.out.println(new Notificacao(null, id_remetente, ds.getId(), tx_conteudo, tx_titulo).toString(), null);
         }
     }
 

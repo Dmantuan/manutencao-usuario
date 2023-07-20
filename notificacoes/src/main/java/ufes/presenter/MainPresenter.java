@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import ufes.service.AtualizarTelasService;
 import ufes.view.MainView;
 
 public class MainPresenter implements IAtualizarTelas {
@@ -15,7 +16,7 @@ public class MainPresenter implements IAtualizarTelas {
     private String user;
     ListarMensagemPresenter listarMensagensPresenter;
     EnviarMensagemPresenter enviarMensagensPresenter;
-    private static MainPresenter instancia = null;
+    AtualizarTelasService atualizarTelasService;
 
     public MainPresenter() {
         this.view = new MainView();
@@ -23,8 +24,14 @@ public class MainPresenter implements IAtualizarTelas {
         novasNotificacoes();
         this.view.setVisible(true);
         
+        //  atualizarTelasService = AtualizarTelasService.getInstancia();
+        
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
         this.listarMensagensPresenter = new ListarMensagemPresenter();
+        
+//        atualizarTelasService.addTelas(this);
+//        atualizarTelasService.addTelas(this.enviarMensagensPresenter);
+//        atualizarTelasService.addTelas(this.listarMensagensPresenter);
 
         inicializarEnviarMensagens();
         inicializarListarMensagens();
@@ -43,14 +50,6 @@ public class MainPresenter implements IAtualizarTelas {
             }
         });
     }
-    
-//    public static MainPresenter getIntance(){
-//        
-//        if(instancia == null){
-//            instancia = new MainPresenter();
-//        }
-//        return instancia;
-//    }
 
     private void inicializarListarMensagens() {
 
@@ -112,7 +111,6 @@ public class MainPresenter implements IAtualizarTelas {
     public void atualizarTela() {
         try {
             novasNotificacoes();
-            System.out.println("ufes.presenter.MainPresenter.atualizarTela() tela atualizada");
         } catch (Exception ex) {
             Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }

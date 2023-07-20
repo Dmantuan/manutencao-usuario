@@ -9,11 +9,18 @@ import ufes.presenter.MainPresenter;
 
 public class AtualizarTelasService {
     
-    List<IAtualizarTelas> telas;
+    private List<IAtualizarTelas> telas;
+    private static AtualizarTelasService ats;
 
-    public AtualizarTelasService() {
+    private AtualizarTelasService() {
         this.telas = new ArrayList<>();
-        addTelas();
+    }
+    
+    public static AtualizarTelasService getInstancia(){
+        if(ats == null){
+            ats = new AtualizarTelasService();
+        } 
+        return ats;
     }
 
     public void atualizarTodasTelas(){
@@ -22,11 +29,8 @@ public class AtualizarTelasService {
             tela.atualizarTela();
         }
     }   
-    
-    ////////////////////////////// error //////////////////////////
-    private void addTelas(){
-        // this.telas.add(MainPresenter.getIntance());
-        // this.telas.add(new EnviarMensagemPresenter());
-        // this.telas.add(new ListarMensagemPresenter());
+
+    public void addTelas(IAtualizarTelas presenter){
+        this.telas.add(new MainPresenter());
     }
 }

@@ -48,6 +48,12 @@ public class NotificacoesBusiness {
         validateExists(id);
         this.notificacoesDAO.deleteById(id);
     }
+    
+    public void alterarStatusMensagem(Integer id, boolean lida) throws Exception {
+        Notificacao notificacao =  notificacoesDAO.getById(id);
+        System.out.println(notificacao);
+        this.notificacoesDAO.alterarStatusMensagem(notificacao, lida);
+    }
 
     private void validate(Notificacao notificacao) throws Exception {
         if (notificacao.getId_destinatario() == null) {
