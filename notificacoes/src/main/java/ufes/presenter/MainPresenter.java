@@ -35,15 +35,6 @@ public class MainPresenter implements IAtualizarTelas {
 
         this.loginPresenter = new LoginPresenter();
         inicializarLogin();
-        
-        try {
-            Usuario usuarioLogado = this.loginPresenter.logar();  
-            System.out.println(usuarioLogado);
-            
-        } catch (Exception e) {
-            // error
-            System.out.println("error");
-        }
 
         this.view.setVisible(true);
 
@@ -112,7 +103,6 @@ public class MainPresenter implements IAtualizarTelas {
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
     }
-
 
     private void visualizarNotificacoes() {
         this.listarMensagensPresenter.setVisible(true);
