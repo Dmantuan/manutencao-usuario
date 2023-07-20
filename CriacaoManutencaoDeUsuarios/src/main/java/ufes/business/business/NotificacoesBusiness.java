@@ -63,10 +63,10 @@ public class NotificacoesBusiness {
         try {
             this.notificacoesDAO.deleteById(id);
             
-            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") enviada para: " + user.getNome());
+            Log log = new Log(notificacao.getTx_nomeRemetente(),String.valueOf(user.getId()), "Mensagem com id: (" + notificacao.getId()+ ") enviada para: " + user.getNome());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
-            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") enviada para: " + user.getNome(), e.getMessage());
+            Log log = new Log(notificacao.getTx_nomeRemetente(),String.valueOf(user.getId()), "Mensagem com id: (" + notificacao.getId()+ ") enviada para: " + user.getNome(), e.getMessage());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         }    
     }
@@ -78,10 +78,10 @@ public class NotificacoesBusiness {
         try {
             this.notificacoesDAO.alterarStatusMensagem(notificacao, lida);
             
-            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado());
+            Log log = new Log(notificacao.getTx_nomeRemetente(), String.valueOf(user.getId()), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
-            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado(), e.getMessage());
+            Log log = new Log(notificacao.getTx_nomeRemetente(), String.valueOf(user.getId()), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado(), e.getMessage());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         }    
     }

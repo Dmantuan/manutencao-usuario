@@ -36,6 +36,7 @@ public class MainView extends javax.swing.JFrame {
         tipoUser = new javax.swing.JLabel();
         notificacao = new javax.swing.JButton();
         mensagem = new javax.swing.JButton();
+        manterUsuarios = new javax.swing.JButton();
         DesktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,6 +81,13 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        manterUsuarios.setText("Manter usuarios");
+        manterUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manterUsuariosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
         footerLayout.setHorizontalGroup(
@@ -88,6 +96,8 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(tipoUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(manterUsuarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mensagem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(notificacao)
@@ -100,7 +110,8 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(notificacao)
                     .addComponent(tipoUser)
-                    .addComponent(mensagem))
+                    .addComponent(mensagem)
+                    .addComponent(manterUsuarios))
                 .addContainerGap())
         );
 
@@ -144,12 +155,17 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_escolherLogActionPerformed
 
+    private void manterUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manterUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_manterUsuariosActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopPane;
     private javax.swing.JButton escolherLog;
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
+    private javax.swing.JButton manterUsuarios;
     private javax.swing.JButton mensagem;
     private javax.swing.JButton notificacao;
     private javax.swing.JLabel tipoUser;
@@ -173,5 +189,9 @@ public class MainView extends javax.swing.JFrame {
 
     public JButton getEscolherLog() {
         return escolherLog;
+    }
+
+    public JButton getManterUsuarios() {
+        return manterUsuarios;
     }
 }

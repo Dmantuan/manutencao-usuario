@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import ufes.business.business.NotificacoesBusiness;
+import ufes.models.Usuario;
 import ufes.presenters.LoginPresenter;
 import ufes.view.MainView;
 
@@ -18,6 +19,7 @@ public class MainPresenter {
     private EnviarMensagemPresenter enviarMensagensPresenter;
     private LoginPresenter loginPresenter;
     private ConfiguracaoPresenter log = ConfiguracaoPresenter.getIntancia();
+    private Usuario usuario;
 
     private NotificacoesBusiness dbMensagens;
 
@@ -30,16 +32,9 @@ public class MainPresenter {
 
         this.dbMensagens = new NotificacoesBusiness();
 
-//        this.loginPresenter = new LoginPresenter();
-//        inicializarLogin();
-//        try {
-//            Usuario usuarioLogado = this.loginPresenter.logar();  
-//            System.out.println(usuarioLogado);
-//            
-//        } catch (Exception e) {
-//            // error
-//            System.out.println("error");
-//        }
+        this.loginPresenter = new LoginPresenter(this);
+        inicializarLogin();
+        
         this.view.setVisible(true);
 
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
@@ -48,6 +43,7 @@ public class MainPresenter {
         inicializarEnviarMensagens();
         inicializarListarMensagens();
         inicializarLog();
+        inicializarManterUusarios();
 
         this.view.getNotificacao().addActionListener(new ActionListener() {
             @Override
@@ -69,6 +65,13 @@ public class MainPresenter {
                 abrirLog();
             }
         });
+        
+        this.view.getManterUsuarios().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                abrirManterUsuarios();
+            }
+        });
     }
 
     private void inicializarListarMensagens() {
@@ -77,7 +80,7 @@ public class MainPresenter {
         internalFrame.setSize(this.view.getDesktopPane().getSize());
         internalFrame.setPreferredSize(this.view.getDesktopPane().getSize());
         int x = (this.view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
-        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
+        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2 - 40;
         internalFrame.setLocation(x, y);
 
         internalFrame.setVisible(false);
@@ -90,11 +93,15 @@ public class MainPresenter {
         internalFrame.setSize(this.view.getDesktopPane().getSize());
         internalFrame.setPreferredSize(this.view.getDesktopPane().getSize());
         int x = (this.view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
-        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
+        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2 - 40;
         internalFrame.setLocation(x, y);
 
         internalFrame.setVisible(false);
         this.view.getDesktopPane().add(internalFrame);
+    }
+    
+    private void inicializarManterUusarios(){
+        // adicionar as telas do manter usuarios com visible false
     }
 
     private void inicializarLogin() {
@@ -113,8 +120,21 @@ public class MainPresenter {
     }
 
     private void abrirLog() {
-
         this.log.setVisible(true);
+    }
+    
+    public void logar(Usuario usuario){
+        
+        this.usuario = usuario;
+        this.user = this.usuario.getNome();
+        if(usuario.getAdmin()){
+            this.view.getNotificacao().setVisible(true);
+            this.view.getMensagem().setVisible(true);
+        }else{
+            this.view.getNotificacao().setVisible(true);
+            this.view.getMensagem().setVisible(false);
+        }
+        this.loginPresenter.setVisible(false);
     }
 
     private void visualizarNotificacoes() {
@@ -130,13 +150,17 @@ public class MainPresenter {
     private void novasNotificacoes() {
         try {
             this.qtdNovasNotificacoes = this.dbMensagens.getQtdNovasNotificacoes(3); // aqui vai ser feita a consulta
-            this.user = "Admin: Matheus";
-
+            this.user = "";
+            
             this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
             this.view.getTipoUser().setText(this.user);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, e.getMessage());
         }
+    }
+    
+    private void abrirManterUsuarios(){
+        
     }
 
     public void setVisible() {
