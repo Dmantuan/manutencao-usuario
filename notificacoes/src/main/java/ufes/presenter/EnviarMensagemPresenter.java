@@ -186,9 +186,8 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
         // atribundo as notificações para cada id de destinatario
         ArrayList<Notificacao> notificacoes = new ArrayList<>();
         for (Usuario ds : destinatariosSelecionados) {
-
-            // dbNotificacoes.insert(new Notificacao(id_remetente, ds.getId(), tx_conteudo ,tx_titulo));
-            // System.out.println(new Notificacao(null, id_remetente, ds.getId(), tx_conteudo, tx_titulo).toString(), null);
+            Notificacao notificacao = new Notificacao(id_remetente, ds.getId(), tx_conteudo, tx_titulo, false);
+            this.dbNotificacoes.insert(notificacao);
         }
     }
 

@@ -21,26 +21,24 @@ public class MainPresenter implements IAtualizarTelas {
     private NotificacoesBusiness dbMensagens;
 
     public MainPresenter() {
+        this.dbMensagens = new NotificacoesBusiness();
+
         this.view = new MainView();
         exibirEmTelaCheia();
         novasNotificacoes();
-        
-        this.dbMensagens = new NotificacoesBusiness();
-        
+
         this.view.setVisible(true);
-        
+
         //  atualizarTelasService = AtualizarTelasService.getInstancia();
-        
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
         this.listarMensagensPresenter = new ListarMensagemPresenter();
-        
+
 //        atualizarTelasService.addTelas(this);
 //        atualizarTelasService.addTelas(this.enviarMensagensPresenter);
 //        atualizarTelasService.addTelas(this.listarMensagensPresenter);
-
         inicializarEnviarMensagens();
         inicializarListarMensagens();
-        
+
         this.view.getNotificacao().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -81,18 +79,18 @@ public class MainPresenter implements IAtualizarTelas {
         internalFrame.setVisible(false);
         this.view.getDesktopPane().add(internalFrame);
     }
-    
-    private void visualizarNotificacoes(){
+
+    private void visualizarNotificacoes() {
         this.listarMensagensPresenter.setVisible(true);
         this.enviarMensagensPresenter.setVisible(false);
     }
-    
-    private void enviarNotificacoes(){
+
+    private void enviarNotificacoes() {
         this.enviarMensagensPresenter.setVisible(true);
         this.listarMensagensPresenter.setVisible(false);
     }
 
-    private void novasNotificacoes(){
+    private void novasNotificacoes() {
         try {
             this.qtdNovasNotificacoes = this.dbMensagens.getQtdNovasNotificacoes(3); // aqui vai ser feita a consulta
             System.out.println(qtdNovasNotificacoes);
@@ -101,7 +99,7 @@ public class MainPresenter implements IAtualizarTelas {
             this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
             this.view.getTipoUser().setText(this.user);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -112,7 +110,7 @@ public class MainPresenter implements IAtualizarTelas {
     private void exibirEmTelaCheia() {
         this.view.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
+
     @Override
     public void atualizarTela() {
         try {

@@ -56,7 +56,7 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
         this.view.getTable().setEnabled(true);
         
         this.mensagens = new ArrayList<>();
-        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAll();
+        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAllByUserId(32);
         atualizarTabela();
         
         // Montar tabelas

@@ -8,14 +8,16 @@ public class Notificacao {
     private String tx_titulo;
     private Boolean bool_vizualizado;
     private String tx_conteudo;
+    private String tx_nomeRemetente;
 
-    public Notificacao(Integer id, Integer id_remetente, Integer id_destinatario, String tx_conteudo, String tx_titulo, Boolean bool_visualizado) {
+    public Notificacao(Integer id, Integer id_remetente, Integer id_destinatario, String tx_conteudo, String tx_titulo, Boolean bool_visualizado, String nomeRemetente) {
         this.id = id;
         this.id_destinatario = id_destinatario;
         this.id_remetente = id_remetente;
         this.tx_conteudo = tx_conteudo;
         this.tx_titulo = tx_titulo;
         this.bool_vizualizado = bool_visualizado;
+        this.tx_nomeRemetente = nomeRemetente;
     }
 
     public Notificacao(Integer id_remetente, Integer id_destinatario, String tx_conteudo, String tx_titulo, Boolean bool_visualizado) {
@@ -28,6 +30,10 @@ public class Notificacao {
 
     public String getTx_titulo() {
         return tx_titulo;
+    }
+
+    public String getTx_nomeRemetente() {
+        return tx_nomeRemetente;
     }
 
     public void setTx_titulo(String tx_titulo) {

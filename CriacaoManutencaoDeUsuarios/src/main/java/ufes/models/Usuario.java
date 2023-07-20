@@ -1,17 +1,23 @@
 package ufes.models;
 
+import java.time.LocalDateTime;
+
 public class Usuario {
 
     private Integer id;
     private String nome;
     private String senha;
     private String login;
+    private LocalDateTime data;
+    private Boolean admin;
 
-    public Usuario(Integer id, String nome, String senha, String login) {
+    public Usuario(Integer id, String nome, String senha, String login, LocalDateTime data, Boolean admin) {
         this.id = id;
         this.nome = nome;
         this.senha = senha;
         this.login = login;
+        this.data = data;
+        this.admin = admin;
     }
 
     public Usuario(String nome, String senha, String login) {
@@ -47,7 +53,6 @@ public class Usuario {
     public void setLogin(String login) {
         this.login = login;
     }
-
     @Override
     public String toString() {
         return this.nome;
