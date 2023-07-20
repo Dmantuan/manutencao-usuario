@@ -1,15 +1,15 @@
 package ufes.presenters;
 
-import javax.swing.JOptionPane;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ufes.business.dao.UsuarioDAO;
 import ufes.models.Usuario;
 import ufes.views.LoginView;
 import com.pss.senha.validacao.ValidadorSenha;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ufes.business.business.UsuarioBusiness;
 
 public class LoginPresenter {
@@ -35,7 +35,11 @@ public class LoginPresenter {
         this.view.getBtn_login_loginPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                logar();
+                try {
+                    logar();
+                } catch (Exception ex) {
+                    Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -44,40 +48,38 @@ public class LoginPresenter {
             public void actionPerformed(ActionEvent ae) {
                 cadastrar();
             }
-        }
-        );
+        });
 
         this.view.getBtn_casdastro_loginPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switchLogar();
             }
-        }
-        );
+        });
 
         this.view.setVisible(
                 true);
     }
 
     public void switchCadastrar() {
-        cardLayout.show(view.getLoginPanel(), "cadastrar");
+        cardLayout.show(view.getLoginPanel(), "cadastro");
     }
 
     public void switchLogar() {
-        cardLayout.show(view.getLoginPanel(), "logar");
+        cardLayout.show(view.getLoginPanel(), "login");
     }
 
-    public void logar() {
-        try {
-            Usuario usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().toString());
+    public Usuario logar() throws Exception {
+        
+        Usuario usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().getText());
 
-            if (usuario == null) {
-                throw new Exception("O login do usuario nao consta no bano de dados");
-            }
-
-        } catch (Exception e) {
-            //TODO: tratamento de erro
+        if (usuario == null) {
+            throw new Exception("O login do usuario nao consta no bano de dados");
         }
+        
+        verificarLoginSenha(usuario);
+
+        return usuario;
     }
 
     public void cadastrar() {
@@ -99,6 +101,22 @@ public class LoginPresenter {
             }
         } catch (Exception e) {
             //TODO: tratamento de erro
+        }
+    }
+
+    public LoginView getView() {
+        return view;
+    }
+    
+    private void verificarLoginSenha(Usuario usuario){
+        
+        String senha = this.view.getTxField_senha_loginPanel().getText();
+        
+        if(usuario.getSenha() == null ? senha == null : usuario.getSenha().equals(senha)){
+            System.out.println("Uusario/admin logado com sucesso");
+        }
+        else{
+            System.out.println("usuario não está autorizado, senha incorreta");
         }
     }
 }

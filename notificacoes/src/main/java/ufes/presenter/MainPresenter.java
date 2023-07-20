@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import ufes.business.business.NotificacoesBusiness;
+import ufes.models.Usuario;
+import ufes.presenters.LoginPresenter;
 import ufes.service.AtualizarTelasService;
 import ufes.view.MainView;
 
@@ -15,9 +17,11 @@ public class MainPresenter implements IAtualizarTelas {
     private MainView view;
     private int qtdNovasNotificacoes;
     private String user;
-    ListarMensagemPresenter listarMensagensPresenter;
-    EnviarMensagemPresenter enviarMensagensPresenter;
-    AtualizarTelasService atualizarTelasService;
+    private ListarMensagemPresenter listarMensagensPresenter;
+    private EnviarMensagemPresenter enviarMensagensPresenter;
+    private LoginPresenter loginPresenter;
+
+    private AtualizarTelasService atualizarTelasService;
     private NotificacoesBusiness dbMensagens;
 
     public MainPresenter() {
@@ -26,6 +30,20 @@ public class MainPresenter implements IAtualizarTelas {
         this.view = new MainView();
         exibirEmTelaCheia();
         novasNotificacoes();
+
+        this.dbMensagens = new NotificacoesBusiness();
+
+        this.loginPresenter = new LoginPresenter();
+        inicializarLogin();
+        
+        try {
+            Usuario usuarioLogado = this.loginPresenter.logar();  
+            System.out.println(usuarioLogado);
+            
+        } catch (Exception e) {
+            // error
+            System.out.println("error");
+        }
 
         this.view.setVisible(true);
 
@@ -79,6 +97,22 @@ public class MainPresenter implements IAtualizarTelas {
         internalFrame.setVisible(false);
         this.view.getDesktopPane().add(internalFrame);
     }
+
+    private void inicializarLogin() {
+
+        this.view.getNotificacao().setVisible(false);
+        this.view.getMensagem().setVisible(false);
+        JInternalFrame internalFrame = this.loginPresenter.getView();
+//        internalFrame.setSize(this.view.getDesktopPane().getSize());
+//        internalFrame.setPreferredSize(this.view.getDesktopPane().getSize());
+//        int x = (this.view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
+//        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
+//        internalFrame.setLocation(x, y);
+
+        internalFrame.setVisible(true);
+        this.view.getDesktopPane().add(internalFrame);
+    }
+
 
     private void visualizarNotificacoes() {
         this.listarMensagensPresenter.setVisible(true);
