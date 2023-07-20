@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import ufes.business.business.NotificacoesBusiness;
 import ufes.business.business.UsuarioBusiness;
-import ufes.business.dao.UsuarioDAO;
 import ufes.presenters.crudState.CrudState;
 import ufes.views.CrudView;
 import ufes.models.Usuario;

@@ -18,8 +18,8 @@ public class MainPresenter {
     private String user;
     private ListarMensagemPresenter listarMensagensPresenter;
     private EnviarMensagemPresenter enviarMensagensPresenter;
-    private LoginPresenter loginPresenter;
     private CrudPresenter crudPresenter;
+    private LoginPresenter loginPresenter;
     private ConfiguracaoPresenter log = ConfiguracaoPresenter.getIntancia();
     private Usuario usuario;
 
@@ -27,8 +27,6 @@ public class MainPresenter {
 
     public MainPresenter() {
         this.dbMensagens = new NotificacoesBusiness();
-        
-        this.crudPresenter = new CrudPresenter();
 
         this.view = new MainView();
         exibirEmTelaCheia();
@@ -43,6 +41,7 @@ public class MainPresenter {
 
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
         this.listarMensagensPresenter = new ListarMensagemPresenter();
+        this.crudPresenter = new CrudPresenter();
 
         inicializarEnviarMensagens();
         inicializarListarMensagens();
@@ -120,6 +119,7 @@ public class MainPresenter {
 
         this.view.getNotificacao().setVisible(false);
         this.view.getMensagem().setVisible(false);
+        this.view.getManterUsuarios().setVisible(false);
         JInternalFrame internalFrame = this.loginPresenter.getView();
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
