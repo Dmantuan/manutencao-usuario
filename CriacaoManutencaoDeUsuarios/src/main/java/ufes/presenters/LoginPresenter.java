@@ -1,46 +1,103 @@
 package ufes.presenters;
 
+import javax.swing.JOptionPane;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import ufes.views.ViewLogin;
+import ufes.business.dao.UsuarioDAO;
+import ufes.models.Usuario;
+import ufes.views.LoginView;
+import com.pss.senha.validacao.ValidadorSenha;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginPresenter {
 
-    private ViewLogin viewLog;
-    private static LoginPresenter instancia;
-    private CadastroPresenter cadPresenter;
+    private final LoginView view;
+    private final UsuarioDAO usuarioDAO;
+    private final CardLayout cardLayout;
 
-    public LoginPresenter(boolean isVisible){
+    public LoginPresenter() {
+        this.usuarioDAO = new UsuarioDAO();
 
-        this.viewLog = new ViewLogin();
-        this.viewLog.setVisible(isVisible);
+        this.view = new LoginView();
 
-        this.viewLog.getLogar().addActionListener(new ActionListener() {
+        this.cardLayout = (CardLayout) view.getLoginPanel().getLayout();
+
+        this.view.getBtn_casdastro_loginPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                VerificarLogin();
+                switchCadastrar();
             }
         });
 
-        this.viewLog.getCadastrar().addActionListener(new ActionListener() {
+        this.view.getBtn_login_loginPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                navigateCadastro();
+                logar();
             }
         });
+
+        this.view.getBtn_cadastrar_cadastroPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                cadastrar();
+            }
+        }
+        );
+
+        this.view.getBtn_casdastro_loginPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switchLogar();
+            }
+        }
+        );
+
+        this.view.setVisible(
+                true);
     }
 
-    private void VerificarLogin(){
-        String loginUser = viewLog.getLogin().getText();
-        String senhaUser = viewLog.getSenha().getText();
-
-        System.out.println(loginUser);
-        System.out.println(senhaUser);
+    public void switchCadastrar() {
+        cardLayout.show(view.getLoginPanel(), "cadastrar");
     }
 
-    private void navigateCadastro(){
+    public void switchLogar() {
+        cardLayout.show(view.getLoginPanel(), "logar");
+    }
 
-        this.cadPresenter = new CadastroPresenter(true);
-        this.viewLog.setVisible(false);
+    public void logar() {
+        try {
+            Usuario usuario = usuarioDAO.getByLogin(view.getTxField_login_loginPanel().toString());
+
+            if (usuario == null) {
+                throw new Exception("O login do usuario nao consta no bano de dados");
+            }
+
+        } catch (Exception e) {
+            //TODO: tratamento de erro
+        }
+    }
+
+    public void cadastrar() {
+        try {
+            Usuario usuario = new Usuario(
+                    view.getTxField_nome_cadastroPanel().toString(),
+                    view.getTxField_senha_cadastroPanel().toString(),
+                    view.getTxField_login_cadastroPanel().toString()
+            );
+            usuarioDAO.insert(usuario);
+
+            ValidadorSenha validadorSenha = new ValidadorSenha();
+            List passWordException = new ArrayList<>();
+
+            passWordException.addAll(validadorSenha.validar(usuario.getSenha()));
+
+            if (passWordException == null) {
+                throw new Exception("O senha est");
+            }
+        } catch (Exception e) {
+            //TODO: tratamento de erro
+        }
     }
 }

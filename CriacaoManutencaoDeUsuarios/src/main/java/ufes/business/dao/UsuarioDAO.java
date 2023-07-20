@@ -39,6 +39,32 @@ public class UsuarioDAO {
             throw new Exception(e.getMessage());
         }
     }
+    
+    public Usuario getByLogin(String login) throws Exception {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append(" SELECT * ");
+        query.append(" FROM usuario as u ");
+        query.append(" WHERE u.tx_login = ? ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setString(1, login);
+
+            ResultSet rs = stm.executeQuery();
+
+            if (!rs.next()) {
+                return null;
+            }
+            
+            Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nm_usuario"), rs.getString("tx_senha"), rs.getString("tx_login"));
+            
+            return usuario;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 
     public List<Usuario> getAll() throws Exception {
         StringBuilder query = new StringBuilder();

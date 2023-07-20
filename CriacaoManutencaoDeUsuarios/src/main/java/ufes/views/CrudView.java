@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package ufes.views;
 
@@ -14,10 +14,10 @@ import javax.swing.JTextField;
  *
  * @author daniel
  */
-public class CrudView extends javax.swing.JFrame {
+public class CrudView extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form CrudView
+     * Creates new form CrudView1
      */
     public CrudView() {
         initComponents();
@@ -73,8 +73,6 @@ public class CrudView extends javax.swing.JFrame {
         btn_editar_visualizarPanel = new javax.swing.JButton();
         btn_fechar_visualizarPanel = new javax.swing.JButton();
         btn_excluir_visualizarPanel = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         crudPanel.setLayout(new java.awt.CardLayout());
 
@@ -155,7 +153,7 @@ public class CrudView extends javax.swing.JFrame {
                     .addComponent(btn_autorizar_buscarPanel)
                     .addComponent(btn_visuzalizar_buscarPanel)
                     .addComponent(btn_fechar_buscarPanel))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         crudPanel.add(buscar, "buscar");
@@ -221,7 +219,7 @@ public class CrudView extends javax.swing.JFrame {
                 .addGroup(editarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar_editarPanel)
                     .addComponent(btn_salvar_editarPanel))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         crudPanel.add(editar, "editar");
@@ -272,7 +270,7 @@ public class CrudView extends javax.swing.JFrame {
                 .addComponent(label_usuario_autorizarPanel)
                 .addGap(18, 18, 18)
                 .addComponent(usuarios_scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(autorizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar_autorizarPanel)
                     .addComponent(btn_autorizar_autorizarPanel))
@@ -359,7 +357,7 @@ public class CrudView extends javax.swing.JFrame {
                     .addComponent(btn_fechar_visualizarPanel)
                     .addComponent(btn_editar_visualizarPanel)
                     .addComponent(btn_excluir_visualizarPanel))
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         crudPanel.add(visualizar, "visualizar");
@@ -368,11 +366,11 @@ public class CrudView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
+            .addComponent(crudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(crudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
         );
 
         pack();
@@ -386,9 +384,6 @@ public class CrudView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txField_msgLida_visualizarPanelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel autorizar;
@@ -545,7 +540,5 @@ public class CrudView extends javax.swing.JFrame {
     public JPanel getVisualizar() {
         return visualizar;
     }
-
-    
 
 }
