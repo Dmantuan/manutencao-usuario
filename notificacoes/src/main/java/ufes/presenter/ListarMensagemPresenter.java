@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -11,11 +12,10 @@ import javax.swing.table.TableColumn;
 import ufes.view.ListarMensagemView;
 import ufes.models.Notificacao;
 import ufes.business.business.NotificacoesBusiness;
-import ufes.service.BackgroundColorTableCellRenderer;
 import ufes.service.ButtonEditor;
 import ufes.service.ButtonRenderer;
 
-public class ListarMensagemPresenter implements IAtualizarTelas {
+public class ListarMensagemPresenter {
 
     private DefaultTableModel tbMensagens;
     private ListarMensagemView view;
@@ -31,6 +31,7 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
         try {
             loadData();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error ao listar as mensagens");
         }
     }
 
@@ -56,7 +57,7 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
         this.view.getTable().setEnabled(true);
         
         this.mensagens = new ArrayList<>();
-        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAll();
+        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAllByUserId(32);
         atualizarTabela();
         
         // Montar tabelas
@@ -100,15 +101,5 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
         }
 
         this.view.getTable().setModel(this.tbMensagens);
-    }
-
-    @Override
-    public void atualizarTela() {
-        try {
-            loadData();
-            System.out.println("ufes.presenter.ListarMensagemPresenter.atualizarTela() tela atualizada");
-        } catch (Exception ex) {
-            Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

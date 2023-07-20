@@ -1,17 +1,16 @@
 [
 {
-  "operacao": "REMOÇÃO",
-  "nome": "Daniel",
-  "user": "Matheus",
-  "data": "19/JULY/2023",
-  "hora": "16:12:51"
+  "operacao": "Mensagem com id: (7) maracada como lida?: false",
+  "nome": "Sigismund",
+  "user": "Sigismund",
+  "data": "20/JULY/2023",
+  "hora": "17:26:44"
 },
 {
-  "error": "index of",
-  "operacao": "ADIÇÃO",
-  "nome": "Daniel",
-  "user": "Matheus",
-  "data": "19/JULY/2023",
-  "hora": "16:12:51"
+  "operacao": "Mensagem com id: (5) maracada como lida?: false",
+  "nome": "Tiler",
+  "user": "Tiler",
+  "data": "20/JULY/2023",
+  "hora": "17:26:44"
 }
 ]

@@ -53,7 +53,5 @@ public class Log {
 
     public String getNome() {
         return nome;
-    }
-    
-    
+    }    
 }

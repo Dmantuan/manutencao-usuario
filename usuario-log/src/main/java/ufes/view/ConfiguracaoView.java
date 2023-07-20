@@ -1,20 +1,21 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package ufes.view;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 /**
  *
- * @author daniel
+ * @author annin
  */
-public class ConfiguracaoView extends javax.swing.JFrame {
+public class ConfiguracaoView extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ConfiguracaoView
+     * Creates new form ConfiguracaoView2
      */
     public ConfiguracaoView() {
         initComponents();
@@ -32,9 +33,6 @@ public class ConfiguracaoView extends javax.swing.JFrame {
         cmbBox = new javax.swing.JComboBox<>();
         btnSalvar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-
-        setTitle("Configuracao do sistema");
-        setFocusCycleRoot(false);
 
         cmbBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbBox.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +58,7 @@ public class ConfiguracaoView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(cmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
             .addGroup(layout.createSequentialGroup()
@@ -77,7 +75,7 @@ public class ConfiguracaoView extends javax.swing.JFrame {
                     .addComponent(cmbBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSalvar)
-                .addGap(12, 12, 12))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -91,10 +89,6 @@ public class ConfiguracaoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
@@ -102,11 +96,16 @@ public class ConfiguracaoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
+    public JButton getBtnSalvar() {
+        return btnSalvar;
+    }
+
     public JComboBox<String> getCmbBox() {
         return cmbBox;
     }
 
-    public JButton getBtnSalvar() {
-        return btnSalvar;
+    public JLabel getjLabel1() {
+        return jLabel1;
     }
+    
 }

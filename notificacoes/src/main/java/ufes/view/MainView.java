@@ -31,6 +31,7 @@ public class MainView extends javax.swing.JFrame {
     private void initComponents() {
 
         header = new javax.swing.JPanel();
+        escolherLog = new javax.swing.JButton();
         footer = new javax.swing.JPanel();
         tipoUser = new javax.swing.JLabel();
         notificacao = new javax.swing.JButton();
@@ -41,15 +42,28 @@ public class MainView extends javax.swing.JFrame {
 
         header.setBackground(new java.awt.Color(0, 0, 102));
 
+        escolherLog.setText("Escolher Log");
+        escolherLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                escolherLogActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(escolherLog)
+                .addGap(19, 19, 19))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 56, Short.MAX_VALUE)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(escolherLog)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         footer.setBackground(new java.awt.Color(0, 0, 102));
@@ -126,9 +140,14 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_mensagemActionPerformed
 
+    private void escolherLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escolherLogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_escolherLogActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopPane;
+    private javax.swing.JButton escolherLog;
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
     private javax.swing.JButton mensagem;
@@ -150,5 +169,9 @@ public class MainView extends javax.swing.JFrame {
 
     public JButton getMensagem() {
         return mensagem;
+    }
+
+    public JButton getEscolherLog() {
+        return escolherLog;
     }
 }

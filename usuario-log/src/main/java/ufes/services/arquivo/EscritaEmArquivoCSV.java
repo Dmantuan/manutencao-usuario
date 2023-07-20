@@ -10,7 +10,11 @@ import ufes.models.Log;
 public class EscritaEmArquivoCSV implements IArquivo {
 
     private static EscritaEmArquivoCSV instancia;
-    private final String filePath = "src/main/java/ufes/services/arquivo/LogCSV.csv";
+    
+    File currentDir = new File(System.getProperty("user.dir"));
+    File parentDir = currentDir.getParentFile();
+    String parentDirectory = parentDir.getAbsolutePath();
+    private final String filePath = parentDirectory + "/usuario-log/src/main/java/ufes/services/arquivo/LogCSV.csv";
 
     private File file;
 

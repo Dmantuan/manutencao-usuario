@@ -2,6 +2,8 @@ package ufes.business.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ufes.models.Usuario;
@@ -12,9 +14,9 @@ public class UsuarioDAO {
     private final ConexaoDB db = ConexaoDB.getInstancia();
 
     public UsuarioDAO() {
-        
+
     }
-    
+
     public Usuario getById(Integer id) throws Exception {
 
         StringBuilder query = new StringBuilder();
@@ -32,14 +34,24 @@ public class UsuarioDAO {
             if (!rs.next()) {
                 return null;
             }
-            Usuario usuario = new Usuario(id, rs.getString("nm_usuario"), rs.getString("tx_senha"), rs.getString("tx_login"));
+
+            Timestamp timestamp = rs.getTimestamp("dt_criacao");
+            LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
+            Usuario usuario = new Usuario(rs.getInt("id"),
+                    rs.getString("nm_usuario"),
+                    rs.getString("tx_senha"),
+                    rs.getString("tx_login"),
+                    dt_criacao,
+                    rs.getBoolean("bool_admin")
+            );
 
             return usuario;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-    
+
     public Usuario getByLogin(String login) throws Exception {
 
         StringBuilder query = new StringBuilder();
@@ -57,9 +69,18 @@ public class UsuarioDAO {
             if (!rs.next()) {
                 return null;
             }
-            
-            Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nm_usuario"), rs.getString("tx_senha"), rs.getString("tx_login"));
-            
+
+            Timestamp timestamp = rs.getTimestamp("dt_criacao");
+            LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
+            Usuario usuario = new Usuario(rs.getInt("id"),
+                    rs.getString("nm_usuario"),
+                    rs.getString("tx_senha"),
+                    rs.getString("tx_login"),
+                    dt_criacao,
+                    rs.getBoolean("bool_admin")
+            );
+
             return usuario;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
@@ -80,7 +101,16 @@ public class UsuarioDAO {
             List<Usuario> lista = new ArrayList<>();
 
             while (rs.next()) {
-                Usuario usuario = new Usuario(rs.getInt("id"), rs.getString("nm_usuario"), rs.getString("tx_senha"), rs.getString("tx_login"));
+                Timestamp timestamp = rs.getTimestamp("dt_criacao");
+                LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
+                Usuario usuario = new Usuario(rs.getInt("id"),
+                        rs.getString("nm_usuario"),
+                        rs.getString("tx_senha"),
+                        rs.getString("tx_login"),
+                        dt_criacao,
+                        rs.getBoolean("bool_admin")
+                );
                 lista.add(usuario);
             }
 
@@ -122,7 +152,7 @@ public class UsuarioDAO {
 
             stm.execute();
         } catch (Exception e) {
-           throw new Exception(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
