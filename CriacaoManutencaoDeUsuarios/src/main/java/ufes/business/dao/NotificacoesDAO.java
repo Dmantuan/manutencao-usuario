@@ -12,15 +12,15 @@ public class NotificacoesDAO {
     private final ConexaoDB db = ConexaoDB.getInstancia();
 
     public NotificacoesDAO() {
-        
+
     }
-    
+
     public Notificacao getById(Integer id) throws Exception {
 
         StringBuilder query = new StringBuilder();
 
         query.append(" SELECT * ");
-        query.append(" FROM notificacoes as n ");
+        query.append(" FROM notificacao as n ");
         query.append(" WHERE n.id = ? ");
 
         try {
@@ -32,9 +32,9 @@ public class NotificacoesDAO {
             if (!rs.next()) {
                 return null;
             }
-            Notificacao notificacao = new Notificacao(id, 
+            Notificacao notificacao = new Notificacao(id,
                     rs.getInt("id_remetente"),
-                    rs.getInt("id_destinatario"), 
+                    rs.getInt("id_destinatario"),
                     rs.getString("tx_conteudo"),
                     rs.getString("tx_titulo")
             );
@@ -65,10 +65,10 @@ public class NotificacoesDAO {
             List<Notificacao> lista = new ArrayList<>();
 
             while (rs.next()) {
-                Notificacao notificacao = new Notificacao(rs.getInt("id"), 
-                        rs.getInt("id_remetente"), 
-                        rs.getInt("id_destinatario"), 
-                        rs.getString("tx_conteudo"), 
+                Notificacao notificacao = new Notificacao(rs.getInt("id"),
+                        rs.getInt("id_remetente"),
+                        rs.getInt("id_destinatario"),
+                        rs.getString("tx_conteudo"),
                         rs.getString("tx_titulo")
                 );
                 lista.add(notificacao);
@@ -99,10 +99,10 @@ public class NotificacoesDAO {
             List<Notificacao> lista = new ArrayList<>();
 
             while (rs.next()) {
-                Notificacao notificacao = new Notificacao(rs.getInt("id"), 
+                Notificacao notificacao = new Notificacao(rs.getInt("id"),
                         rs.getInt("id_remetente"),
-                        rs.getInt("id_destinatario"), 
-                        rs.getString("tx_conteudo"), 
+                        rs.getInt("id_destinatario"),
+                        rs.getString("tx_conteudo"),
                         rs.getString("tx_titulo")
                 );
                 lista.add(notificacao);
@@ -113,7 +113,7 @@ public class NotificacoesDAO {
             throw new Exception(e.getMessage());
         }
     }
-    
+
     public List<Notificacao> getAll() throws Exception {
         StringBuilder query = new StringBuilder();
 
@@ -132,10 +132,10 @@ public class NotificacoesDAO {
             List<Notificacao> lista = new ArrayList<>();
 
             while (rs.next()) {
-                Notificacao notificacao = new Notificacao(rs.getInt("id"), 
+                Notificacao notificacao = new Notificacao(rs.getInt("id"),
                         rs.getInt("id_remetente"),
-                        rs.getInt("id_destinatario"), 
-                        rs.getString("tx_conteudo"), 
+                        rs.getInt("id_destinatario"),
+                        rs.getString("tx_conteudo"),
                         rs.getString("tx_titulo")
                 );
                 lista.add(notificacao);
@@ -147,30 +147,10 @@ public class NotificacoesDAO {
         }
     }
 
-    public void update(Notificacao notificacao) throws Exception {
-        StringBuilder query = new StringBuilder();
-
-        query.append(" UPDATE notificacoes as n ");
-        query.append(" SET id_remetente = ?, id_destinatario = ?, tx_conteudo = ? ");
-        query.append(" WHERE n.id = ? ");
-
-        try {
-            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
-            stm.setInt(1, notificacao.getId_remetente());
-            stm.setInt(2, notificacao.getId_destinatario());
-            stm.setString(3, notificacao.getTx_conteudo());
-            stm.setInt(4, notificacao.getId());
-
-            stm.execute();
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
-
     public void deleteById(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" DELETE FROM notificacoes as n ");
+        query.append(" DELETE FROM notificacao as n ");
         query.append(" WHERE n.id = ?  ");
 
         try {
@@ -183,23 +163,56 @@ public class NotificacoesDAO {
         }
     }
 
-    
-    /*
-    TODO:consertar
-    */
     public void insert(Notificacao notificacao) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" INSERT INTO notificacoes (id_remetente, id_destinatario, tx_conteudo) ");
+        query.append(" INSERT INTO notificacao (tx_conteudo, tx_titulo, bool_visualizado) ");
         query.append(" VALUES (?, ?, ?) ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
-            stm.setInt(1, notificacao.getId_remetente());
-            stm.setInt(2, notificacao.getId_destinatario());
-            stm.setString(3, notificacao.getTx_conteudo());
+            stm.setString(1, notificacao.getTx_conteudo());
+            stm.setString(2, notificacao.getTx_titulo());
+            stm.setBoolean(3, notificacao.getBool_vizualizada());
 
             stm.execute();
+            
+            insertUsuarioNotificacao(notificacao.getId_remetente(), notificacao.getId_destinatario());
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    public void insertUsuarioNotificacao(Integer id_remetente, Integer id_destinatario) throws Exception {
+        StringBuilder query = new StringBuilder();
+
+        query.append(" INSERT INTO usuario_notificao (id_remetente, id_destinatario, id_notificacao) ");
+        query.append(" VALUES (?, ?, ?) ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setInt(1, id_remetente);
+            stm.setInt(2, id_destinatario);
+            stm.setInt(3, getMaxId());
+
+            stm.execute();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private Integer getMaxId() throws Exception {
+        StringBuilder query = new StringBuilder();
+
+        query.append(" SELECT MAX(id) as id ");
+        query.append(" FROM notificacao ");
+        
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+
+            ResultSet rs = stm.executeQuery();
+            
+            return rs.getInt("id");
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
