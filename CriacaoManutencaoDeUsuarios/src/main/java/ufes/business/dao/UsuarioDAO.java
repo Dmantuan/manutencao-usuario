@@ -43,7 +43,8 @@ public class UsuarioDAO {
                     rs.getString("tx_senha"),
                     rs.getString("tx_login"),
                     dt_criacao,
-                    rs.getBoolean("bool_admin")
+                    rs.getBoolean("bool_admin"),
+                    rs.getBoolean("bool_autorizado")
             );
 
             return usuario;
@@ -70,6 +71,7 @@ public class UsuarioDAO {
                 return null;
             }
 
+
             Timestamp timestamp = rs.getTimestamp("dt_criacao");
             LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
 
@@ -78,7 +80,8 @@ public class UsuarioDAO {
                     rs.getString("tx_senha"),
                     rs.getString("tx_login"),
                     dt_criacao,
-                    rs.getBoolean("bool_admin")
+                    rs.getBoolean("bool_admin"),
+                    rs.getBoolean("bool_autorizado")
             );
 
             return usuario;
@@ -109,7 +112,8 @@ public class UsuarioDAO {
                         rs.getString("tx_senha"),
                         rs.getString("tx_login"),
                         dt_criacao,
-                        rs.getBoolean("bool_admin")
+                        rs.getBoolean("bool_admin"),
+                        rs.getBoolean("bool_autorizado")
                 );
                 lista.add(usuario);
             }
@@ -119,8 +123,27 @@ public class UsuarioDAO {
             throw new Exception(e.getMessage());
         }
     }
+    
+    public void updateAdmin(Integer id, Boolean autorizado, Boolean admin) throws Exception {
+        StringBuilder query = new StringBuilder();
 
-    public void update(Usuario usuario) throws Exception {
+        query.append(" UPDATE usuario as u ");
+        query.append(" SET bool_admin = ?, bool_autorizado = ? ");
+        query.append(" WHERE u.id = ? ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setBoolean(1, admin);
+            stm.setBoolean(2, autorizado);
+            stm.setInt(3, id);
+
+            stm.execute();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public void update(Integer id, String nome, String login, String senha) throws Exception {
         StringBuilder query = new StringBuilder();
 
         query.append(" UPDATE usuario as u ");
@@ -129,10 +152,10 @@ public class UsuarioDAO {
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
-            stm.setString(1, usuario.getNome());
-            stm.setString(2, usuario.getSenha());
-            stm.setString(3, usuario.getLogin());
-            stm.setInt(4, usuario.getId());
+            stm.setString(1, nome);
+            stm.setString(2, senha);
+            stm.setString(3, login);
+            stm.setInt(4, id);
 
             stm.execute();
         } catch (Exception e) {

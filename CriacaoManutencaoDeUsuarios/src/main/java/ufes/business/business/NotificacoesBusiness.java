@@ -2,17 +2,16 @@ package ufes.business.business;
 
 import java.util.List;
 import ufes.business.dao.NotificacoesDAO;
+import ufes.business.dao.NotificacoesDAO;
+import ufes.business.dao.UsuarioDAO;
 import ufes.business.dao.UsuarioDAO;
 import ufes.models.Notificacao;
 import ufes.models.Log;
+import ufes.models.Notificacao;
 import ufes.models.Usuario;
 import ufes.presenter.ConfiguracaoPresenter;
 import ufes.services.log.GerenciadorLog;
 
-/*
-    - Posso editar mensagens?
-    - Posso excluir mensagens?s
- */
 public class NotificacoesBusiness {
     
     private ConfiguracaoPresenter logPresenter = ConfiguracaoPresenter.getIntancia();
@@ -20,15 +19,19 @@ public class NotificacoesBusiness {
     private final NotificacoesDAO notificacoesDAO;
 
     private final UsuarioDAO usuarioDAO;
-    
-    public NotificacoesBusiness(){
-        
+
+    public NotificacoesBusiness() {
+
         this.notificacoesDAO = new NotificacoesDAO();
         this.usuarioDAO = new UsuarioDAO();
     }
-    
-    public int getQtdNovasNotificacoes(Integer id) throws Exception{
+
+    public int getQtdNovasNotificacoes(Integer id) throws Exception {
         return this.notificacoesDAO.getQtdNovasNotificacoes(id);
+    }
+
+    public int getQtdNotificacoesLidas(Integer id) throws Exception {
+        return this.notificacoesDAO.getQtdNotificacoesLidas(id);
     }
 
     public Notificacao getById(Integer id) throws Exception {
@@ -38,8 +41,8 @@ public class NotificacoesBusiness {
     public List<Notificacao> getAllByUserId(Integer id) throws Exception {
         return notificacoesDAO.getAllByUserDestinyId(id);
     }
-    
-        public List<Notificacao> getAll() throws Exception {
+
+    public List<Notificacao> getAll() throws Exception {
         return notificacoesDAO.getAll();
     }
 
@@ -67,7 +70,7 @@ public class NotificacoesBusiness {
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         }    
     }
-    
+
     public void alterarStatusMensagem(Integer id, boolean lida) throws Exception {
         Notificacao notificacao =  notificacoesDAO.getById(id);
         Usuario user = usuarioDAO.getById(notificacao.getId_destinatario());

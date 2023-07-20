@@ -40,6 +40,31 @@ public class NotificacoesDAO {
         }
     }
 
+    public int getQtdNotificacoesLidas(Integer id) throws Exception {
+        StringBuilder query = new StringBuilder();
+
+        query.append(" SELECT COUNT(n.id) as quantidade ");
+        query.append(" FROM usuario as u ");
+        query.append(" INNER JOIN usuario_notificacao un ");
+        query.append(" ON un.id_remetente = u.id ");
+        query.append(" LEFT JOIN notificacao n ");
+        query.append(" ON n.id = un.id_notificacao ");
+        query.append(" WHERE n.bool_visualizado = TRUE and u.id = ? ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setInt(1, id);
+
+            ResultSet rs = stm.executeQuery();
+
+            Integer quantidade = rs.getInt("quantidade");
+
+            return quantidade;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
     public void alterarStatusMensagem(Notificacao notificacao, boolean lida) throws Exception {
         StringBuilder query = new StringBuilder();
 
@@ -109,8 +134,9 @@ public class NotificacoesDAO {
                 + " un.id_destinatario as id_destinatario, "
                 + " n.tx_conteudo as tx_conteudo, "
                 + " n.tx_titulo as tx_titulo, "
-                + " n.bool_visualizado as bool_visualizado,"
+                + " n.bool_visualizado as bool_visualizado, "
                 + " u.nm_usuario as nm_usuario ");
+        
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
         query.append(" ON un.id_destinatario = u.id ");
@@ -152,7 +178,7 @@ public class NotificacoesDAO {
                 + " un.id_destinatario as id_destinatario, "
                 + " n.tx_conteudo as tx_conteudo, "
                 + " n.tx_titulo as tx_titulo, "
-                + " n.bool_visualizado as bool_visualizado "
+                + " n.bool_visualizado as bool_visualizado, "
                 + " u.nm_usuario as nm_usuario ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");

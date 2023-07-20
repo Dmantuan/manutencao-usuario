@@ -2,13 +2,10 @@ package ufes.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import ufes.business.business.NotificacoesBusiness;
-import ufes.models.Usuario;
 import ufes.presenters.LoginPresenter;
 import ufes.view.MainView;
 
@@ -35,7 +32,6 @@ public class MainPresenter {
 
 //        this.loginPresenter = new LoginPresenter();
 //        inicializarLogin();
-        
 //        try {
 //            Usuario usuarioLogado = this.loginPresenter.logar();  
 //            System.out.println(usuarioLogado);
@@ -44,7 +40,6 @@ public class MainPresenter {
 //            // error
 //            System.out.println("error");
 //        }
-
         this.view.setVisible(true);
 
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
@@ -67,7 +62,7 @@ public class MainPresenter {
                 enviarNotificacoes();
             }
         });
-        
+
         this.view.getEscolherLog().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -110,15 +105,15 @@ public class MainPresenter {
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
     }
-    
-    private void inicializarLog(){
-       
+
+    private void inicializarLog() {
+
         JInternalFrame internalFrame = this.log.getView();
         this.view.getDesktopPane().add(internalFrame);
     }
 
-    private void abrirLog(){
-      
+    private void abrirLog() {
+
         this.log.setVisible(true);
     }
 
@@ -140,7 +135,7 @@ public class MainPresenter {
             this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
             this.view.getTipoUser().setText(this.user);
         } catch (Exception e) {
-            this.view.getNotificacao().setText("error");
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
     }
 

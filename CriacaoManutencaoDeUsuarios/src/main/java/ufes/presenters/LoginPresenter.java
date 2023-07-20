@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import ufes.business.business.UsuarioBusiness;
 
 public class LoginPresenter {
@@ -35,11 +36,7 @@ public class LoginPresenter {
         this.view.getBtn_login_loginPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                try {
-                    logar();
-                } catch (Exception ex) {
-                    Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                logar();
             }
         });
 
@@ -57,8 +54,7 @@ public class LoginPresenter {
             }
         });
 
-        this.view.setVisible(
-                true);
+        this.view.setVisible(true);
     }
 
     public void switchCadastrar() {
@@ -69,17 +65,25 @@ public class LoginPresenter {
         cardLayout.show(view.getLoginPanel(), "login");
     }
 
-    public Usuario logar() throws Exception {
-        
-        Usuario usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().getText());
+    public Usuario logar() {
 
-        if (usuario == null) {
-            throw new Exception("O login do usuario nao consta no bano de dados");
+        try {
+            Usuario usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().getText());
+
+            if (usuario == null) {
+                throw new Exception("O login do usuario nao consta no banco de dados");
+            }
+
+            if (!usuario.getSenha().equals(view.getTxField_senha_loginPanel().getText())) {
+                throw new Exception("A senha do usuario esta errada");
+            }
+            
+            return usuario;
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
         
-        verificarLoginSenha(usuario);
-
-        return usuario;
+        return null;
     }
 
     public void cadastrar() {
@@ -97,26 +101,16 @@ public class LoginPresenter {
             passWordException.addAll(validadorSenha.validar(usuario.getSenha()));
 
             if (passWordException == null) {
-                throw new Exception("O senha est");
+                System.out.println("cadastrado com sucesso");
             }
+
+            throw new Exception(passWordException.toString());
         } catch (Exception e) {
-            //TODO: tratamento de erro
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
     }
 
     public LoginView getView() {
         return view;
-    }
-    
-    private void verificarLoginSenha(Usuario usuario){
-        
-        String senha = this.view.getTxField_senha_loginPanel().getText();
-        
-        if(usuario.getSenha() == null ? senha == null : usuario.getSenha().equals(senha)){
-            System.out.println("Uusario/admin logado com sucesso");
-        }
-        else{
-            System.out.println("usuario não está autorizado, senha incorreta");
-        }
     }
 }
