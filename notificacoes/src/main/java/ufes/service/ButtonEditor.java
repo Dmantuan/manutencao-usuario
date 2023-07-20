@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import ufes.business.business.NotificacoesBusiness;
 import ufes.models.Notificacao;
+import ufes.presenter.ListarMensagemPresenter;
 
 public class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
 
@@ -19,7 +20,7 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
     private int clickedRow; // Variável para armazenar o índice da linha clicada
     private JTable table; // Reference to the JTable
 
-    public ButtonEditor(NotificacoesBusiness dbMensagens, ArrayList<Notificacao> mensagens, JTable table) {
+    public ButtonEditor(NotificacoesBusiness dbMensagens, ArrayList<Notificacao> mensagens, JTable table, ListarMensagemPresenter presenter) {
 
         this.table = table;
         button = new JButton();
@@ -32,21 +33,19 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
 
                 // Acessa os dados da linha clicada
                 Integer idNotificacao = mensagens.get(clickedRow).getId();
-                System.out.println(idNotificacao);
-//                System.out.println("lida?: " + lida);
-//                System.out.println("rementente?: " + idRemetente);
-//                System.out.println("rementente?: " + idRemetenteInt);
 
-                if(mensagens.get(clickedRow).getBool_vizualizado()){
+                System.out.println(mensagens.get(clickedRow).getBool_vizualizado());
+                if(mensagens.get(clickedRow).getBool_vizualizado() == true){
                     try {  
                         dbMensagens.alterarStatusMensagem(idNotificacao, false);
-                        // aplicar observer
+                        presenter.loadData();
                     } catch (Exception ex) {
                         Logger.getLogger(ButtonEditor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }else{
                     try {  
                         dbMensagens.alterarStatusMensagem(idNotificacao, true);
+                        presenter.loadData();
                     } catch (Exception ex) {
                         Logger.getLogger(ButtonEditor.class.getName()).log(Level.SEVERE, null, ex);
                     }

@@ -28,7 +28,25 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
 
         this.mensagens = new ArrayList<>();
 
-        // tabelas
+        try {
+            loadData();
+        } catch (Exception e) {
+        }
+    }
+
+    public ListarMensagemView getView() {
+        return this.view;
+    }
+
+    public void setVisible(boolean visible) {
+        EventQueue.invokeLater(() -> {
+            view.setVisible(visible);
+            view.toFront(); // Abrir a tela na frente de outras
+        });
+    }
+    
+    public final void loadData() throws Exception {
+
         this.tbMensagens = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{"Enviado por", "Titulo", "Mensagem", "Status" , "Lida"}
@@ -37,17 +55,15 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
         this.view.getTable().setModel(tbMensagens);
         this.view.getTable().setEnabled(true);
         
-        // requisição
-        try {
-            loadData();
-        } catch (Exception ex) {
-            Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.mensagens = new ArrayList<>();
+        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAll();
+        atualizarTabela();
         
-        // Definir a largura das colunas
-        this.view.getTable().getColumnModel().getColumn(4).setMaxWidth(150);
+        // Montar tabelas
+        this.view.getTable().getColumnModel().getColumn(4).setMaxWidth(300);
+        this.view.getTable().getColumnModel().getColumn(4).setMinWidth(120);
         this.view.getTable().getColumnModel().getColumn(0).setMaxWidth(100);
-        this.view.getTable().getColumnModel().getColumn(3).setMaxWidth(100);
+        this.view.getTable().getColumnModel().getColumn(3).setMaxWidth(200);
         
         TableColumn column0 = this.view.getTable().getColumnModel().getColumn(0);
         TableColumn column3 = this.view.getTable().getColumnModel().getColumn(3);
@@ -62,27 +78,12 @@ public class ListarMensagemPresenter implements IAtualizarTelas {
 
         TableColumn lidaColumn = this.view.getTable().getColumnModel().getColumn(4);
         lidaColumn.setCellRenderer(new ButtonRenderer());
-        lidaColumn.setCellEditor(new ButtonEditor(this.dbMensagens, this.mensagens, this.view.getTable()));      
-    }
-
-    public ListarMensagemView getView() {
-        return this.view;
-    }
-
-    public void setVisible(boolean visible) {
-        EventQueue.invokeLater(() -> {
-            view.setVisible(visible);
-            view.toFront(); // Abrir a tela na frente de outras
-        });
-    }
-
-    private void loadData() throws Exception {
-
-        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAll();
-        atualizarTabela();
+        lidaColumn.setCellEditor(new ButtonEditor(this.dbMensagens, this.mensagens, this.view.getTable(), this));      
     }
 
     private void atualizarTabela() {
+        
+        this.tbMensagens.setNumRows(0);
 
         if (this.mensagens != null) {
             for (Notificacao mensagem : this.mensagens) {

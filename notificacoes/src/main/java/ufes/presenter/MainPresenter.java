@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import ufes.business.business.NotificacoesBusiness;
 import ufes.service.AtualizarTelasService;
 import ufes.view.MainView;
 
@@ -17,11 +18,15 @@ public class MainPresenter implements IAtualizarTelas {
     ListarMensagemPresenter listarMensagensPresenter;
     EnviarMensagemPresenter enviarMensagensPresenter;
     AtualizarTelasService atualizarTelasService;
+    private NotificacoesBusiness dbMensagens;
 
     public MainPresenter() {
         this.view = new MainView();
         exibirEmTelaCheia();
         novasNotificacoes();
+        
+        this.dbMensagens = new NotificacoesBusiness();
+        
         this.view.setVisible(true);
         
         //  atualizarTelasService = AtualizarTelasService.getInstancia();
@@ -89,7 +94,8 @@ public class MainPresenter implements IAtualizarTelas {
 
     private void novasNotificacoes(){
         try {
-            this.qtdNovasNotificacoes = 4; // aqui vai ser feita a consulta
+            this.qtdNovasNotificacoes = this.dbMensagens.getQtdNovasNotificacoes(3); // aqui vai ser feita a consulta
+            System.out.println(qtdNovasNotificacoes);
             this.user = "Admin: Matheus";
 
             this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
