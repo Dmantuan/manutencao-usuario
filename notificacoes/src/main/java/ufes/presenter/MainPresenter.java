@@ -20,7 +20,7 @@ public class MainPresenter implements IAtualizarTelas {
     private ListarMensagemPresenter listarMensagensPresenter;
     private EnviarMensagemPresenter enviarMensagensPresenter;
     private LoginPresenter loginPresenter;
-
+    private Usuario usuario;
     private AtualizarTelasService atualizarTelasService;
     private NotificacoesBusiness dbMensagens;
 
@@ -34,7 +34,6 @@ public class MainPresenter implements IAtualizarTelas {
         this.dbMensagens = new NotificacoesBusiness();
 
         this.loginPresenter = new LoginPresenter();
-        inicializarLogin();
 
         this.view.setVisible(true);
 
