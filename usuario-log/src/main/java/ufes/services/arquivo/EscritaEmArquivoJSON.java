@@ -1,11 +1,14 @@
 package ufes.services.arquivo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import javax.swing.JOptionPane;
+import ufes.models.Log;
 
 public class EscritaEmArquivoJSON implements IArquivo {
     private static EscritaEmArquivoJSON instancia;
@@ -13,8 +16,11 @@ public class EscritaEmArquivoJSON implements IArquivo {
 
     private FileWriter fw;
     private File file;
+    private Gson gson;
 
     private EscritaEmArquivoJSON() {
+        
+        this.gson  = new GsonBuilder().setPrettyPrinting().create();
         try {
             this.file = new File(filePath);
             if (!file.exists()) {
@@ -33,7 +39,8 @@ public class EscritaEmArquivoJSON implements IArquivo {
     }
 
     @Override
-    public void escreverArquivo(String log) {
+    public void escreverArquivo(Log log) {
+
         try {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -50,7 +57,7 @@ public class EscritaEmArquivoJSON implements IArquivo {
                 bw.write("[\n"); 
             }
 
-            bw.write(log);
+            bw.write(this.gson.toJson(log));
 
             bw.close();
 
@@ -63,5 +70,7 @@ public class EscritaEmArquivoJSON implements IArquivo {
         } catch (IOException ioEx) {
             JOptionPane.showMessageDialog(null, ioEx);
         }
+        
+        System.out.println(this.gson.toJson(log));
     }
 }

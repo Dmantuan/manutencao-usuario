@@ -10,15 +10,16 @@ import ufes.views.LoginView;
 import com.pss.senha.validacao.ValidadorSenha;
 import java.util.ArrayList;
 import java.util.List;
+import ufes.business.business.UsuarioBusiness;
 
 public class LoginPresenter {
 
     private final LoginView view;
-    private final UsuarioDAO usuarioDAO;
+    private final UsuarioBusiness usuarioBusiness;
     private final CardLayout cardLayout;
 
     public LoginPresenter() {
-        this.usuarioDAO = new UsuarioDAO();
+        this.usuarioBusiness = new UsuarioBusiness();
 
         this.view = new LoginView();
 
@@ -68,7 +69,7 @@ public class LoginPresenter {
 
     public void logar() {
         try {
-            Usuario usuario = usuarioDAO.getByLogin(view.getTxField_login_loginPanel().toString());
+            Usuario usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().toString());
 
             if (usuario == null) {
                 throw new Exception("O login do usuario nao consta no bano de dados");
@@ -86,7 +87,7 @@ public class LoginPresenter {
                     view.getTxField_senha_cadastroPanel().toString(),
                     view.getTxField_login_cadastroPanel().toString()
             );
-            usuarioDAO.insert(usuario);
+            usuarioBusiness.insert(usuario);
 
             ValidadorSenha validadorSenha = new ValidadorSenha();
             List passWordException = new ArrayList<>();

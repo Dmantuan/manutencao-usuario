@@ -22,6 +22,10 @@ public class NotificacoesBusiness {
         this.notificacoesDAO = new NotificacoesDAO();
         this.usuarioDAO = new UsuarioDAO();
     }
+    
+    public int getQtdNovasNotificacoes(Integer id) throws Exception{
+        return this.notificacoesDAO.getQtdNovasNotificacoes(id);
+    }
 
     public Notificacao getById(Integer id) throws Exception {
         return this.notificacoesDAO.getById(id);
@@ -47,6 +51,12 @@ public class NotificacoesBusiness {
     public void delete(Integer id) throws Exception {
         validateExists(id);
         this.notificacoesDAO.deleteById(id);
+    }
+    
+    public void alterarStatusMensagem(Integer id, boolean lida) throws Exception {
+        Notificacao notificacao =  notificacoesDAO.getById(id);
+        System.out.println(notificacao.getBool_vizualizado() + " -> " + lida);
+        this.notificacoesDAO.alterarStatusMensagem(notificacao, lida);
     }
 
     private void validate(Notificacao notificacao) throws Exception {

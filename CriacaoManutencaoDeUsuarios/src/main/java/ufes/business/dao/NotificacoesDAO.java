@@ -14,14 +14,17 @@ public class NotificacoesDAO {
     public NotificacoesDAO() {
 
     }
-
-    public Notificacao getById(Integer id) throws Exception {
-
+    
+    public int getQtdNovasNotificacoes(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" SELECT * ");
-        query.append(" FROM notificacao as n ");
-        query.append(" WHERE n.id = ? ");
+        query.append(" SELECT COUNT(n.id) as quantidade ");
+        query.append(" FROM usuario as u ");
+        query.append(" INNER JOIN usuario_notificacao un ");
+        query.append(" ON un.id_remetente = u.id ");
+        query.append(" LEFT JOIN notificacao n ");
+        query.append(" ON n.id = un.id_notificacao ");
+        query.append(" WHERE u.id = ? ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
@@ -29,14 +32,59 @@ public class NotificacoesDAO {
 
             ResultSet rs = stm.executeQuery();
 
+            Integer quantidade = rs.getInt("quantidade");
+                    
+            return quantidade;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    public void alterarStatusMensagem(Notificacao notificacao, boolean lida) throws Exception {
+        StringBuilder query = new StringBuilder();
+
+        query.append(" UPDATE notificacao as n ");
+        query.append(" SET bool_visualizado = ? ");
+        query.append(" WHERE n.id = ? ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setBoolean(1, lida);
+            stm.setInt(2, notificacao.getId());
+
+            stm.execute();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+    public Notificacao getById(Integer idNotificacao) throws Exception {
+
+        StringBuilder query = new StringBuilder();
+
+        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo, n.bool_visualizado as bool_visualizado ");
+        query.append(" FROM usuario as u ");
+        query.append(" INNER JOIN usuario_notificacao un ");
+        query.append(" ON un.id_destinatario = u.id ");
+        query.append(" LEFT JOIN notificacao n ");
+        query.append(" ON n.id = un.id_notificacao ");
+        query.append(" WHERE n.id = ? ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setInt(1, idNotificacao);
+
+            ResultSet rs = stm.executeQuery();
+
             if (!rs.next()) {
                 return null;
             }
-            Notificacao notificacao = new Notificacao(id,
+            Notificacao notificacao = new Notificacao(idNotificacao, 
                     rs.getInt("id_remetente"),
                     rs.getInt("id_destinatario"),
                     rs.getString("tx_conteudo"),
-                    rs.getString("tx_titulo")
+                    rs.getString("tx_titulo"),
+                    rs.getBoolean("bool_visualizado")
             );
 
             return notificacao;
@@ -48,7 +96,7 @@ public class NotificacoesDAO {
     public List<Notificacao> getAllByUserDestinyId(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo ");
+        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo, n.bool_visualizado as bool_visualizado ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
         query.append(" ON un.id_destinatario = u.id ");
@@ -65,11 +113,13 @@ public class NotificacoesDAO {
             List<Notificacao> lista = new ArrayList<>();
 
             while (rs.next()) {
-                Notificacao notificacao = new Notificacao(rs.getInt("id"),
-                        rs.getInt("id_remetente"),
-                        rs.getInt("id_destinatario"),
-                        rs.getString("tx_conteudo"),
-                        rs.getString("tx_titulo")
+                Notificacao notificacao = new Notificacao(
+                        rs.getInt("id"), 
+                        rs.getInt("id_remetente"), 
+                        rs.getInt("id_destinatario"), 
+                        rs.getString("tx_conteudo"), 
+                        rs.getString("tx_titulo"),
+                        rs.getBoolean("bool_visualizado")
                 );
                 lista.add(notificacao);
             }
@@ -82,7 +132,7 @@ public class NotificacoesDAO {
     public List<Notificacao> getAllByUserSendId(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo ");
+        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo, n.bool_visualizado as bool_visualizado ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
         query.append(" ON un.id_remetente = u.id ");
@@ -101,9 +151,10 @@ public class NotificacoesDAO {
             while (rs.next()) {
                 Notificacao notificacao = new Notificacao(rs.getInt("id"),
                         rs.getInt("id_remetente"),
-                        rs.getInt("id_destinatario"),
-                        rs.getString("tx_conteudo"),
-                        rs.getString("tx_titulo")
+                        rs.getInt("id_destinatario"), 
+                        rs.getString("tx_conteudo"), 
+                        rs.getString("tx_titulo"),
+                        rs.getBoolean("bool_visualizado")
                 );
                 lista.add(notificacao);
             }
@@ -117,7 +168,7 @@ public class NotificacoesDAO {
     public List<Notificacao> getAll() throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" SELECT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo ");
+        query.append(" SELECT DISTINCT n.id as id, un.id_remetente as id_remetente, un.id_destinatario as id_destinatario, n.tx_conteudo as tx_conteudo, n.tx_titulo as tx_titulo, n.bool_visualizado as bool_visualizado ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
         query.append(" ON un.id_remetente = u.id ");
@@ -134,9 +185,10 @@ public class NotificacoesDAO {
             while (rs.next()) {
                 Notificacao notificacao = new Notificacao(rs.getInt("id"),
                         rs.getInt("id_remetente"),
-                        rs.getInt("id_destinatario"),
-                        rs.getString("tx_conteudo"),
-                        rs.getString("tx_titulo")
+                        rs.getInt("id_destinatario"), 
+                        rs.getString("tx_conteudo"), 
+                        rs.getString("tx_titulo"),
+                        rs.getBoolean("bool_visualizado")
                 );
                 lista.add(notificacao);
             }
@@ -173,7 +225,7 @@ public class NotificacoesDAO {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
             stm.setString(1, notificacao.getTx_conteudo());
             stm.setString(2, notificacao.getTx_titulo());
-            stm.setBoolean(3, notificacao.getBool_vizualizada());
+            stm.setBoolean(3, notificacao.getBool_vizualizado());
 
             stm.execute();
             
