@@ -7,6 +7,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import ufes.business.business.NotificacoesBusiness;
 import ufes.models.Usuario;
+import ufes.presenters.CrudPresenter;
 import ufes.presenters.LoginPresenter;
 import ufes.view.MainView;
 
@@ -17,6 +18,7 @@ public class MainPresenter {
     private String user;
     private ListarMensagemPresenter listarMensagensPresenter;
     private EnviarMensagemPresenter enviarMensagensPresenter;
+    private CrudPresenter crudPresenter;
     private LoginPresenter loginPresenter;
     private ConfiguracaoPresenter log = ConfiguracaoPresenter.getIntancia();
     private Usuario usuario;
@@ -39,6 +41,7 @@ public class MainPresenter {
 
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
         this.listarMensagensPresenter = new ListarMensagemPresenter();
+        this.crudPresenter = new CrudPresenter();
 
         inicializarEnviarMensagens();
         inicializarListarMensagens();
@@ -101,13 +104,18 @@ public class MainPresenter {
     }
     
     private void inicializarManterUusarios(){
-        // adicionar as telas do manter usuarios com visible false
+        
+        JInternalFrame internalFrame = this.crudPresenter.getView();
+
+        internalFrame.setVisible(false);
+        this.view.getDesktopPane().add(internalFrame);
     }
 
     private void inicializarLogin() {
 
         this.view.getNotificacao().setVisible(false);
         this.view.getMensagem().setVisible(false);
+        this.view.getManterUsuarios().setVisible(false);
         JInternalFrame internalFrame = this.loginPresenter.getView();
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
@@ -130,9 +138,11 @@ public class MainPresenter {
         if(usuario.getAdmin()){
             this.view.getNotificacao().setVisible(true);
             this.view.getMensagem().setVisible(true);
+            this.view.getManterUsuarios().setVisible(true);
         }else{
             this.view.getNotificacao().setVisible(true);
             this.view.getMensagem().setVisible(false);
+            this.view.getManterUsuarios().setVisible(false);
         }
         this.loginPresenter.setVisible(false);
     }
@@ -160,7 +170,7 @@ public class MainPresenter {
     }
     
     private void abrirManterUsuarios(){
-        
+        this.crudPresenter.setVisible(true);
     }
 
     public void setVisible() {

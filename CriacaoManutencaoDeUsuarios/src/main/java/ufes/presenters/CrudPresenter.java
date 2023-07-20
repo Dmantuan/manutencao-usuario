@@ -1,13 +1,13 @@
 package ufes.presenters;
 
 import java.awt.CardLayout;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import ufes.business.business.NotificacoesBusiness;
 import ufes.business.business.UsuarioBusiness;
-import ufes.business.dao.UsuarioDAO;
 import ufes.presenters.crudState.CrudState;
 import ufes.views.CrudView;
 import ufes.models.Usuario;
@@ -213,5 +213,17 @@ public class CrudPresenter {
 
     public void setEstate(CrudState state) {
         this.estado = state;
+    }
+
+    public CrudView getView() {
+        return view;
+    }
+    
+    public void setVisible(boolean visible) {
+
+        EventQueue.invokeLater(() -> {
+            view.setVisible(visible);
+            view.toFront(); // Abrir a tela na frente de outras
+        });
     }
 }
