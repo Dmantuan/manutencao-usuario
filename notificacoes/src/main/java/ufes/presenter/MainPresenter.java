@@ -2,17 +2,14 @@ package ufes.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import ufes.business.business.NotificacoesBusiness;
-import ufes.models.Usuario;
 import ufes.presenters.LoginPresenter;
-import ufes.service.AtualizarTelasService;
 import ufes.view.MainView;
 
-public class MainPresenter implements IAtualizarTelas {
+public class MainPresenter {
 
     private MainView view;
     private int qtdNovasNotificacoes;
@@ -20,8 +17,8 @@ public class MainPresenter implements IAtualizarTelas {
     private ListarMensagemPresenter listarMensagensPresenter;
     private EnviarMensagemPresenter enviarMensagensPresenter;
     private LoginPresenter loginPresenter;
-    private Usuario usuario;
-    private AtualizarTelasService atualizarTelasService;
+    private ConfiguracaoPresenter log = ConfiguracaoPresenter.getIntancia();
+
     private NotificacoesBusiness dbMensagens;
 
     public MainPresenter() {
@@ -33,19 +30,24 @@ public class MainPresenter implements IAtualizarTelas {
 
         this.dbMensagens = new NotificacoesBusiness();
 
-        this.loginPresenter = new LoginPresenter();
-
+//        this.loginPresenter = new LoginPresenter();
+//        inicializarLogin();
+//        try {
+//            Usuario usuarioLogado = this.loginPresenter.logar();  
+//            System.out.println(usuarioLogado);
+//            
+//        } catch (Exception e) {
+//            // error
+//            System.out.println("error");
+//        }
         this.view.setVisible(true);
 
-        //  atualizarTelasService = AtualizarTelasService.getInstancia();
         this.enviarMensagensPresenter = new EnviarMensagemPresenter();
         this.listarMensagensPresenter = new ListarMensagemPresenter();
 
-//        atualizarTelasService.addTelas(this);
-//        atualizarTelasService.addTelas(this.enviarMensagensPresenter);
-//        atualizarTelasService.addTelas(this.listarMensagensPresenter);
         inicializarEnviarMensagens();
         inicializarListarMensagens();
+        inicializarLog();
 
         this.view.getNotificacao().addActionListener(new ActionListener() {
             @Override
@@ -58,6 +60,13 @@ public class MainPresenter implements IAtualizarTelas {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 enviarNotificacoes();
+            }
+        });
+
+        this.view.getEscolherLog().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                abrirLog();
             }
         });
     }
@@ -93,14 +102,19 @@ public class MainPresenter implements IAtualizarTelas {
         this.view.getNotificacao().setVisible(false);
         this.view.getMensagem().setVisible(false);
         JInternalFrame internalFrame = this.loginPresenter.getView();
-//        internalFrame.setSize(this.view.getDesktopPane().getSize());
-//        internalFrame.setPreferredSize(this.view.getDesktopPane().getSize());
-//        int x = (this.view.getDesktopPane().getWidth() - internalFrame.getWidth()) / 2;
-//        int y = (this.view.getDesktopPane().getHeight() - internalFrame.getHeight()) / 2;
-//        internalFrame.setLocation(x, y);
-
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
+    }
+
+    private void inicializarLog() {
+
+        JInternalFrame internalFrame = this.log.getView();
+        this.view.getDesktopPane().add(internalFrame);
+    }
+
+    private void abrirLog() {
+
+        this.log.setVisible(true);
     }
 
     private void visualizarNotificacoes() {
@@ -116,13 +130,12 @@ public class MainPresenter implements IAtualizarTelas {
     private void novasNotificacoes() {
         try {
             this.qtdNovasNotificacoes = this.dbMensagens.getQtdNovasNotificacoes(3); // aqui vai ser feita a consulta
-            System.out.println(qtdNovasNotificacoes);
             this.user = "Admin: Matheus";
 
             this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
             this.view.getTipoUser().setText(this.user);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
     }
 
@@ -132,14 +145,5 @@ public class MainPresenter implements IAtualizarTelas {
 
     private void exibirEmTelaCheia() {
         this.view.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }
-
-    @Override
-    public void atualizarTela() {
-        try {
-            novasNotificacoes();
-        } catch (Exception ex) {
-            Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

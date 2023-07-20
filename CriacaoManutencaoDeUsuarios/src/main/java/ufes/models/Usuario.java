@@ -68,8 +68,6 @@ public class Usuario {
         return autorizado;
     }
     
-    
-    
     @Override
     public String toString() {
         return this.nome;

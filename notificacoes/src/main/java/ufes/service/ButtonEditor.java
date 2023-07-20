@@ -33,8 +33,6 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
 
                 // Acessa os dados da linha clicada
                 Integer idNotificacao = mensagens.get(clickedRow).getId();
-
-                System.out.println(mensagens.get(clickedRow).getBool_vizualizado());
                 if(mensagens.get(clickedRow).getBool_vizualizado() == true){
                     try {  
                         dbMensagens.alterarStatusMensagem(idNotificacao, false);
@@ -50,7 +48,6 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
                         Logger.getLogger(ButtonEditor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                // dbMensagens
                 fireEditingStopped(); // Indica que a edição da célula deve ser encerrada
             }
         });

@@ -12,7 +12,11 @@ import ufes.models.Log;
 
 public class EscritaEmArquivoJSON implements IArquivo {
     private static EscritaEmArquivoJSON instancia;
-    private final String filePath = "src/main/java/ufes/services/arquivo/LogJSON.json";
+    
+    File currentDir = new File(System.getProperty("user.dir"));
+    File parentDir = currentDir.getParentFile();
+    String parentDirectory = parentDir.getAbsolutePath();
+    private final String filePath = parentDirectory + "/usuario-log/src/main/java/ufes/services/arquivo/LogJSON.json";
 
     private FileWriter fw;
     private File file;
@@ -70,7 +74,5 @@ public class EscritaEmArquivoJSON implements IArquivo {
         } catch (IOException ioEx) {
             JOptionPane.showMessageDialog(null, ioEx);
         }
-        
-        System.out.println(this.gson.toJson(log));
     }
 }

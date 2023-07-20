@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import ufes.business.business.NotificacoesBusiness;
 import ufes.business.business.UsuarioBusiness;
 import ufes.models.Notificacao;
 import ufes.models.Usuario;
-import ufes.service.AtualizarTelasService;
 import ufes.view.EnviarMensagemView;
 
-public class EnviarMensagemPresenter implements IAtualizarTelas {
+public class EnviarMensagemPresenter {
 
     private EnviarMensagemView view;
 
@@ -36,7 +36,7 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
         try {
             loadData();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error ao listar as os usuarios cadastrados");
         }
 
         // setando modelo da lista de destinatarios
@@ -184,22 +184,9 @@ public class EnviarMensagemPresenter implements IAtualizarTelas {
         String tx_conteudo = this.view.getTitulo().getText();
 
         // atribundo as notificações para cada id de destinatario
-        ArrayList<Notificacao> notificacoes = new ArrayList<>();
         for (Usuario ds : destinatariosSelecionados) {
             Notificacao notificacao = new Notificacao(id_remetente, ds.getId(), tx_conteudo, tx_titulo, false);
             this.dbNotificacoes.insert(notificacao);
-        }
-    }
-
-    @Override
-    public void atualizarTela() {
-        try {
-            loadData();
-            adicionarDestinatario();
-            removerDestinatarios();
-            System.out.println("ufes.presenter.EnviarMensagemPresenter.atualizarTela() tela atualizada");
-        } catch (Exception ex) {
-            Logger.getLogger(ListarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

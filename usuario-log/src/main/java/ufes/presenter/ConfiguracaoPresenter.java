@@ -2,6 +2,7 @@ package ufes.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 import ufes.services.log.ILog;
 import ufes.services.log.LogJSON;
 import ufes.services.log.LogCSV;
@@ -9,9 +10,10 @@ import ufes.view.ConfiguracaoView;
 
 public class ConfiguracaoPresenter {
     private ConfiguracaoView view;
-    private static ILog tipoLog;
+    private ILog tipoLog;
+    private static ConfiguracaoPresenter configuracaoPresenter;
     
-    public ConfiguracaoPresenter(){
+    private ConfiguracaoPresenter(){
         this.view = new ConfiguracaoView();
         this.view.setVisible(false);
         
@@ -29,25 +31,34 @@ public class ConfiguracaoPresenter {
                 setConfiguracao();
                 view.setVisible(false);
             }
-        });
-        
+        }); 
+    }
+    
+    public static ConfiguracaoPresenter getIntancia(){
+        if(configuracaoPresenter == null){
+            configuracaoPresenter = new ConfiguracaoPresenter();
+        }
+        return configuracaoPresenter;
     }
     
     private void setConfiguracao(){
         if( this.view.getCmbBox().getItemAt(this.view.getCmbBox().getSelectedIndex()).equalsIgnoreCase("CSV")){
-            ConfiguracaoPresenter.tipoLog = new LogCSV();
+            this.tipoLog = new LogCSV();
         }
         else{
-            ConfiguracaoPresenter.tipoLog = new LogJSON();
+            this.tipoLog = new LogJSON();
         }
     }
     
-    public static ILog getTipoLog(){
-        return ConfiguracaoPresenter.tipoLog;
+    public ILog getTipoLog(){
+        return this.tipoLog;
     }
     
-    public void setVisible(){
-        this.view.setVisible(true);
+    public void setVisible(boolean visible){
+        this.view.setVisible(visible);
     }
-    
+
+    public ConfiguracaoView getView() {
+        return view;
+    }
 }

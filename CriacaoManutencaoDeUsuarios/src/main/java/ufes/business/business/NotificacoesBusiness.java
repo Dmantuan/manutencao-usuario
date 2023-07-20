@@ -2,12 +2,20 @@ package ufes.business.business;
 
 import java.util.List;
 import ufes.business.dao.NotificacoesDAO;
+import ufes.business.dao.NotificacoesDAO;
 import ufes.business.dao.UsuarioDAO;
-
+import ufes.business.dao.UsuarioDAO;
 import ufes.models.Notificacao;
+import ufes.models.Log;
+import ufes.models.Notificacao;
+import ufes.models.Usuario;
+import ufes.presenter.ConfiguracaoPresenter;
+import ufes.services.log.GerenciadorLog;
 
 public class NotificacoesBusiness {
-
+    
+    private ConfiguracaoPresenter logPresenter = ConfiguracaoPresenter.getIntancia();
+    
     private final NotificacoesDAO notificacoesDAO;
 
     private final UsuarioDAO usuarioDAO;
@@ -49,13 +57,33 @@ public class NotificacoesBusiness {
 
     public void delete(Integer id) throws Exception {
         validateExists(id);
-        this.notificacoesDAO.deleteById(id);
+        Notificacao notificacao =  notificacoesDAO.getById(id);
+        Usuario user = usuarioDAO.getById(notificacao.getId_destinatario());
+        
+        try {
+            this.notificacoesDAO.deleteById(id);
+            
+            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") enviada para: " + user.getNome());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        } catch (Exception e) {
+            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") enviada para: " + user.getNome(), e.getMessage());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        }    
     }
 
     public void alterarStatusMensagem(Integer id, boolean lida) throws Exception {
-        Notificacao notificacao = notificacoesDAO.getById(id);
-        System.out.println(notificacao.getBool_vizualizado() + " -> " + lida);
-        this.notificacoesDAO.alterarStatusMensagem(notificacao, lida);
+        Notificacao notificacao =  notificacoesDAO.getById(id);
+        Usuario user = usuarioDAO.getById(notificacao.getId_destinatario());
+        
+        try {
+            this.notificacoesDAO.alterarStatusMensagem(notificacao, lida);
+            
+            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        } catch (Exception e) {
+            Log log = new Log(notificacao.getTx_nomeRemetente(), user.getNome(), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado(), e.getMessage());
+            GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
+        }    
     }
 
     private void validate(Notificacao notificacao) throws Exception {

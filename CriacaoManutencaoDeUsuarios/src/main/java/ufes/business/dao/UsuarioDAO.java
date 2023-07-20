@@ -2,6 +2,8 @@ package ufes.business.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ufes.models.Usuario;
@@ -32,11 +34,15 @@ public class UsuarioDAO {
             if (!rs.next()) {
                 return null;
             }
-            Usuario usuario = new Usuario(id,
+
+            Timestamp timestamp = rs.getTimestamp("dt_criacao");
+            LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
+            Usuario usuario = new Usuario(rs.getInt("id"),
                     rs.getString("nm_usuario"),
                     rs.getString("tx_senha"),
                     rs.getString("tx_login"),
-                    rs.getTimestamp("dt_criacao").toLocalDateTime(),
+                    dt_criacao,
                     rs.getBoolean("bool_admin"),
                     rs.getBoolean("bool_autorizado")
             );
@@ -65,11 +71,15 @@ public class UsuarioDAO {
                 return null;
             }
 
+
+            Timestamp timestamp = rs.getTimestamp("dt_criacao");
+            LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
             Usuario usuario = new Usuario(rs.getInt("id"),
                     rs.getString("nm_usuario"),
                     rs.getString("tx_senha"),
                     rs.getString("tx_login"),
-                    rs.getTimestamp("dt_criacao").toLocalDateTime(),
+                    dt_criacao,
                     rs.getBoolean("bool_admin"),
                     rs.getBoolean("bool_autorizado")
             );
@@ -94,11 +104,14 @@ public class UsuarioDAO {
             List<Usuario> lista = new ArrayList<>();
 
             while (rs.next()) {
+                Timestamp timestamp = rs.getTimestamp("dt_criacao");
+                LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
                 Usuario usuario = new Usuario(rs.getInt("id"),
                         rs.getString("nm_usuario"),
                         rs.getString("tx_senha"),
                         rs.getString("tx_login"),
-                        rs.getTimestamp("dt_criacao").toLocalDateTime(),
+                        dt_criacao,
                         rs.getBoolean("bool_admin"),
                         rs.getBoolean("bool_autorizado")
                 );

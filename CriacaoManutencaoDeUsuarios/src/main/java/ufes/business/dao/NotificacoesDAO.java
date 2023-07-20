@@ -177,7 +177,7 @@ public class NotificacoesDAO {
                 + " un.id_destinatario as id_destinatario, "
                 + " n.tx_conteudo as tx_conteudo, "
                 + " n.tx_titulo as tx_titulo, "
-                + " n.bool_visualizado as bool_visualizado "
+                + " n.bool_visualizado as bool_visualizado, "
                 + " u.nm_usuario as nm_usuario ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");

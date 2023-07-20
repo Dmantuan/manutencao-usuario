@@ -64,7 +64,7 @@ public class UsuarioBusiness {
 
         return listaErros;
     }
-
+    
     private Usuario validateExists(Integer id) throws Exception {
         Usuario usuario = this.usuarioDAO.getById(id);
         if (usuario == null) {
