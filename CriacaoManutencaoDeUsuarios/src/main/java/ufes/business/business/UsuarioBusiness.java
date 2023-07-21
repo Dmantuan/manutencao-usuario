@@ -1,12 +1,12 @@
 package ufes.business.business;
 
 import com.pss.senha.validacao.ValidadorSenha;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ufes.business.dao.UsuarioDAO;
 import ufes.models.Log;
 import ufes.models.MultipleExceptions;
-import ufes.models.Notificacao;
 import ufes.models.Usuario;
 import ufes.presenter.ConfiguracaoPresenter;
 import ufes.services.log.GerenciadorLog;
@@ -22,7 +22,11 @@ public class UsuarioBusiness {
     public void insert(Usuario usuario) throws Exception {
 
         try {
+            usuario.setAdmin(Boolean.FALSE);
+            usuario.setData(LocalDateTime.now());
+            usuario.setAutorizado(Boolean.FALSE);
             validate(usuario);
+            
             this.usuarioDAO.insert(usuario);
             
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Isercao de usuario");
@@ -99,7 +103,7 @@ public class UsuarioBusiness {
             exceptionList.add(new Exception("O Login de usuario esta vazio"));
         }
         exceptionList.addAll(validatePassWord(usuario.getSenha()));
-
+              
         if(!exceptionList.isEmpty()){
             throw new MultipleExceptions(exceptionList);
         }
@@ -107,9 +111,6 @@ public class UsuarioBusiness {
 
     private List validatePassWord(String senha) {
         List<String> listaErros = this.validadorSenha.validar(senha);
-
-        System.out.println(listaErros);
-        System.out.println(listaErros.isEmpty());
         
         return listaErros;
     }

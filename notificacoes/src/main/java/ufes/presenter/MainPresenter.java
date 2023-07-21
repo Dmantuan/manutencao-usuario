@@ -13,13 +13,13 @@ import ufes.view.MainView;
 
 public class MainPresenter {
 
-    private MainView view;
+    private final MainView view;
     private int qtdNovasNotificacoes;
     private String user;
-    private ListarMensagemPresenter listarMensagensPresenter;
-    private EnviarMensagemPresenter enviarMensagensPresenter;
-    private CrudPresenter crudPresenter;
-    private LoginPresenter loginPresenter;
+    private final ListarMensagemPresenter listarMensagensPresenter;
+    private final EnviarMensagemPresenter enviarMensagensPresenter;
+    private final CrudPresenter crudPresenter;
+    private final LoginPresenter loginPresenter;
     private ConfiguracaoPresenter log = ConfiguracaoPresenter.getIntancia();
     private Usuario usuario;
 
@@ -34,7 +34,7 @@ public class MainPresenter {
 
         this.dbMensagens = new NotificacoesBusiness();
 
-        this.loginPresenter = new LoginPresenter(this);
+        this.loginPresenter = new LoginPresenter();
         inicializarLogin();
         
         this.view.setVisible(true);
@@ -75,6 +75,7 @@ public class MainPresenter {
                 abrirManterUsuarios();
             }
         });
+        logar();
     }
 
     private void inicializarListarMensagens() {
@@ -135,9 +136,11 @@ public class MainPresenter {
         this.log.setVisible(true);
     }
     
-    public void logar(Usuario usuario){
+    public void logar(){
         
-        this.usuario = usuario;
+        this.loginPresenter.loginHandler();
+
+        this.usuario = this.loginPresenter.getUsuario();
         this.user = this.usuario.getNome();
         if(usuario.getAdmin()){
             this.view.getNotificacao().setVisible(true);

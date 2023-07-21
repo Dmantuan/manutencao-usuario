@@ -8,17 +8,18 @@ import ufes.views.LoginView;
 import com.pss.senha.validacao.ValidadorSenha;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ufes.business.business.UsuarioBusiness;
-import ufes.presenter.MainPresenter;
 
 public class LoginPresenter {
 
     private final LoginView view;
     private final UsuarioBusiness usuarioBusiness;
     private final CardLayout cardLayout;
+    private Usuario usuarioLogado;
 
-    public LoginPresenter(MainPresenter mainPresenter) {
+    public LoginPresenter() {
         this.usuarioBusiness = new UsuarioBusiness();
 
         this.view = new LoginView();
@@ -35,7 +36,7 @@ public class LoginPresenter {
         this.view.getBtn_login_loginPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                logar(mainPresenter);
+                logar();
             }
         });
 
@@ -64,11 +65,10 @@ public class LoginPresenter {
         cardLayout.show(view.getLoginPanel(), "login");
     }
 
-    public void logar(MainPresenter mainPresenter) {
-
-        Usuario usuario = null;
+    public void logar() {
+        
         try {
-            usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().getText());
+            Usuario usuario = usuarioBusiness.getByLogin(view.getTxField_login_loginPanel().getText());
 
             if (usuario == null) {
                 throw new Exception("O login do usuario nao consta no banco de dados");
@@ -78,10 +78,11 @@ public class LoginPresenter {
                 throw new Exception("A senha do usuario esta errada");
             }
             
-            mainPresenter.logar(usuario);
-        } catch (Exception e){
+            modificarLogin(usuario);
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(view, e.getMessage());
-        } 
+        }
     }
 
     public void cadastrar() {
@@ -92,17 +93,8 @@ public class LoginPresenter {
                     view.getTxField_login_cadastroPanel().getText()
             );
             usuarioBusiness.insert(usuario);
-
-            ValidadorSenha validadorSenha = new ValidadorSenha();
-            List passWordException = new ArrayList<>();
-
-            passWordException.addAll(validadorSenha.validar(usuario.getSenha()));
-
-            if (passWordException == null) {
-                System.out.println("cadastrado com sucesso");
-            }
-
-            throw new Exception(passWordException.toString());
+            
+            JOptionPane.showMessageDialog(view, "Usuario cadastrado com sucesso");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, e.getMessage());
         }
@@ -111,8 +103,27 @@ public class LoginPresenter {
     public LoginView getView() {
         return view;
     }
-    
+
     public void setVisible(boolean visible) {
         view.setVisible(visible);
+    }
+
+    public Usuario getUsuario() {
+        return this.usuarioLogado;
+    }
+    
+    public synchronized void modificarLogin(Usuario usuario){
+        usuarioLogado = usuario;
+        notify();
+    }
+    
+    public synchronized void loginHandler(){
+        while(usuarioLogado == null){
+            try{
+                wait();
+            } catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

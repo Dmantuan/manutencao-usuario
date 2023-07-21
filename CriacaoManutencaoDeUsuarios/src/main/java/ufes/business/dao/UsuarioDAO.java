@@ -182,14 +182,17 @@ public class UsuarioDAO {
     public void insert(Usuario usuario) throws Exception {
         StringBuilder query = new StringBuilder();
 
-        query.append(" INSERT INTO usuario (nm_usuario, tx_senha, tx_login) ");
-        query.append(" VALUES (?, ?, ?) ");
+        query.append(" INSERT INTO usuario (nm_usuario, tx_senha, tx_login, bool_admin, dt_criacao, bool_autorizado) ");
+        query.append(" VALUES (?, ?, ?, ?, ?, ?) ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getSenha());
             stm.setString(3, usuario.getLogin());
+            stm.setBoolean(4, usuario.getAdmin());
+            stm.setTimestamp(5, Timestamp.valueOf(usuario.getData()));
+            stm.setBoolean(6, usuario.getAutorizado());
 
             stm.execute();
         } catch (Exception e) {

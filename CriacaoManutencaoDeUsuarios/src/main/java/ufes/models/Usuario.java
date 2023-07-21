@@ -56,6 +56,18 @@ public class Usuario {
         this.login = login;
     }
 
+    public void setData(LocalDateTime data) {
+        this.data = data;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
+    public void setAutorizado(Boolean autorizado) {
+        this.autorizado = autorizado;
+    }
+
     public LocalDateTime getData() {
         return data;
     }

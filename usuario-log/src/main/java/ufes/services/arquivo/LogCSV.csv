@@ -42,3 +42,19 @@ Cannot invoke ""java.util.Collection.toArray()"" because ""c"" is null;Isercao d
 =======
 ;Mensagem com id: (7) maracada como lida?: false;Sigismund;20/JULY/2023;19:40:49;26
 >>>>>>> origin/matheus
+;Isercao de usuario;Daniel;20/JULY/2023;20:29:18;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;Daniel;20/JULY/2023;20:30:46;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;daniel;20/JULY/2023;20:31:35;null
+;Isercao de usuario;Daniel;20/JULY/2023;20:50:14;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;Daniel;20/JULY/2023;20:50:18;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;Daniel;20/JULY/2023;20:50:43;null
+;Isercao de usuario;jose;20/JULY/2023;20:55:10;null
+;Isercao de usuario;jose;20/JULY/2023;20:55:16;null
+;Isercao de usuario;daniel;20/JULY/2023;21:40:27;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;daniel;20/JULY/2023;21:40:45;null
+;Isercao de usuario;Matheus;20/JULY/2023;21:50:27;null
+;Isercao de usuario;dan;20/JULY/2023;21:52:19;null
+[SQLITE_BUSY] The database file is locked (database is locked);Isercao de usuario;fsdaf;20/JULY/2023;21:53:15;null
+[SQLITE_BUSY] The database file is locked (database is locked);Isercao de usuario;fsdaf;20/JULY/2023;21:53:25;null
+;Isercao de usuario;;20/JULY/2023;21:56:20;null
+;Isercao de usuario;danie;20/JULY/2023;21:56:57;null
