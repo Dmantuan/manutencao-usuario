@@ -96,7 +96,7 @@ public class NotificacoesBusiness {
         if (this.usuarioDAO.getById(notificacao.getId_remetente()) == null) {
             throw new Exception("O id do usuario remetente não consta na nossa base de dados");
         }
-        if (notificacao.getTx_titulo() == null) {
+        if ( notificacao.getTx_titulo().isEmpty()) {
             notificacao.setTx_titulo("SEM ASSUNTO");
         }
         if (notificacao.getTx_conteudo().isEmpty()) {

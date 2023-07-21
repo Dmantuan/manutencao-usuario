@@ -12,9 +12,9 @@ import ufes.presenter.ConfiguracaoPresenter;
 import ufes.services.log.GerenciadorLog;
 
 public class UsuarioBusiness {
-    
+
     private ConfiguracaoPresenter logPresenter = ConfiguracaoPresenter.getIntancia();
-    
+
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     ValidadorSenha validadorSenha = new ValidadorSenha();
@@ -22,64 +22,72 @@ public class UsuarioBusiness {
     public void insert(Usuario usuario) throws Exception {
 
         try {
-            usuario.setAdmin(Boolean.FALSE);
+
+            if (usuarioDAO.getAll() == null) {
+                usuario.setAdmin(Boolean.TRUE);
+                usuario.setAutorizado(Boolean.TRUE);
+            } else {
+                usuario.setAdmin(Boolean.FALSE);
+                usuario.setAutorizado(Boolean.FALSE);
+            }
+
             usuario.setData(LocalDateTime.now());
-            usuario.setAutorizado(Boolean.FALSE);
             validate(usuario);
-            
+
             this.usuarioDAO.insert(usuario);
-            
+
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Isercao de usuario");
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Isercao de usuario", e.getMessage());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
-        }   
+        }
     }
 
     public void update(Integer id, String nome, String login, String senha) throws Exception {
         validateExists(id);
         validatePassWord(senha);
         Usuario usuario = this.usuarioDAO.getById(id);
-        
+
         try {
             this.usuarioDAO.update(id, nome, login, senha);
-            
+
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de usuario");
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de usuario", e.getMessage());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
-        }   
+        }
     }
 
     public void updateAdmin(Integer id, Boolean admin, Boolean autorizado) throws Exception {
         validateExists(id);
-        Usuario usuario  = this.usuarioDAO.getById(id);
-        
-        try {this.usuarioDAO.updateAdmin(id, autorizado, admin);
-            
+        Usuario usuario = this.usuarioDAO.getById(id);
+
+        try {
+            this.usuarioDAO.updateAdmin(id, autorizado, admin);
+
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de admin");
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de admin", e.getMessage());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
-        }   
+        }
     }
 
     public void delete(Integer id) throws Exception {
         validateExists(id);
-        Usuario usuario  = this.usuarioDAO.getById(id);
-        
+        Usuario usuario = this.usuarioDAO.getById(id);
+
         try {
             this.usuarioDAO.deleteById(id);
-            
+
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Deletando o usuario");
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Deletando o usuario", e.getMessage());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
-        }   
+        }
     }
 
     public Usuario getUserById(Integer id) throws Exception {
@@ -90,8 +98,16 @@ public class UsuarioBusiness {
         return this.usuarioDAO.getAll();
     }
 
+    public List<Usuario> getAllUsersNaoAutorizados() throws Exception {
+        return this.usuarioDAO.getAllNaoAutorizados();
+    }
+
     public Usuario getByLogin(String login) throws Exception {
-        return this.usuarioDAO.getByLogin(login);
+        Usuario user = this.usuarioDAO.getByLogin(login);
+        if (!user.getAutorizado()) {
+            throw new Exception("O usuario ainda nao esta autorizado");
+        }
+        return user;
     }
 
     private void validate(Usuario usuario) throws Exception {
@@ -103,18 +119,18 @@ public class UsuarioBusiness {
             exceptionList.add(new Exception("O Login de usuario esta vazio"));
         }
         exceptionList.addAll(validatePassWord(usuario.getSenha()));
-              
-        if(!exceptionList.isEmpty()){
+
+        if (!exceptionList.isEmpty()) {
             throw new MultipleExceptions(exceptionList);
         }
     }
 
     private List validatePassWord(String senha) {
         List<String> listaErros = this.validadorSenha.validar(senha);
-        
+
         return listaErros;
     }
-    
+
     private Usuario validateExists(Integer id) throws Exception {
         Usuario usuario = this.usuarioDAO.getById(id);
         if (usuario == null) {

@@ -91,7 +91,7 @@ public class CrudPresenter {
                 }
             }
         });
-
+        
         view.getBtn_autorizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
