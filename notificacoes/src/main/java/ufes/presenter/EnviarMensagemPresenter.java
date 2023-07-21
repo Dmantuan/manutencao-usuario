@@ -22,12 +22,12 @@ public class EnviarMensagemPresenter {
     private ArrayList<Usuario> usuarios;
     private UsuarioBusiness dbUsuarios;
     private NotificacoesBusiness dbNotificacoes;
+    private Usuario user;
 
     DefaultListModel<Usuario> listModelDestinatarios = new DefaultListModel<>();
     DefaultListModel<Usuario> listModelDestinatariosSelecionados = new DefaultListModel<>();
 
     public EnviarMensagemPresenter() {
-
         this.view = new EnviarMensagemView();
         this.dbUsuarios = new UsuarioBusiness();
         this.dbNotificacoes = new NotificacoesBusiness();
@@ -36,7 +36,7 @@ public class EnviarMensagemPresenter {
         try {
             loadData();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error ao listar as os usuarios cadastrados");
+            JOptionPane.showMessageDialog(null, "Error ao listar os usuarios cadastrados");
         }
 
         // setando modelo da lista de destinatarios
@@ -119,6 +119,15 @@ public class EnviarMensagemPresenter {
     public EnviarMensagemView getView() {
         return this.view;
     }
+    
+    public void setUser(Usuario user){
+        this.user = user;
+        try {
+            loadData();
+        } catch (Exception ex) {
+            Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void setVisible(boolean visible) {
 
@@ -131,7 +140,7 @@ public class EnviarMensagemPresenter {
     private void loadData() throws Exception {
 
         this.usuarios = new ArrayList<>();
-        this.usuarios = (ArrayList<Usuario>) dbUsuarios.getAllUsers();
+        this.usuarios = (ArrayList<Usuario>) dbUsuarios.getAllUsers(this.user.getId());
     }
 
     private DefaultListModel<Usuario> buscaPorDestinatarios(DefaultListModel<Usuario> listModelData, String user) {

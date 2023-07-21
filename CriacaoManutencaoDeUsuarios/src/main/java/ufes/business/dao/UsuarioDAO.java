@@ -90,15 +90,50 @@ public class UsuarioDAO {
         }
     }
 
-    public List<Usuario> getAll() throws Exception {
+    public List<Usuario> getAll(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
         query.append(" SELECT * ");
-        query.append(" FROM usuario ");
+        query.append(" FROM usuario as u ");
+        query.append(" WHERE bool_autorizado = TRUE ");
+        query.append(" AND u.id != ? ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
 
+            List<Usuario> lista = new ArrayList<>();
+
+            while (rs.next()) {
+                Timestamp timestamp = rs.getTimestamp("dt_criacao");
+                LocalDateTime dt_criacao = timestamp != null ? timestamp.toLocalDateTime() : null;
+
+                Usuario usuario = new Usuario(rs.getInt("id"),
+                        rs.getString("nm_usuario"),
+                        rs.getString("tx_senha"),
+                        rs.getString("tx_login"),
+                        dt_criacao,
+                        rs.getBoolean("bool_admin"),
+                        rs.getBoolean("bool_autorizado")
+                );
+                lista.add(usuario);
+            }
+
+            return lista;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
+     public List<Usuario> getAllAll() throws Exception {
+        StringBuilder query = new StringBuilder();
+
+        query.append(" SELECT * ");
+        query.append(" FROM usuario as u ");
+
+        try {
+            PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
             ResultSet rs = stm.executeQuery();
 
             List<Usuario> lista = new ArrayList<>();
@@ -129,7 +164,7 @@ public class UsuarioDAO {
 
         query.append(" SELECT * ");
         query.append(" FROM usuario ");
-        query.append(" WHERE bool_altorizado = FALSE ");
+        query.append(" WHERE bool_autorizado = FALSE ");
         
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());

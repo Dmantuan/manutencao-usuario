@@ -42,7 +42,6 @@ public class NotificacoesBusiness {
     public List<Notificacao> getAll() throws Exception {
         return notificacoesDAO.getAll();
     }
-
     public List<Notificacao> getAllByUserSendId(Integer id) throws Exception {
         return notificacoesDAO.getAllByUserSendId(id);
     }

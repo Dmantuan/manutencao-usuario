@@ -143,6 +143,12 @@ public class MainPresenter {
         novasNotificacoes();
 
         this.listarMensagensPresenter.setIduser(this.usuario.getId());
+        this.crudPresenter.setUser(this.usuario);
+        if(usuario != null){
+            this.crudPresenter.loadUsers();
+        }
+        
+        this.enviarMensagensPresenter.setUser(usuario);
         novasNotificacoes();
         inicializarManterUusarios();
         inicializarEnviarMensagens();
