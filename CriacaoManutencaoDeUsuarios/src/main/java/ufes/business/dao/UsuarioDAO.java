@@ -194,18 +194,17 @@ public class UsuarioDAO {
         }
     }
     
-    public void updateAdmin(Integer id, Boolean autorizado, Boolean admin) throws Exception {
+    public void updateAutorizado(Integer id, Boolean autorizado) throws Exception {
         StringBuilder query = new StringBuilder();
 
         query.append(" UPDATE usuario as u ");
-        query.append(" SET bool_admin = ?, bool_autorizado = ? ");
+        query.append(" SET bool_autorizado = ? ");
         query.append(" WHERE u.id = ? ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
-            stm.setBoolean(1, admin);
-            stm.setBoolean(2, autorizado);
-            stm.setInt(3, id);
+            stm.setBoolean(1, autorizado);
+            stm.setInt(2, id);
 
             stm.execute();
         } catch (Exception e) {

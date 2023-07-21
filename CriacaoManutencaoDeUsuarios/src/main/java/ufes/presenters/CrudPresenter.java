@@ -34,7 +34,10 @@ public class CrudPresenter {
     private NotificacoesBusiness notificacaoBusines;
     private CardLayout cardLayout;
     private List<Usuario> usuarios;
+    private List<Usuario> usuariosAutorizar;
     private Usuario user;
+    
+    private DefaultTableModel buscar_model = new DefaultTableModel();
 
     public CrudPresenter() {
         this.usuarioBusiness = new UsuarioBusiness();
@@ -54,21 +57,21 @@ public class CrudPresenter {
         ICrudCommand visualizarCommand = new VisualizarCommand(this);
 
         //Criando tabela de usuarios com scrool pane
-        DefaultTableModel buscar_model = new DefaultTableModel();
+//        DefaultTableModel buscar_model = new DefaultTableModel();
         buscar_model.addColumn("Nome");
         buscar_model.addColumn("Login");
         buscar_model.addColumn("Notificacoes Lidas");
         buscar_model.addColumn("Notificacoes enviadas");
-        
+
         // Criando tabela de usuarios com scrool pane
         DefaultTableModel autorizar_model = new DefaultTableModel();
         autorizar_model.addColumn("Nome");
         autorizar_model.addColumn("Login");
         autorizar_model.addColumn("Notificacoes Lidas");
         autorizar_model.addColumn("Notificacoes enviadas");
-        
+
         // ####### Pagina de buscar usuario
-        // loadData(buscar_model);
+//        loadData(buscar_model);
 
         view.getBtn_visuzalizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
@@ -79,32 +82,33 @@ public class CrudPresenter {
 
                 view.getTxField_nome_visualizarPanel().setText(usuarios.get(select).getNome());
                 view.getTxField_nome_visualizarPanel().setEnabled(false);
-                
+
                 String pattern = "dd/MM/yyyy HH:mm:ss";
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-                view.getTxField_dataCricao_visualizarPanel().setText( usuarios.get(select).getData().format(formatter));
+                view.getTxField_dataCricao_visualizarPanel().setText(usuarios.get(select).getData().format(formatter));
                 view.getTxField_dataCricao_visualizarPanel().setEnabled(false);
                 try {
-                    view.getTxField_msgRecebidas_visualizarPanel().setText(String.valueOf( notificacaoBusines.getQtdNovasNotificacoes(usuarios.get(select).getId())));
-                     view.getTxField_msgRecebidas_visualizarPanel().setEnabled(false);
+                    view.getTxField_msgRecebidas_visualizarPanel().setText(String.valueOf(notificacaoBusines.getQtdNovasNotificacoes(usuarios.get(select).getId())));
+                    view.getTxField_msgRecebidas_visualizarPanel().setEnabled(false);
                 } catch (Exception ex) {
                     Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 try {
-                    view.getTxField_msgLida_visualizarPanel().setText(String.valueOf( notificacaoBusines.getQtdNotificacoesLidas(usuarios.get(select).getId())));
+                    view.getTxField_msgLida_visualizarPanel().setText(String.valueOf(notificacaoBusines.getQtdNotificacoesLidas(usuarios.get(select).getId())));
                     view.getTxField_msgLida_visualizarPanel().setEnabled(false);
                 } catch (Exception ex) {
                     Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
         view.getBtn_autorizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 control.setCommand(autorizarCommand);
                 control.pressionarBotao();
                 carregarTabelaAutorizarModel(autorizar_model);
+                loadUsersAutorizar();
             }
         });
 
@@ -124,9 +128,9 @@ public class CrudPresenter {
                 control.pressionarBotao();
 
                 view.getTxField_nome_editarPanel().setText(usuarios.get(select).getNome());
-                view.getTxField_login_editarPanel().setText( usuarios.get(select).getLogin());
+                view.getTxField_login_editarPanel().setText(usuarios.get(select).getLogin());
                 view.getTxField_senhaAntiga_editarPanel().setText(usuarios.get(select).getSenha());
-                view.getTxField_senhaNova_editarPanel().setText("");  
+                view.getTxField_senhaNova_editarPanel().setText("");
             }
         });
 
@@ -141,11 +145,12 @@ public class CrudPresenter {
                         JOptionPane.showMessageDialog(view, "Usuario excluido");
                         control.setCommand(buscarCommand);
                         control.pressionarBotao();
-                        loadData(buscar_model);
+                        loadData();
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(view, e.getMessage());
                 }
+
             }
         });
 
@@ -177,7 +182,7 @@ public class CrudPresenter {
                 }
                 control.setCommand(visualizarCommand);
                 control.pressionarBotao();
-                loadData(buscar_model);
+                loadData();
             }
         });
 
@@ -193,14 +198,13 @@ public class CrudPresenter {
         view.getBtn_autorizar_autorizarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                //TODO: chamar o log
+                int select = view.getTb_usuarios_autorizarPanel().getSelectedRow();
                 try {
-                    usuarioBusiness.updateAdmin(1, Boolean.TRUE, Boolean.TRUE);
+                    usuarioBusiness.updateAutorizado(usuariosAutorizar.get(select).getId(), Boolean.TRUE);
 
-                    control.setCommand(autorizarCommand);
-                    control.pressionarBotao();
+                    JOptionPane.showMessageDialog(view, "Usuario foi autorizado com sucesso");
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(view, "Nao foi possivel autorizar o usuario");
+                    JOptionPane.showMessageDialog(view, e.getMessage());
                 }
                 control.setCommand(buscarCommand);
                 control.pressionarBotao();
@@ -242,28 +246,25 @@ public class CrudPresenter {
         return this.view;
     }
 
-    public void setUser(Usuario user){
+    public void setUser(Usuario user) {
         this.user = user;
     }
-    
-    public void setVisible(boolean visible){
+
+    public void setVisible(boolean visible) {
         EventQueue.invokeLater(() -> {
             view.setVisible(visible);
             view.toFront(); // Abrir a tela na frente de outras
         });
     }
-    
-    public void loadUsers(){
+
+    public void loadData() {
+        
         try {
             this.usuarios = usuarioBusiness.getAllUsers(this.user.getId());
         } catch (Exception ex) {
             Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void loadData(DefaultTableModel buscar_model) {
         
-        loadUsers();
         buscar_model.setNumRows(0);
         try {
             for (Usuario usuario : usuarios) {
@@ -275,17 +276,27 @@ public class CrudPresenter {
 
         view.getTb_usuarios_buscarPanel().setModel(buscar_model);
     }
-    
-    private void carregarTabelaAutorizarModel(DefaultTableModel autorizar_model){
-        loadUsers();
+
+    public void loadUsersAutorizar() {
         try {
-            for (Usuario usuario : usuarioBusiness.getAllUsers(this.user.getId())) {
+            this.usuariosAutorizar = usuarioBusiness.getAllUsersNaoAutorizados();
+        } catch (Exception ex) {
+            Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void carregarTabelaAutorizarModel(DefaultTableModel autorizar_model) {
+
+        autorizar_model.setNumRows(0);
+        loadUsersAutorizar();
+        try {
+            for (Usuario usuario : usuariosAutorizar) {
                 autorizar_model.addRow(new Object[]{usuario.getNome(), usuario.getLogin(), usuario.getSenha(), usuario.getSenha()});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, "Nao foi possivel carregar os dados da tabela");
         }
-        
+
         view.getTb_usuarios_autorizarPanel().setModel(autorizar_model);
     }
 }

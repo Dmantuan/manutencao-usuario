@@ -144,8 +144,10 @@ public class MainPresenter {
 
         this.listarMensagensPresenter.setIduser(this.usuario.getId());
         this.crudPresenter.setUser(this.usuario);
+        this.enviarMensagensPresenter.setUser(this.usuario);
+        this.enviarMensagensPresenter.loadData();
         if(usuario != null){
-            this.crudPresenter.loadUsers();
+            this.crudPresenter.loadData();
         }
         
         this.enviarMensagensPresenter.setUser(usuario);

@@ -52,7 +52,8 @@ public class UsuarioBusiness {
 
         try {
             this.usuarioDAO.update(id, nome, login, senha);
-
+            usuario = this.usuarioDAO.getById(id);
+            
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de usuario");
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
         } catch (Exception e) {
@@ -61,12 +62,13 @@ public class UsuarioBusiness {
         }
     }
 
-    public void updateAdmin(Integer id, Boolean admin, Boolean autorizado) throws Exception {
+    public void updateAutorizado(Integer id, Boolean autorizado) throws Exception {
         validateExists(id);
         Usuario usuario = this.usuarioDAO.getById(id);
 
         try {
-            this.usuarioDAO.updateAdmin(id, autorizado, admin);
+            this.usuarioDAO.updateAutorizado(id, autorizado);
+            usuario = this.usuarioDAO.getById(id);
 
             Log log = new Log(usuario.getNome(), String.valueOf(usuario.getId()), "Update de admin");
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);
@@ -140,5 +142,4 @@ public class UsuarioBusiness {
 
         return usuario;
     }
-
 }

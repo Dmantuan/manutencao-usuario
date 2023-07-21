@@ -73,6 +73,7 @@ public class NotificacoesBusiness {
         
         try {
             this.notificacoesDAO.alterarStatusMensagem(notificacao, lida);
+            user = usuarioDAO.getById(notificacao.getId_destinatario());
             
             Log log = new Log(notificacao.getTx_nomeRemetente(), String.valueOf(user.getId()), "Mensagem com id: (" + notificacao.getId()+ ") maracada como lida?: " + notificacao.getBool_vizualizado());
             GerenciadorLog.salvarLog(logPresenter.getTipoLog(), log);

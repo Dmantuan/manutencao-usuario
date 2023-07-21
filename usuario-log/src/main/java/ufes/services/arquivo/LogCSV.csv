@@ -87,3 +87,20 @@ Cannot invoke ""java.util.Collection.toArray()"" because ""c"" is null;Isercao d
 ;Isercao de usuario;;21/JULY/2023;1:57:17;null
 ;Isercao de usuario;daniel;21/JULY/2023;1:58:7;null
 ;Isercao de usuario;daniel;21/JULY/2023;1:58:36;null
+;Update de admin;Matheus;21/JULY/2023;2:14:46;57
+;Update de admin;daniel;21/JULY/2023;2:35:47;58
+;Isercao de usuario;dan2;21/JULY/2023;2:44:57;null
+;Update de admin;dan2;21/JULY/2023;2:45:24;59
+;Isercao de usuario;dan3;21/JULY/2023;2:48:16;null
+;Update de admin;dan3;21/JULY/2023;2:48:35;60
+;Isercao de usuario;dan4;21/JULY/2023;2:49:41;null
+;Update de admin;dan4;21/JULY/2023;2:50:20;61
+;Isercao de usuario;dan5;21/JULY/2023;2:51:52;null
+;Update de admin;dan5;21/JULY/2023;2:52:21;62
+;Isercao de usuario;dan6;21/JULY/2023;2:58:26;null
+;Update de admin;dan6;21/JULY/2023;2:58:45;63
+;Deletando o usuario;dan6;21/JULY/2023;3:7:18;63
+;Deletando o usuario;dan5;21/JULY/2023;3:9:8;62
+;Update de usuario;dan4;21/JULY/2023;3:9:43;61
+;Mensagem com id: (23) maracada como lida?: false;daniel;21/JULY/2023;3:26:36;58
+;Mensagem com id: (24) maracada como lida?: false;Matheus;21/JULY/2023;3:28:54;57

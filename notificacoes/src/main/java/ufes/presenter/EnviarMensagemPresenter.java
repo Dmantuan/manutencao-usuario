@@ -24,30 +24,13 @@ public class EnviarMensagemPresenter {
     private NotificacoesBusiness dbNotificacoes;
     private Usuario user;
 
-    DefaultListModel<Usuario> listModelDestinatarios = new DefaultListModel<>();
-    DefaultListModel<Usuario> listModelDestinatariosSelecionados = new DefaultListModel<>();
+    DefaultListModel<Usuario> listModelDestinatarios;
+    DefaultListModel<Usuario> listModelDestinatariosSelecionados;
 
     public EnviarMensagemPresenter() {
         this.view = new EnviarMensagemView();
         this.dbUsuarios = new UsuarioBusiness();
         this.dbNotificacoes = new NotificacoesBusiness();
-
-        // Criação dos objetos de exemplo
-        try {
-            loadData();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error ao listar os usuarios cadastrados");
-        }
-
-        // setando modelo da lista de destinatarios
-        for (Usuario item : usuarios) {
-            listModelDestinatarios.addElement(item);
-        }
-        this.view.getDestinatarios().setModel(listModelDestinatarios);
-
-        // setando modelo da lista de destinatarios selecionados
-        this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
-        this.view.setVisible(true);
 
         this.view.getAdicionarDestinatarios().addActionListener(new ActionListener() {
             @Override
@@ -98,7 +81,6 @@ public class EnviarMensagemPresenter {
                 DefaultListModel<Usuario> lsModel;
                 String user = view.getTextoBuscaDestinatarios().getText();
                 lsModel = buscaPorDestinatarios(listModelDestinatarios, user);
-                System.out.println(lsModel);
                 view.getDestinatarios().setModel(lsModel);
             }
         });
@@ -110,7 +92,6 @@ public class EnviarMensagemPresenter {
                 DefaultListModel<Usuario> lsModel;
                 String user = view.getTextoBuscaDestinatariosSelect().getText();
                 lsModel = buscaPorDestinatarios(listModelDestinatariosSelecionados, user);
-                System.out.println(lsModel);
                 view.getDestinatariosSelect().setModel(lsModel);
             }
         });
@@ -122,11 +103,6 @@ public class EnviarMensagemPresenter {
     
     public void setUser(Usuario user){
         this.user = user;
-        try {
-            loadData();
-        } catch (Exception ex) {
-            Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void setVisible(boolean visible) {
@@ -137,10 +113,26 @@ public class EnviarMensagemPresenter {
         });
     }
 
-    private void loadData() throws Exception {
+    public void loadData() {
 
         this.usuarios = new ArrayList<>();
-        this.usuarios = (ArrayList<Usuario>) dbUsuarios.getAllUsers(this.user.getId());
+        this.listModelDestinatarios = new DefaultListModel<>();
+        this.listModelDestinatariosSelecionados = new DefaultListModel<>();
+        
+        try {
+            this.usuarios = (ArrayList<Usuario>) dbUsuarios.getAllUsers(this.user.getId());
+        } catch (Exception ex) {
+            Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // setando modelo da lista de destinatarios
+        for (Usuario item : usuarios) {
+            listModelDestinatarios.addElement(item);
+        }
+
+        this.view.getDestinatarios().setModel(listModelDestinatarios);
+        this.view.getDestinatariosSelect().setModel(listModelDestinatariosSelecionados);
+        this.view.setVisible(true);
     }
 
     private DefaultListModel<Usuario> buscaPorDestinatarios(DefaultListModel<Usuario> listModelData, String user) {
@@ -184,12 +176,13 @@ public class EnviarMensagemPresenter {
     private void enviarMensagem() throws Exception {
 
         List<Usuario> destinatariosSelecionados = new ArrayList<>();
+        
         for (int i = 0; i < listModelDestinatariosSelecionados.size(); i++) {
             destinatariosSelecionados.add(listModelDestinatariosSelecionados.get(i));
         }
 
         // Criar a mensagem e enviar
-        Integer id_remetente = 1; // ver dps pra puxar o usuario logado
+        Integer id_remetente = this.user.getId();
         String tx_titulo = this.view.getTitulo().getText();
         String tx_conteudo = this.view.getMensagem().getText();
 
@@ -198,5 +191,9 @@ public class EnviarMensagemPresenter {
             Notificacao notificacao = new Notificacao(id_remetente, ds.getId(), tx_conteudo, tx_titulo, false);
             this.dbNotificacoes.insert(notificacao);
         }
+        
+        loadData();
+        this.view.getTitulo().setText("");
+        this.view.getMensagem().setText("");
     }
 }
