@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import ufes.business.business.NotificacoesBusiness;
 import ufes.models.Usuario;
 import ufes.presenters.CrudPresenter;

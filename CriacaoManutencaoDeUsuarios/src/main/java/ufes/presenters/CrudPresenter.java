@@ -69,7 +69,7 @@ public class CrudPresenter {
                 control.pressionarBotao();
             }
         });
-
+        
         view.getBtn_autorizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
