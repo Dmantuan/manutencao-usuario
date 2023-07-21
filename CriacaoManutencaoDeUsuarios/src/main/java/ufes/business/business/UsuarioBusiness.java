@@ -23,7 +23,7 @@ public class UsuarioBusiness {
 
         try {
 
-            if (usuarioDAO.getAll(usuario.getId()) == null) {
+            if (usuarioDAO.getAllAll().isEmpty()) {
                 usuario.setAdmin(Boolean.TRUE);
                 usuario.setAutorizado(Boolean.TRUE);
             } else {

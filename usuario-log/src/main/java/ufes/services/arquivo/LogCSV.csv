@@ -69,3 +69,14 @@ Cannot invoke ""java.util.Collection.toArray()"" because ""c"" is null;Isercao d
 ;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:42:53;53
 ;Mensagem com id: (21) maracada como lida?: true;daniel;20/JULY/2023;22:42:57;53
 ;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:43:17;53
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:27:52;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:31:8;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:31:22;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:34:26;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:36:17;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:37:4;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;danel;21/JULY/2023;1:42:23;null
+;Isercao de usuario;danield;21/JULY/2023;1:43:48;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;danield;21/JULY/2023;1:44:33;null
+;Isercao de usuario;daniel;21/JULY/2023;1:46:17;null
+;Isercao de usuario;daniel;21/JULY/2023;1:48:40;null
