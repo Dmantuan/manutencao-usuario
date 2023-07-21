@@ -16,7 +16,6 @@ public class MainPresenter {
 
     private final MainView view;
     private int qtdNovasNotificacoes;
-    private String user;
     private final ListarMensagemPresenter listarMensagensPresenter;
     private final EnviarMensagemPresenter enviarMensagensPresenter;
     private final CrudPresenter crudPresenter;
@@ -141,7 +140,8 @@ public class MainPresenter {
         this.loginPresenter.loginHandler();
 
         this.usuario = this.loginPresenter.getUsuario();
-        this.user = this.usuario.getNome();
+       
+        novasNotificacoes();
 
         this.listarMensagensPresenter.setIduser(this.usuario.getId());
         novasNotificacoes();
@@ -174,10 +174,9 @@ public class MainPresenter {
     private void novasNotificacoes() {
         try {
             this.qtdNovasNotificacoes = this.dbMensagens.getQtdNovasNotificacoes(this.usuario.getId());
-            this.user = "";
 
             this.view.getNotificacao().setText("Mensagens não lidas: " + String.valueOf(this.qtdNovasNotificacoes));
-            this.view.getTipoUser().setText(this.user);
+            this.view.getTipoUser().setText(this.usuario.getAdmin() ? "Admin: " + this.usuario.getNome() : "User: " + this.usuario.getNome());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, e.getMessage());
         }
