@@ -26,6 +26,7 @@ public class CrudPresenter {
     private UsuarioBusiness usuarioBusiness;
     private NotificacoesBusiness notificacaoBusines;
     private CardLayout cardLayout;
+    private Usuario user;
 
     public CrudPresenter() {
         this.usuarioBusiness = new UsuarioBusiness();
@@ -53,7 +54,7 @@ public class CrudPresenter {
         buscar_model.addColumn("Notificacoes Lidas");
         buscar_model.addColumn("Notificacoes enviadas");
         try {
-            for (Usuario usuario : usuarioBusiness.getAllUsers()) {
+            for (Usuario usuario : usuarioBusiness.getAllUsers(this.user.getId())) {
                 buscar_model.addRow(new Object[]{usuario.getNome(), usuario.getLogin(), notificacaoBusines.getQtdNotificacoesLidas(usuario.getId()), notificacaoBusines.getQtdNovasNotificacoes(usuario.getId())});
             }
         } catch (Exception e) {
@@ -150,11 +151,11 @@ public class CrudPresenter {
         autorizar_model.addColumn("Notificacoes Lidas");
         autorizar_model.addColumn("Notificacoes enviadas");
         try {
-            for (Usuario usuario : usuarioBusiness.getAllUsers()) {
+            for (Usuario usuario : usuarioBusiness.getAllUsers(this.user.getId())) {
                 autorizar_model.addRow(new Object[]{usuario.getNome(), usuario.getLogin(), usuario.getSenha(), usuario.getSenha()});
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Nao foi possivel carregar os dados da tabela");
         }
 
         view.getTb_usuarios_autorizarPanel().setModel(autorizar_model);
@@ -217,6 +218,10 @@ public class CrudPresenter {
     
     public CrudView getCrudView(){
         return this.view;
+    }
+    
+    public void setUser(Usuario user){
+        this.user = user;
     }
     
     public void setVisible(boolean visible){

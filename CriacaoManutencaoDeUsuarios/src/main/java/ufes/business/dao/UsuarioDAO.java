@@ -90,15 +90,17 @@ public class UsuarioDAO {
         }
     }
 
-    public List<Usuario> getAll() throws Exception {
+    public List<Usuario> getAll(Integer id) throws Exception {
         StringBuilder query = new StringBuilder();
 
         query.append(" SELECT * ");
-        query.append(" FROM usuario ");
+        query.append(" FROM usuario as u ");
+        query.append(" WHERE bool_altorizado = TRUE ");
+        query.append(" AND u.id != ? ");
 
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());
-
+            stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
 
             List<Usuario> lista = new ArrayList<>();

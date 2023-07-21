@@ -143,6 +143,8 @@ public class MainPresenter {
         this.user = this.usuario.getNome();
 
         this.listarMensagensPresenter.setIduser(this.usuario.getId());
+        this.crudPresenter.setUser(usuario);
+        this.enviarMensagensPresenter.setUser(usuario);
         novasNotificacoes();
         inicializarManterUusarios();
         inicializarEnviarMensagens();

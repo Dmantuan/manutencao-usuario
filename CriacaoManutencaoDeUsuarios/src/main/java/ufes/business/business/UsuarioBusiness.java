@@ -23,7 +23,7 @@ public class UsuarioBusiness {
 
         try {
 
-            if (usuarioDAO.getAll() == null) {
+            if (usuarioDAO.getAll(usuario.getId()) == null) {
                 usuario.setAdmin(Boolean.TRUE);
                 usuario.setAutorizado(Boolean.TRUE);
             } else {
@@ -94,8 +94,8 @@ public class UsuarioBusiness {
         return validateExists(id);
     }
 
-    public List<Usuario> getAllUsers() throws Exception {
-        return this.usuarioDAO.getAll();
+    public List<Usuario> getAllUsers(Integer id) throws Exception {
+        return this.usuarioDAO.getAll(id);
     }
 
     public List<Usuario> getAllUsersNaoAutorizados() throws Exception {
