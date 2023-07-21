@@ -3,6 +3,7 @@ package ufes.db;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import javax.swing.JOptionPane;
 
 public class ConexaoDB {
     
@@ -19,9 +20,8 @@ public class ConexaoDB {
 
             connection = DriverManager.getConnection(url);
 
-            System.out.println("conecao realizada com sucesso");
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Nao foi possivel conectar com o banco de dados");
         }
 
     }

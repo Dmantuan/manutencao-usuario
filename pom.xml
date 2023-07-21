@@ -20,8 +20,8 @@
   
     <modules>
         <module>notificacoes</module>
-        <module>CriacaoManutencaoDeUsuarios</module>
         <module>usuario-log</module>
+        <module>CriacaoManutencaoDeUsuarios</module>
     </modules>
   
     <build>
