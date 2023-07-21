@@ -2,37 +2,32 @@ package ufes.presenter;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import static org.apache.maven.wagon.PathUtils.user;
 import ufes.view.ListarMensagemView;
 import ufes.models.Notificacao;
 import ufes.business.business.NotificacoesBusiness;
+import ufes.models.Usuario;
 import ufes.service.ButtonEditor;
 import ufes.service.ButtonRenderer;
 
 public class ListarMensagemPresenter {
 
     private DefaultTableModel tbMensagens;
-    private ListarMensagemView view;
+    private final ListarMensagemView view;
     private ArrayList<Notificacao> mensagens;
-    private NotificacoesBusiness dbMensagens;
-
+    private final NotificacoesBusiness dbMensagens;
+    private Integer idUsuario;
+    
     public ListarMensagemPresenter() {
         this.view = new ListarMensagemView();
         this.dbMensagens = new NotificacoesBusiness();
 
         this.mensagens = new ArrayList<>();
 
-        try {
-            loadData();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error ao listar as mensagens");
-        }
     }
 
     public ListarMensagemView getView() {
@@ -57,7 +52,7 @@ public class ListarMensagemPresenter {
         this.view.getTable().setEnabled(true);
         
         this.mensagens = new ArrayList<>();
-        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAllByUserId(32);
+        this.mensagens = (ArrayList<Notificacao>) dbMensagens.getAllByUserId(this.idUsuario);
         atualizarTabela();
         
         // Montar tabelas
@@ -80,6 +75,10 @@ public class ListarMensagemPresenter {
         TableColumn lidaColumn = this.view.getTable().getColumnModel().getColumn(4);
         lidaColumn.setCellRenderer(new ButtonRenderer());
         lidaColumn.setCellEditor(new ButtonEditor(this.dbMensagens, this.mensagens, this.view.getTable(), this));      
+    }
+    
+    public void setIduser(Integer id){
+        this.idUsuario = id;
     }
 
     private void atualizarTabela() {

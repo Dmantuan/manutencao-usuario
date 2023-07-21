@@ -21,7 +21,7 @@ public class NotificacoesDAO {
         query.append(" SELECT COUNT(n.id) as quantidade ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
-        query.append(" ON un.id_remetente = u.id ");
+        query.append(" ON un.id_destinatario = u.id ");
         query.append(" LEFT JOIN notificacao n ");
         query.append(" ON n.id = un.id_notificacao ");
         query.append(" WHERE n.bool_visualizado = FALSE and u.id = ? ");
@@ -46,7 +46,7 @@ public class NotificacoesDAO {
         query.append(" SELECT COUNT(n.id) as quantidade ");
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
-        query.append(" ON un.id_remetente = u.id ");
+        query.append(" ON un.id_destinatario = u.id ");
         query.append(" LEFT JOIN notificacao n ");
         query.append(" ON n.id = un.id_notificacao ");
         query.append(" WHERE n.bool_visualizado = TRUE and u.id = ? ");
@@ -140,7 +140,7 @@ public class NotificacoesDAO {
         query.append(" FROM usuario as u ");
         query.append(" INNER JOIN usuario_notificacao un ");
         query.append(" ON un.id_destinatario = u.id ");
-        query.append(" LEFT JOIN notificacao n ");
+        query.append(" INNER JOIN notificacao n ");
         query.append(" ON n.id = un.id_notificacao ");
         query.append(" WHERE u.id = ? ");
 

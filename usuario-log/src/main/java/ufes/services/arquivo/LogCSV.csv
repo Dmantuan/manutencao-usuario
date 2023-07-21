@@ -58,3 +58,14 @@ Cannot invoke ""java.util.Collection.toArray()"" because ""c"" is null;Isercao d
 [SQLITE_BUSY] The database file is locked (database is locked);Isercao de usuario;fsdaf;20/JULY/2023;21:53:25;null
 ;Isercao de usuario;;20/JULY/2023;21:56:20;null
 ;Isercao de usuario;danie;20/JULY/2023;21:56:57;null
+;Isercao de usuario;;20/JULY/2023;22:8:58;null
+;Mensagem com id: (7) maracada como lida?: true;Sigismund;20/JULY/2023;22:28:30;26
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;daniel;20/JULY/2023;22:32:59;null
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;daniel;20/JULY/2023;22:33:14;null
+;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:42:9;53
+;Mensagem com id: (21) maracada como lida?: true;daniel;20/JULY/2023;22:42:10;53
+;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:42:51;53
+;Mensagem com id: (21) maracada como lida?: true;daniel;20/JULY/2023;22:42:52;53
+;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:42:53;53
+;Mensagem com id: (21) maracada como lida?: true;daniel;20/JULY/2023;22:42:57;53
+;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:43:17;53

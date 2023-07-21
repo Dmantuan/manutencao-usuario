@@ -2,10 +2,7 @@ package ufes.business.business;
 
 import java.util.List;
 import ufes.business.dao.NotificacoesDAO;
-import ufes.business.dao.NotificacoesDAO;
 import ufes.business.dao.UsuarioDAO;
-import ufes.business.dao.UsuarioDAO;
-import ufes.models.Notificacao;
 import ufes.models.Log;
 import ufes.models.Notificacao;
 import ufes.models.Usuario;
