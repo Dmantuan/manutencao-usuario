@@ -95,7 +95,7 @@ public class UsuarioDAO {
 
         query.append(" SELECT * ");
         query.append(" FROM usuario as u ");
-        query.append(" WHERE bool_altorizado = TRUE ");
+        query.append(" WHERE bool_autorizado = TRUE ");
         query.append(" AND u.id != ? ");
 
         try {
@@ -126,7 +126,7 @@ public class UsuarioDAO {
         }
     }
     
-    public List<Usuario> getAllAll( ) throws Exception {
+     public List<Usuario> getAllAll() throws Exception {
         StringBuilder query = new StringBuilder();
 
         query.append(" SELECT * ");
@@ -164,7 +164,7 @@ public class UsuarioDAO {
 
         query.append(" SELECT * ");
         query.append(" FROM usuario ");
-        query.append(" WHERE bool_altorizado = FALSE ");
+        query.append(" WHERE bool_autorizado = FALSE ");
         
         try {
             PreparedStatement stm = db.getConnection().prepareStatement(query.toString());

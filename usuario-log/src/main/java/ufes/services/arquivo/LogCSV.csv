@@ -69,6 +69,7 @@ Cannot invoke ""java.util.Collection.toArray()"" because ""c"" is null;Isercao d
 ;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:42:53;53
 ;Mensagem com id: (21) maracada como lida?: true;daniel;20/JULY/2023;22:42:57;53
 ;Mensagem com id: (21) maracada como lida?: false;daniel;20/JULY/2023;22:43:17;53
+<<<<<<< HEAD
 [SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:27:52;null
 [SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:31:8;null
 [SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:31:22;null
@@ -80,3 +81,23 @@ Cannot invoke ""java.util.Collection.toArray()"" because ""c"" is null;Isercao d
 [SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Isercao de usuario;danield;21/JULY/2023;1:44:33;null
 ;Isercao de usuario;daniel;21/JULY/2023;1:46:17;null
 ;Isercao de usuario;daniel;21/JULY/2023;1:48:40;null
+=======
+;Mensagem com id: (22) maracada como lida?: false;Fran;20/JULY/2023;23:13:56;2
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Update de usuario;Sebastiano;21/JULY/2023;0:28:20;1
+[SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: usuario.tx_login);Update de usuario;Sebastiano;21/JULY/2023;0:31:56;1
+;Update de usuario;danie;21/JULY/2023;0:34:1;56
+;Update de usuario;danie;21/JULY/2023;0:36:0;56
+;Deletando o usuario;Kerby;21/JULY/2023;0:39:41;32
+;Deletando o usuario;dan;21/JULY/2023;0:45:13;55
+;Deletando o usuario;daniel;21/JULY/2023;0:46:30;53
+;Deletando o usuario;Daniel;21/JULY/2023;0:46:41;51
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;Matheus;21/JULY/2023;1:26:27;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;daniel;21/JULY/2023;1:28:13;null
+[SQLITE_ERROR] SQL error or missing database (no such column: bool_altorizado);Isercao de usuario;Matheus;21/JULY/2023;1:40:33;null
+;Isercao de usuario;Matheus;21/JULY/2023;1:53:1;null
+;Isercao de usuario;daniel;21/JULY/2023;1:54:36;null
+;Isercao de usuario;;21/JULY/2023;1:57:10;null
+;Isercao de usuario;;21/JULY/2023;1:57:17;null
+;Isercao de usuario;daniel;21/JULY/2023;1:58:7;null
+;Isercao de usuario;daniel;21/JULY/2023;1:58:36;null
+>>>>>>> origin/matheus

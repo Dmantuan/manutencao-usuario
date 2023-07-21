@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import ufes.business.dao.UsuarioDAO;
+import ufes.business.dao.UsuarioDAO;
 import ufes.models.Log;
 import ufes.models.MultipleExceptions;
 import ufes.models.Usuario;

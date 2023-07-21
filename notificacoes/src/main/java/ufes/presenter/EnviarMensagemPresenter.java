@@ -36,7 +36,7 @@ public class EnviarMensagemPresenter {
         try {
             loadData();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error ao listar as os usuarios cadastrados");
+            JOptionPane.showMessageDialog(null, "Error ao listar os usuarios cadastrados");
         }
 
         // setando modelo da lista de destinatarios
@@ -122,6 +122,11 @@ public class EnviarMensagemPresenter {
     
     public void setUser(Usuario user){
         this.user = user;
+        try {
+            loadData();
+        } catch (Exception ex) {
+            Logger.getLogger(EnviarMensagemPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setVisible(boolean visible) {
