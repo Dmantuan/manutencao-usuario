@@ -40,10 +40,6 @@ public class CrudView extends javax.swing.JInternalFrame {
         btn_autorizar_buscarPanel = new javax.swing.JButton();
         btn_visuzalizar_buscarPanel = new javax.swing.JButton();
         btn_fechar_buscarPanel = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        cmBox_buscar_buscarPanel = new javax.swing.JComboBox<>();
-        txtField_buscar_buscarPanel = new javax.swing.JTextField();
-        btn_bucar_buscarPanel = new javax.swing.JButton();
         editar = new javax.swing.JPanel();
         btn_cancelar_editarPanel = new javax.swing.JButton();
         btn_salvar_editarPanel = new javax.swing.JButton();
@@ -73,6 +69,17 @@ public class CrudView extends javax.swing.JInternalFrame {
         btn_editar_visualizarPanel = new javax.swing.JButton();
         btn_fechar_visualizarPanel = new javax.swing.JButton();
         btn_excluir_visualizarPanel = new javax.swing.JButton();
+        editarUser = new javax.swing.JPanel();
+        btn_cancelar_editarPanel1 = new javax.swing.JButton();
+        btn_salvar_editarPanel1 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txField_nome_editarPanel1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txField_login_editarPanel1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txField_senhaNova_editarPanel1 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txField_senhaAntiga_editarPanel1 = new javax.swing.JTextField();
 
         crudPanel.setLayout(new java.awt.CardLayout());
 
@@ -102,12 +109,6 @@ public class CrudView extends javax.swing.JInternalFrame {
 
         btn_fechar_buscarPanel.setText("Fechar");
 
-        jLabel1.setText("Buscar por");
-
-        cmBox_buscar_buscarPanel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btn_bucar_buscarPanel.setText("Buscar");
-
         javax.swing.GroupLayout buscarLayout = new javax.swing.GroupLayout(buscar);
         buscar.setLayout(buscarLayout);
         buscarLayout.setHorizontalGroup(
@@ -115,45 +116,29 @@ public class CrudView extends javax.swing.JInternalFrame {
             .addGroup(buscarLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(buscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(usuarios_scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usuario_label)
                     .addGroup(buscarLayout.createSequentialGroup()
                         .addComponent(btn_autorizar_buscarPanel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_visuzalizar_buscarPanel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_fechar_buscarPanel))
-                    .addComponent(usuarios_scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(buscarLayout.createSequentialGroup()
-                        .addGroup(buscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usuario_label)
-                            .addComponent(jLabel1)
-                            .addComponent(cmBox_buscar_buscarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(txtField_buscar_buscarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(btn_bucar_buscarPanel)))
+                        .addComponent(btn_fechar_buscarPanel)))
                 .addGap(12, 12, 12))
         );
         buscarLayout.setVerticalGroup(
             buscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buscarLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(buscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(buscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtField_buscar_buscarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                        .addComponent(btn_bucar_buscarPanel))
-                    .addComponent(cmBox_buscar_buscarPanel))
-                .addGap(45, 45, 45)
+                .addGap(15, 15, 15)
                 .addComponent(usuario_label)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(usuarios_scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(buscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_autorizar_buscarPanel)
                     .addComponent(btn_visuzalizar_buscarPanel)
                     .addComponent(btn_fechar_buscarPanel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         crudPanel.add(buscar, "buscar");
@@ -219,7 +204,7 @@ public class CrudView extends javax.swing.JInternalFrame {
                 .addGroup(editarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar_editarPanel)
                     .addComponent(btn_salvar_editarPanel))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         crudPanel.add(editar, "editar");
@@ -270,7 +255,7 @@ public class CrudView extends javax.swing.JInternalFrame {
                 .addComponent(label_usuario_autorizarPanel)
                 .addGap(18, 18, 18)
                 .addComponent(usuarios_scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(autorizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar_autorizarPanel)
                     .addComponent(btn_autorizar_autorizarPanel))
@@ -357,10 +342,76 @@ public class CrudView extends javax.swing.JInternalFrame {
                     .addComponent(btn_fechar_visualizarPanel)
                     .addComponent(btn_editar_visualizarPanel)
                     .addComponent(btn_excluir_visualizarPanel))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         crudPanel.add(visualizar, "visualizar");
+
+        btn_cancelar_editarPanel1.setText("Cancelar");
+
+        btn_salvar_editarPanel1.setText("Salvar");
+
+        jLabel10.setText("Nome:");
+
+        jLabel11.setText("Login:");
+
+        jLabel12.setText("Senha nova:");
+
+        jLabel13.setText("Senha antiga:");
+
+        javax.swing.GroupLayout editarUserLayout = new javax.swing.GroupLayout(editarUser);
+        editarUser.setLayout(editarUserLayout);
+        editarUserLayout.setHorizontalGroup(
+            editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editarUserLayout.createSequentialGroup()
+                .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editarUserLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10))
+                        .addGap(26, 26, 26)
+                        .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txField_nome_editarPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(txField_login_editarPanel1)
+                            .addComponent(txField_senhaAntiga_editarPanel1)
+                            .addComponent(txField_senhaNova_editarPanel1)))
+                    .addGroup(editarUserLayout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(btn_salvar_editarPanel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_cancelar_editarPanel1)))
+                .addContainerGap(274, Short.MAX_VALUE))
+        );
+        editarUserLayout.setVerticalGroup(
+            editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editarUserLayout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txField_nome_editarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txField_login_editarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txField_senhaAntiga_editarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txField_senhaNova_editarPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(97, 97, 97)
+                .addGroup(editarUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cancelar_editarPanel1)
+                    .addComponent(btn_salvar_editarPanel1))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+
+        crudPanel.add(editarUser, "editarUser");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -370,7 +421,7 @@ public class CrudView extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+            .addComponent(crudPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -389,20 +440,24 @@ public class CrudView extends javax.swing.JInternalFrame {
     private javax.swing.JPanel autorizar;
     private javax.swing.JButton btn_autorizar_autorizarPanel;
     private javax.swing.JButton btn_autorizar_buscarPanel;
-    private javax.swing.JButton btn_bucar_buscarPanel;
     private javax.swing.JButton btn_cancelar_autorizarPanel;
     private javax.swing.JButton btn_cancelar_editarPanel;
+    private javax.swing.JButton btn_cancelar_editarPanel1;
     private javax.swing.JButton btn_editar_visualizarPanel;
     private javax.swing.JButton btn_excluir_visualizarPanel;
     private javax.swing.JButton btn_fechar_buscarPanel;
     private javax.swing.JButton btn_fechar_visualizarPanel;
     private javax.swing.JButton btn_salvar_editarPanel;
+    private javax.swing.JButton btn_salvar_editarPanel1;
     private javax.swing.JButton btn_visuzalizar_buscarPanel;
     private javax.swing.JPanel buscar;
-    private javax.swing.JComboBox<String> cmBox_buscar_buscarPanel;
     private javax.swing.JPanel crudPanel;
     private javax.swing.JPanel editar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel editarUser;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -416,13 +471,16 @@ public class CrudView extends javax.swing.JInternalFrame {
     private javax.swing.JTable tb_usuarios_buscarPanel;
     private javax.swing.JTextField txField_dataCricao_visualizarPanel;
     private javax.swing.JTextField txField_login_editarPanel;
+    private javax.swing.JTextField txField_login_editarPanel1;
     private javax.swing.JTextField txField_msgLida_visualizarPanel;
     private javax.swing.JTextField txField_msgRecebidas_visualizarPanel;
     private javax.swing.JTextField txField_nome_editarPanel;
+    private javax.swing.JTextField txField_nome_editarPanel1;
     private javax.swing.JTextField txField_nome_visualizarPanel;
     private javax.swing.JTextField txField_senhaAntiga_editarPanel;
+    private javax.swing.JTextField txField_senhaAntiga_editarPanel1;
     private javax.swing.JTextField txField_senhaNova_editarPanel;
-    private javax.swing.JTextField txtField_buscar_buscarPanel;
+    private javax.swing.JTextField txField_senhaNova_editarPanel1;
     private javax.swing.JLabel usuario_label;
     private javax.swing.JScrollPane usuarios_scrollPane;
     private javax.swing.JScrollPane usuarios_scrollPane1;
@@ -439,10 +497,6 @@ public class CrudView extends javax.swing.JInternalFrame {
 
     public JButton getBtn_autorizar_buscarPanel() {
         return btn_autorizar_buscarPanel;
-    }
-
-    public JButton getBtn_bucar_buscarPanel() {
-        return btn_bucar_buscarPanel;
     }
 
     public JButton getBtn_cancelar_autorizarPanel() {
@@ -479,10 +533,6 @@ public class CrudView extends javax.swing.JInternalFrame {
 
     public JPanel getBuscar() {
         return buscar;
-    }
-
-    public JComboBox<String> getCmBox_buscar_buscarPanel() {
-        return cmBox_buscar_buscarPanel;
     }
 
     public JPanel getCrudPanel() {
@@ -533,12 +583,32 @@ public class CrudView extends javax.swing.JInternalFrame {
         return txField_senhaNova_editarPanel;
     }
 
-    public JTextField getTxtField_buscar_buscarPanel() {
-        return txtField_buscar_buscarPanel;
-    }
-
     public JPanel getVisualizar() {
         return visualizar;
+    }
+
+    public JButton getBtn_cancelar_editarPanel1() {
+        return btn_cancelar_editarPanel1;
+    }
+
+    public JButton getBtn_salvar_editarPanel1() {
+        return btn_salvar_editarPanel1;
+    }
+
+    public JTextField getTxField_login_editarPanel1() {
+        return txField_login_editarPanel1;
+    }
+
+    public JTextField getTxField_nome_editarPanel1() {
+        return txField_nome_editarPanel1;
+    }
+
+    public JTextField getTxField_senhaAntiga_editarPanel1() {
+        return txField_senhaAntiga_editarPanel1;
+    }
+
+    public JTextField getTxField_senhaNova_editarPanel1() {
+        return txField_senhaNova_editarPanel1;
     }
 
 }

@@ -4,10 +4,7 @@ import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +33,7 @@ public class CrudPresenter {
     private List<Usuario> usuarios;
     private List<Usuario> usuariosAutorizar;
     private Usuario user;
-    
+
     private DefaultTableModel buscar_model = new DefaultTableModel();
 
     public CrudPresenter() {
@@ -72,7 +69,6 @@ public class CrudPresenter {
 
         // ####### Pagina de buscar usuario
 //        loadData(buscar_model);
-
         view.getBtn_visuzalizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -258,13 +254,13 @@ public class CrudPresenter {
     }
 
     public void loadData() {
-        
+
         try {
             this.usuarios = usuarioBusiness.getAllUsers(this.user.getId());
         } catch (Exception ex) {
             Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         buscar_model.setNumRows(0);
         try {
             for (Usuario usuario : usuarios) {
