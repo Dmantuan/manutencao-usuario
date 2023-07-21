@@ -37,6 +37,7 @@ public class MainView extends javax.swing.JFrame {
         notificacao = new javax.swing.JButton();
         mensagem = new javax.swing.JButton();
         manterUsuarios = new javax.swing.JButton();
+        alterarSenha = new javax.swing.JButton();
         DesktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,6 +89,8 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        alterarSenha.setText("Alterar Senha");
+
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
         footerLayout.setHorizontalGroup(
@@ -97,9 +100,11 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(tipoUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(manterUsuarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mensagem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(notificacao)
                 .addContainerGap())
         );
@@ -111,7 +116,8 @@ public class MainView extends javax.swing.JFrame {
                     .addComponent(notificacao)
                     .addComponent(tipoUser)
                     .addComponent(mensagem)
-                    .addComponent(manterUsuarios))
+                    .addComponent(manterUsuarios)
+                    .addComponent(alterarSenha))
                 .addContainerGap())
         );
 
@@ -162,6 +168,7 @@ public class MainView extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopPane;
+    private javax.swing.JButton alterarSenha;
     private javax.swing.JButton escolherLog;
     private javax.swing.JPanel footer;
     private javax.swing.JPanel header;
@@ -193,5 +200,9 @@ public class MainView extends javax.swing.JFrame {
 
     public JButton getManterUsuarios() {
         return manterUsuarios;
+    }
+
+    public JButton getAlterarSenha() {
+        return alterarSenha;
     }
 }

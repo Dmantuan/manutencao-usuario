@@ -94,9 +94,11 @@
                   <Component id="tipoUser" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="manterUsuarios" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="mensagem" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="alterarSenha" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="notificacao" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -111,6 +113,7 @@
                       <Component id="tipoUser" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="mensagem" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="manterUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="alterarSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -146,6 +149,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manterUsuariosActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="alterarSenha">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Alterar Senha"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

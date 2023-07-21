@@ -9,6 +9,7 @@ import ufes.business.business.NotificacoesBusiness;
 import ufes.models.Usuario;
 import ufes.presenters.CrudPresenter;
 import ufes.presenters.LoginPresenter;
+import ufes.presenters.crudState.AlterarSenhaUserState;
 import ufes.view.MainView;
 
 public class MainPresenter {
@@ -65,9 +66,22 @@ public class MainPresenter {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 abrirManterUsuarios();
+                crudPresenter.loadData();
+            }
+        });
+        
+        this.view.getAlterarSenha().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                alterarSenha();
             }
         });
         logar();
+    }
+    
+    private void alterarSenha(){
+        crudPresenter.setEstate(new AlterarSenhaUserState(crudPresenter, usuario));
+        crudPresenter.setVisible(true);   
     }
 
     private void inicializarListarMensagens() {
@@ -119,6 +133,7 @@ public class MainPresenter {
         this.view.getNotificacao().setVisible(false);
         this.view.getMensagem().setVisible(false);
         this.view.getManterUsuarios().setVisible(false);
+        this.view.getAlterarSenha().setVisible(false);
         JInternalFrame internalFrame = this.loginPresenter.getView();
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
@@ -164,6 +179,7 @@ public class MainPresenter {
             this.view.getNotificacao().setVisible(true);
             this.view.getMensagem().setVisible(false);
             this.view.getManterUsuarios().setVisible(false);
+            this.view.getAlterarSenha().setVisible(true);
         }
         this.loginPresenter.setVisible(false);
     }
