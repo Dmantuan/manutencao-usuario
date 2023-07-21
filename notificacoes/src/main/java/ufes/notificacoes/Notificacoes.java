@@ -1,6 +1,5 @@
 package ufes.notificacoes;
 
-import ufes.presenter.ConfiguracaoPresenter;
 import ufes.presenter.MainPresenter;
 
 public class Notificacoes {

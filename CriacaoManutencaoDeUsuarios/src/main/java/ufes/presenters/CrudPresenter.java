@@ -72,28 +72,26 @@ public class CrudPresenter {
         view.getBtn_visuzalizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                int select = view.getTb_usuarios_buscarPanel().getSelectedRow();
-                control.setCommand(visualizarCommand);
-                control.pressionarBotao();
-
-                view.getTxField_nome_visualizarPanel().setText(usuarios.get(select).getNome());
-                view.getTxField_nome_visualizarPanel().setEnabled(false);
-
-                String pattern = "dd/MM/yyyy HH:mm:ss";
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-                view.getTxField_dataCricao_visualizarPanel().setText(usuarios.get(select).getData().format(formatter));
-                view.getTxField_dataCricao_visualizarPanel().setEnabled(false);
                 try {
+                    int select = view.getTb_usuarios_buscarPanel().getSelectedRow();
+
+                    view.getTxField_nome_visualizarPanel().setText(usuarios.get(select).getNome());
+                    view.getTxField_nome_visualizarPanel().setEnabled(false);
+
+                    String pattern = "dd/MM/yyyy HH:mm:ss";
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+                    view.getTxField_dataCricao_visualizarPanel().setText(usuarios.get(select).getData().format(formatter));
+                    view.getTxField_dataCricao_visualizarPanel().setEnabled(false);
+
                     view.getTxField_msgRecebidas_visualizarPanel().setText(String.valueOf(notificacaoBusines.getQtdNovasNotificacoes(usuarios.get(select).getId())));
                     view.getTxField_msgRecebidas_visualizarPanel().setEnabled(false);
-                } catch (Exception ex) {
-                    Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
                     view.getTxField_msgLida_visualizarPanel().setText(String.valueOf(notificacaoBusines.getQtdNotificacoesLidas(usuarios.get(select).getId())));
                     view.getTxField_msgLida_visualizarPanel().setEnabled(false);
+
+                    control.setCommand(visualizarCommand);
+                    control.pressionarBotao();
                 } catch (Exception ex) {
-                    Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(view, "Nao foi possivel visualizar o usuario pois: " + ex.getMessage());
                 }
             }
         });

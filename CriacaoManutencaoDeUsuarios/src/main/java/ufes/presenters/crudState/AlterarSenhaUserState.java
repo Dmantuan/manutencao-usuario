@@ -39,7 +39,7 @@ public class AlterarSenhaUserState extends CrudState {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    usuarioBusiness.update(user.getId(), crudPresenter.getCrudView().getTxField_nome_editarPanel().getText(), crudPresenter.getCrudView().getTxField_login_editarPanel().getText(), crudPresenter.getCrudView().getTxField_senhaNova_editarPanel().getText());
+                    usuarioBusiness.update(user.getId(), crudPresenter.getCrudView().getTxField_nome_editarPanel1().getText(), crudPresenter.getCrudView().getTxField_login_editarPanel1().getText(), crudPresenter.getCrudView().getTxField_senhaNova_editarPanel1().getText());
                     JOptionPane.showMessageDialog(crudPresenter.getCrudView(), "Usuario salvo com sucesso!");
                     crudPresenter.getCrudView().setVisible(false);
                     

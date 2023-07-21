@@ -74,7 +74,6 @@ public class MainPresenter {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 alterarSenha();
-                crudPresenter.loadData();
             }
         });
         logar();
@@ -134,6 +133,7 @@ public class MainPresenter {
         this.view.getNotificacao().setVisible(false);
         this.view.getMensagem().setVisible(false);
         this.view.getManterUsuarios().setVisible(false);
+        this.view.getAlterarSenha().setVisible(false);
         JInternalFrame internalFrame = this.loginPresenter.getView();
         internalFrame.setVisible(true);
         this.view.getDesktopPane().add(internalFrame);
@@ -179,6 +179,7 @@ public class MainPresenter {
             this.view.getNotificacao().setVisible(true);
             this.view.getMensagem().setVisible(false);
             this.view.getManterUsuarios().setVisible(false);
+            this.view.getAlterarSenha().setVisible(true);
         }
         this.loginPresenter.setVisible(false);
     }
