@@ -4,10 +4,7 @@ import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +33,7 @@ public class CrudPresenter {
     private List<Usuario> usuarios;
     private List<Usuario> usuariosAutorizar;
     private Usuario user;
-    
+
     private DefaultTableModel buscar_model = new DefaultTableModel();
 
     public CrudPresenter() {
@@ -72,32 +69,29 @@ public class CrudPresenter {
 
         // ####### Pagina de buscar usuario
 //        loadData(buscar_model);
-
         view.getBtn_visuzalizar_buscarPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                int select = view.getTb_usuarios_buscarPanel().getSelectedRow();
-                control.setCommand(visualizarCommand);
-                control.pressionarBotao();
-
-                view.getTxField_nome_visualizarPanel().setText(usuarios.get(select).getNome());
-                view.getTxField_nome_visualizarPanel().setEnabled(false);
-
-                String pattern = "dd/MM/yyyy HH:mm:ss";
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-                view.getTxField_dataCricao_visualizarPanel().setText(usuarios.get(select).getData().format(formatter));
-                view.getTxField_dataCricao_visualizarPanel().setEnabled(false);
                 try {
+                    int select = view.getTb_usuarios_buscarPanel().getSelectedRow();
+
+                    view.getTxField_nome_visualizarPanel().setText(usuarios.get(select).getNome());
+                    view.getTxField_nome_visualizarPanel().setEnabled(false);
+
+                    String pattern = "dd/MM/yyyy HH:mm:ss";
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+                    view.getTxField_dataCricao_visualizarPanel().setText(usuarios.get(select).getData().format(formatter));
+                    view.getTxField_dataCricao_visualizarPanel().setEnabled(false);
+
                     view.getTxField_msgRecebidas_visualizarPanel().setText(String.valueOf(notificacaoBusines.getQtdNovasNotificacoes(usuarios.get(select).getId())));
                     view.getTxField_msgRecebidas_visualizarPanel().setEnabled(false);
-                } catch (Exception ex) {
-                    Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
                     view.getTxField_msgLida_visualizarPanel().setText(String.valueOf(notificacaoBusines.getQtdNotificacoesLidas(usuarios.get(select).getId())));
                     view.getTxField_msgLida_visualizarPanel().setEnabled(false);
+
+                    control.setCommand(visualizarCommand);
+                    control.pressionarBotao();
                 } catch (Exception ex) {
-                    Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(view, "Nao foi possivel visualizar o usuario pois: " + ex.getMessage());
                 }
             }
         });
@@ -258,13 +252,13 @@ public class CrudPresenter {
     }
 
     public void loadData() {
-        
+
         try {
             this.usuarios = usuarioBusiness.getAllUsers(this.user.getId());
         } catch (Exception ex) {
             Logger.getLogger(CrudPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         buscar_model.setNumRows(0);
         try {
             for (Usuario usuario : usuarios) {

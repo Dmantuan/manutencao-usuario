@@ -5,10 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import ufes.models.Usuario;
 import ufes.views.LoginView;
-import com.pss.senha.validacao.ValidadorSenha;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ufes.business.business.UsuarioBusiness;
 

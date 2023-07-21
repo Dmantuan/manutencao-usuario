@@ -6,11 +6,9 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import static org.apache.maven.wagon.PathUtils.user;
 import ufes.view.ListarMensagemView;
 import ufes.models.Notificacao;
 import ufes.business.business.NotificacoesBusiness;
-import ufes.models.Usuario;
 import ufes.service.ButtonEditor;
 import ufes.service.ButtonRenderer;
 
@@ -90,7 +88,7 @@ public class ListarMensagemPresenter {
                 String statusLida = mensagem.getBool_vizualizado() != null && mensagem.getBool_vizualizado() ? "Antiga" : "Nova";
                 String textButton = mensagem.getBool_vizualizado() != null && mensagem.getBool_vizualizado() ? "Não Lida" : "Lida";
                 this.tbMensagens.addRow(new Object[]{
-                    String.valueOf(mensagem.getId_remetente()),
+                    String.valueOf(mensagem.getTx_nomeRemetente()),
                     String.valueOf(mensagem.getTx_titulo()),
                     String.valueOf(mensagem.getTx_conteudo()),
                     statusLida,
