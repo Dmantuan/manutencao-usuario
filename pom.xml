@@ -22,6 +22,7 @@
         <module>notificacoes</module>
         <module>usuario-log</module>
         <module>CriacaoManutencaoDeUsuarios</module>
+        <module>validadorsenha-master</module>
     </modules>
   
     <build>
